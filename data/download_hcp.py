@@ -42,10 +42,14 @@ subjects = get_all_subjects(bucket, prefix, s3)
 # Check to make sure you are downloading to the package root level
 CURRENT_PATH = Path(os.getcwd())
 CURRENT_FOLDER = CURRENT_PATH.name
-if CURRENT_FOLDER == "scripts":
-    p = Path("../data/graphs")
-elif CURRENT_FOLDER == "connectomic-heritability":
+
+if CURRENT_FOLDER == "connectomic-heritability":
     p = Path("./data/graphs")
+elif CURRENT_FOLDER == "data":
+    p = Path("./graphs")
+else:
+    # Assume user is in one of subfolders otherwise
+    p = Path("../data/graphs")
 
 p.mkdir(parents=True, exist_ok=True)
 
