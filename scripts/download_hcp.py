@@ -1,5 +1,6 @@
 # %%
 from pathlib import Path
+import os
 
 import boto3
 from botocore import UNSIGNED
@@ -37,7 +38,15 @@ prefix = "hcp1200/"
 subjects = get_all_subjects(bucket, prefix, s3)
 
 # %%
-p = Path("../data/graphs")
+
+# Check to make sure you are downloading to the package root level
+CURRENT_PATH = Path(os.getcwd())
+CURRENT_FOLDER = CURRENT_PATH.name
+if CURRENT_FOLDER == "scripts":
+    p = Path("../data/graphs")
+elif CURRENT_FOLDER == "connectomic-heritability":
+    p = Path("./data/graphs")
+
 p.mkdir(parents=True, exist_ok=True)
 
 for idx, sub in enumerate(subjects):
