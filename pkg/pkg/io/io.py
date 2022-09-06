@@ -1,3 +1,5 @@
+# Credit Benjamin Pedigo for this code
+
 import os
 from pathlib import Path
 import pickle
@@ -27,7 +29,7 @@ def savefig(
     subfoldername="figs",
     pathname="./twins/notebooks/outs",
     bbox_inches="tight",
-    pad_inches=0.5,
+    pad_inches=0.025,
     save_on=True,
     transparent=False,
     print_out=True,
