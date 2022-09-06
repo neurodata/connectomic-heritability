@@ -5,3 +5,5 @@ format: jb-book
 root: coverpage
 parts:
   - caption: Introduction
+  chapters:
+      - file: placeholder

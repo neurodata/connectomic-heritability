@@ -32,9 +32,6 @@ repository:
   url: https://github.com/neurodata/connectomic-heritability
   path_to_book: connectomic-heritability
   branch: main
-  
-execute: 
-  execute_notebooks: off # TODO turn back on someday
 
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
