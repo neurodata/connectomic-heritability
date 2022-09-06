@@ -6,4 +6,4 @@ root: coverpage
 parts:
   - caption: Introduction
   chapters:
-      - file: placeholder
+  - file: placeholder
