@@ -1,0 +1,809 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Heritability of Human Structural Connectomes &#8212; Connectomic Heritability</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/nd_logo_small.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/nd_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Connectomic Heritability</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../coverpage.html">
+                    Connectomic Heritability
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Test
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../placeholder.html">
+   Placeholder
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/neurodata/connectomic-heritability"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/neurodata/connectomic-heritability/issues/new?title=Issue%20on%20page%20%2Fslides/dbo/dbo.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/slides/dbo/dbo.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Heritability of Human Structural Connectomes
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jaewon-chung">
+     Jaewon Chung
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#outline">
+   Outline
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-heritability">
+   What is heritability?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#brains-connectivity-as-connectomes">
+   Brains connectivity as connectomes
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#heritability-and-interindividual-variability-of-regional-structure-function-coupling-https-www-nature-com-articles-s41467-021-25184-4">
+     Heritability and interindividual variability of regional structure-function coupling
+https://www.nature.com/articles/s41467-021-25184-4
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connectome-generation">
+   Connectome Generation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overall-dag">
+   Overall DAG
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statistical-problem">
+   Statistical problem
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Statistical problem
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#distance-correlations">
+   Distance Correlations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#human-connectome-project">
+   Human Connectome Project
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monozygotic-vs-dizygotic">
+   Monozygotic vs Dizygotic
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-compare-siblings-and-twins">
+   Why compare siblings and twins?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#all-three-groups">
+   All three groups
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neuroanatomy-effect-mediator">
+   Neuroanatomy (effect mediator)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditional-test-as-causal-effect-estimator">
+   Conditional Test as causal effect estimator
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-end">
+   The End
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#information-on-distance-correlation">
+   Information on Distance Correlation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#shortcomings">
+   Shortcomings
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#environemtal-effects">
+   Environemtal effects
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Heritability of Human Structural Connectomes</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Heritability of Human Structural Connectomes
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#jaewon-chung">
+     Jaewon Chung
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#outline">
+   Outline
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-heritability">
+   What is heritability?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#brains-connectivity-as-connectomes">
+   Brains connectivity as connectomes
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#heritability-and-interindividual-variability-of-regional-structure-function-coupling-https-www-nature-com-articles-s41467-021-25184-4">
+     Heritability and interindividual variability of regional structure-function coupling
+https://www.nature.com/articles/s41467-021-25184-4
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connectome-generation">
+   Connectome Generation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overall-dag">
+   Overall DAG
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statistical-problem">
+   Statistical problem
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Statistical problem
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#distance-correlations">
+   Distance Correlations
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#human-connectome-project">
+   Human Connectome Project
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monozygotic-vs-dizygotic">
+   Monozygotic vs Dizygotic
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#why-compare-siblings-and-twins">
+   Why compare siblings and twins?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#all-three-groups">
+   All three groups
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neuroanatomy-effect-mediator">
+   Neuroanatomy (effect mediator)
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conditional-test-as-causal-effect-estimator">
+   Conditional Test as causal effect estimator
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-end">
+   The End
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#information-on-distance-correlation">
+   Information on Distance Correlation
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#shortcomings">
+   Shortcomings
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#environemtal-effects">
+   Environemtal effects
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <style scoped>
+p {
+    font-size: 24px;
+}
+</style>
+<section class="tex2jax_ignore mathjax_ignore" id="heritability-of-human-structural-connectomes">
+<h1>Heritability of Human Structural Connectomes<a class="headerlink" href="#heritability-of-human-structural-connectomes" title="Permalink to this headline">#</a></h1>
+<section id="jaewon-chung">
+<h2>Jaewon Chung<a class="headerlink" href="#jaewon-chung" title="Permalink to this headline">#</a></h2>
+<p><em>(he/him) - <img alt="icon" src="images/email.png" /> <a class="reference external" href="mailto:j1c&#37;&#52;&#48;jhu&#46;edu"><em>j1c</em><span>&#64;</span>jhu<span>&#46;</span>edu_</a>
+<a class="reference external" href="https://neurodata.io/">NeuroData lab</a></em>
+<em>Johns Hopkins University - Biomedical Engineering</em>
+<img alt="icon" src="images/email.png" /> <a class="reference external" href="mailto:j1c&#37;&#52;&#48;jhu&#46;edu"><em>j1c</em><span>&#64;</span>jhu<span>&#46;</span>edu_</a>
+<img alt="icon" src="../../_images/github.png" /> <a class="reference external" href="https://github.com/j1c"><em>&#64;j1c (Github)</em></a>
+<img alt="icon" src="../../_images/twitter.png" /> <a class="reference external" href="https://twitter.com/j1c"><em>&#64;j1c (Twitter)</em></a></p>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="outline">
+<h1>Outline<a class="headerlink" href="#outline" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Background</p>
+<ul>
+<li><p><strong>What is heritability?</strong></p></li>
+<li><p>Graphs, networks, connectomes</p></li>
+<li><p>Where do connectomes come from?</p></li>
+</ul>
+</li>
+<li><p>Problem</p>
+<ul>
+<li><p>What are we trying to estimate?</p></li>
+<li><p>Causal models</p></li>
+<li><p>Dcorr</p></li>
+<li><p>Distance functions</p></li>
+</ul>
+</li>
+<li><p>Results</p>
+<ul>
+<li><p>Dataset</p></li>
+<li><p>Results 1</p></li>
+<li><p>Results 2</p></li>
+<li><p>Results 3</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="what-is-heritability">
+<h1>What is heritability?<a class="headerlink" href="#what-is-heritability" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Variations in phenotype caused by variations in genotype.</p></li>
+<li><p>Potentially discover relationships between diseases and genetics</p></li>
+</ul>
+<p>Are the brain connectivity patterns heritable?</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="brains-connectivity-as-connectomes">
+<h1>Brains connectivity as connectomes<a class="headerlink" href="#brains-connectivity-as-connectomes" title="Permalink to this headline">#</a></h1>
+<p>(aka networks or graphs)</p>
+<ul class="simple">
+<li><p>Vertex = a region of interest</p></li>
+<li><p>Edges = connectivity measure between a pair of vertices</p></li>
+<li><p>Diffusion MRI = # of estimated neuronal fibers</p></li>
+<li><p>Undirected = Edges have no direction</p></li>
+</ul>
+<section id="heritability-and-interindividual-variability-of-regional-structure-function-coupling-https-www-nature-com-articles-s41467-021-25184-4">
+<h2>Heritability and interindividual variability of regional structure-function coupling
+<a class="reference external" href="https://www.nature.com/articles/s41467-021-25184-4">https://www.nature.com/articles/s41467-021-25184-4</a><a class="headerlink" href="#heritability-and-interindividual-variability-of-regional-structure-function-coupling-https-www-nature-com-articles-s41467-021-25184-4" title="Permalink to this headline">#</a></h2>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="connectome-generation">
+<h1>Connectome Generation<a class="headerlink" href="#connectome-generation" title="Permalink to this headline">#</a></h1>
+<p><img alt="center" src="../../_images/m2g_pipeline.pdf" /></p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="overall-dag">
+<h1>Overall DAG<a class="headerlink" href="#overall-dag" title="Permalink to this headline">#</a></h1>
+<p><img alt="center" src="../../_images/dag.svg" /></p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="statistical-problem">
+<h1>Statistical problem<a class="headerlink" href="#statistical-problem" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Want an independence test!</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0: F(Genome, Connectome) = F(Genome)F(Connectome)\)</span>
+<span class="math notranslate nohighlight">\(H_A: F(Genome, Connectome) \neq F(Genome)F(Connectome)\)</span></p></li>
+<li><p>Test statistic: Distance correlation</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>Statistical problem<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Want an independence test!</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_0: F(Genome, Connectome|Covariates) = F(Genome|Covariates)F(Connectome|Covariates)\)</span>
+<span class="math notranslate nohighlight">\(H_A: F(Genome, Connectome|Covariates) \neq F(Genome|Covariates)F(Connectome|Covariates)\)</span></p></li>
+<li><p>Test statistic: Conditional distance correlation</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="distance-correlations">
+<h1>Distance Correlations<a class="headerlink" href="#distance-correlations" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Require distance functions</p></li>
+<li><p>Genetic distances</p></li>
+<li><p>Connectome distances <span class="math notranslate nohighlight">\(||X - YR||_F\)</span></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="human-connectome-project">
+<h1>Human Connectome Project<a class="headerlink" href="#human-connectome-project" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Demographics:
+Van Essen, David C., et al., The WU-Minn human connectome project: an overview (2013)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="monozygotic-vs-dizygotic">
+<h1>Monozygotic vs Dizygotic<a class="headerlink" href="#monozygotic-vs-dizygotic" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Assumptions:</p>
+<ul>
+<li><p>Controls environment variable</p></li>
+</ul>
+</li>
+</ul>
+<p>Insert figure</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="why-compare-siblings-and-twins">
+<h1>Why compare siblings and twins?<a class="headerlink" href="#why-compare-siblings-and-twins" title="Permalink to this headline">#</a></h1>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="all-three-groups">
+<h1>All three groups<a class="headerlink" href="#all-three-groups" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Assumptions:</p>
+<ul>
+<li><p>Add in environmental and genetic variance</p></li>
+</ul>
+</li>
+</ul>
+<p>Insert figure</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="neuroanatomy-effect-mediator">
+<h1>Neuroanatomy (effect mediator)<a class="headerlink" href="#neuroanatomy-effect-mediator" title="Permalink to this headline">#</a></h1>
+<p>Test the existence of arrow</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="conditional-test-as-causal-effect-estimator">
+<h1>Conditional Test as causal effect estimator<a class="headerlink" href="#conditional-test-as-causal-effect-estimator" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Using conditional distance correlation</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="the-end">
+<h1>The End<a class="headerlink" href="#the-end" title="Permalink to this headline">#</a></h1>
+<hr class="docutils" />
+<p>Additional slides</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="information-on-distance-correlation">
+<h1>Information on Distance Correlation<a class="headerlink" href="#information-on-distance-correlation" title="Permalink to this headline">#</a></h1>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="shortcomings">
+<h1>Shortcomings<a class="headerlink" href="#shortcomings" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Network models</p></li>
+<li><p>Problems with connectome estimation.</p></li>
+<li><p>dominant genetic effects and epistasis.</p></li>
+<li><p>No interaction between environment and genetics</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="environemtal-effects">
+<h1>Environemtal effects<a class="headerlink" href="#environemtal-effects" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>Shared</p>
+<ul>
+<li><p>Common experiences of siblings living in the same household.</p>
+<ul>
+<li><p>household income, the family’s living situation, the dynamics between the parents, food consumed</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Non-shared</p>
+<ul>
+<li><p>Everything else</p></li>
+<li><p>Epigenetics</p></li>
+<li><p>Luck</p></li>
+<li><p>schools, peers</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./slides/dbo"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jaewon Chung<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
