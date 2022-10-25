@@ -45,34 +45,33 @@ _Johns Hopkins University - Biomedical Engineering_
 # What is heritability?
 
 - Variations in phenotype caused by variations in genotype.
-- Example:
+- Potentially discover relationships between diseases and genetics
+
+Are the brain connectivity patterns heritable?
 
 ---
 
-# Brains as connectomes
+# Brains connectivity as connectomes
 (aka networks or graphs)
 
 - Vertex = a region of interest
 - Edges = connectivity measure between a pair of vertices
 - Diffusion MRI = # of estimated neuronal fibers
+- Undirected = Edges have no direction
 
+
+Heritability and interindividual variability of regional structure-function coupling
+https://www.nature.com/articles/s41467-021-25184-4
 ---
 # Connectome Generation
 
-![center](./../../images/m2g-pipeline.pdf)
-
-Source: https://www.biorxiv.org/content/biorxiv/early/2021/11/03/2021.11.01.466686.full.pdf
-
+![center](./../../images/m2g_pipeline.pdf)
 
 ---
+
 # Overall DAG
 
-Insert dag
-
----
-# Subject specifig DAGs
-
-Insert 4 Dags
+![center](./../../images/dag.svg)
 
 ---
 # Statistical problem
@@ -80,17 +79,29 @@ Insert 4 Dags
 - $H_0: F(Genome, Connectome) = F(Genome)F(Connectome)$
   $H_A: F(Genome, Connectome) \neq F(Genome)F(Connectome)$
 
-- Distance correlation test statistics
+- Test statistic: Distance correlation
+---
 
+# Statistical problem
+- Want an independence test!
+- $H_0: F(Genome, Connectome|Covariates) = F(Genome|Covariates)F(Connectome|Covariates)$
+  $H_A: F(Genome, Connectome|Covariates) \neq F(Genome|Covariates)F(Connectome|Covariates)$
+
+- Test statistic: Conditional distance correlation
+
+---
+# Distance Correlations
+- Require distance functions
+
+- Genetic distances
+- Connectome distances $||X - YR||_F$
 ---
 
 # Human Connectome Project
--
+- Demographics:
+Van Essen, David C., et al., The WU-Minn human connectome project: an overview (2013)
 
----
-# Assumptions
-- Only 2 children per family
-- Only identical twins, fraternal twins, non-twin siblings
+
 
 ---
 # Monozygotic vs Dizygotic
@@ -100,6 +111,10 @@ Insert 4 Dags
 Insert figure
 
 ---
+# Why compare siblings and twins?
+
+
+---
 # All three groups
 - Assumptions:
   - Add in environmental and genetic variance
@@ -107,7 +122,7 @@ Insert figure
 Insert figure
 
 ---
-# Neuroanatomy Mediator
+# Neuroanatomy (effect mediator)
 
 Test the existence of arrow
 
@@ -132,6 +147,7 @@ Additional slides
 - Network models
 - Problems with connectome estimation.
 - dominant genetic effects and epistasis.
+- No interaction between environment and genetics
 ---
 
 # Environemtal effects
