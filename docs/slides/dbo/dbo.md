@@ -2,7 +2,7 @@
 marp: true
 theme: slides
 size: 16:9
-paginate: false
+paginate: true
 ---
 
 <style scoped>
@@ -48,22 +48,39 @@ _Johns Hopkins University - Biomedical Engineering_
 # What is heritability?
 
 - Variations in phenotype caused by variations in genotype.
-- Potentially discover relationships between diseases and genetics
+- Potentially discover relationships between diseases and genetics.
 
-Are the brain connectivity patterns heritable?
+ <br> <br> <br>
+
+<style scoped>
+h2 {
+    justify-content: center;
+    text-align: center;
+}
+</style>
+
+
+## Are the brain connectivity patterns heritable?
 
 ---
 
 # Brains connectivity as connectomes
+<!-- (aka networks or graphs) -->
 
-(aka networks or graphs)
+<div class="columns">
+<div>
 
-- Vertex = a region of interest
+- Vertex = region of interest
 - Edges = connectivity measure between a pair of vertices
 - Diffusion MRI = # of estimated neuronal fibers
-- Undirected = Edges have no direction
+- Undirected = edges have no direction
 
-![center](./../../images/what_is_network.png)
+</div>
+<div>
+
+![center h:500](./../../images/what_is_network.png)
+
+</div>
 
 <footer>
 Image from Gu, Zijin, et al. "Heritability and interindividual variability of regional structure-function coupling." (2021)
@@ -71,51 +88,52 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 
 ---
 
-# Connectome Generation
+# How do we get structural connectomes?
 
-![center](./../../images/m2g_pipeline.pdf)
+<br>
+
+![center](./../../images/m2g_pipeline.png)
 
 ---
 
-# Overall DAG
+# Heritability as Causal Problem
 
-![center](./../../images/dag.svg)
+![center h:500](./../../images/dag.svg)
 
 ---
 
 # Statistical problem
 
 - Want an independence test!
-- $H_0: F(Genome, Connectome) = F(Genome)F(Connectome)$
-  $H_A: F(Genome, Connectome) \neq F(Genome)F(Connectome)$
+
+    $H_0: F($<span style="color: var(--genome)">Genome</span>, <span style="color: var(--connectome)">Connectome</span>$) = F($<span style="color: var(--genome)">Genome</span>$)F($<span style="color: var(--connectome)">Connectome</span>$)$
+    $H_0: F($<span style="color: var(--genome)">Genome</span>, <span style="color: var(--connectome)">Connectome</span>$) \neq F($<span style="color: var(--genome)">Genome</span>$)F($<span style="color: var(--connectome)">Connectome</span>$)$
+
 
 - Test statistic: Distance correlation
 
 ---
 
-# Statistical problem
-
-- Want an independence test!
-- $H_0: F(Genome, Connectome|Covariates) = F(Genome|Covariates)F(Connectome|Covariates)$
-  $H_A: F(Genome, Connectome|Covariates) \neq F(Genome|Covariates)F(Connectome|Covariates)$
-
-- Test statistic: Conditional distance correlation
-
----
-
-# Distance Correlations
+# What is distance correlation?
 
 - Require distance functions
 
-- Genetic distances
-- Connectome distances $||X - YR||_F$
+- Genetic distances: coefficient of kinship
+- Connectome distances: Procrustes distance $||X - YR||_F$
 
 ---
 
+
 # Human Connectome Project
 
-- Demographics:
-  Van Essen, David C., et al., The WU-Minn human connectome project: an overview (2013)
+- Brain scans
+
+![center w:500](./../../images/hcp_demographics.svg)
+
+
+<footer>
+Van Essen, David C., et al., The WU-Minn human connectome project: an overview (2013)
+</footer>
 
 ---
 
@@ -143,9 +161,27 @@ Insert figure
 
 # Neuroanatomy (effect mediator)
 
-Test the existence of arrow
+- Literature show neuroanatomy is highly heritable.
+
 
 ---
+
+# New DAG
+
+One with neuro anatomy
+
+---
+
+# Statistical problem
+
+- Want an independence test!
+- $H_0: F(Genome, Connectome|Covariates) = F(Genome|Covariates)F(Connectome|Covariates)$
+  $H_A: F(Genome, Connectome|Covariates) \neq F(Genome|Covariates)F(Connectome|Covariates)$
+
+- Test statistic: Conditional distance correlation
+
+---
+
 
 # Conditional Test as causal effect estimator
 
@@ -161,16 +197,20 @@ Additional slides
 
 ---
 
-# Information on Distance Correlation
+# Random dot product graphs
 
 ---
 
 # Shortcomings
 
 - Network models
+  -
 - Problems with connectome estimation.
 - dominant genetic effects and epistasis.
 - No interaction between environment and genetics
+
+- Inability to determine the precise origin/termination of connections in the cortex.
+- Crossing fibers
 
 ---
 

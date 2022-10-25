@@ -19,6 +19,8 @@ section {
     --right: #fc8d62;
     --source: #8da0cb;
     --target: #e78ac3;
+    --genome: #98C981;
+    --connectome: #B4D5ED;
 }
 
 /* REF: https://github.com/yhatt/marp/issues/119 */
