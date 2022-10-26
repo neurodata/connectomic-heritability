@@ -4,6 +4,10 @@
 format: jb-book
 root: coverpage
 parts:
-  - caption: Test
-    chapters: 
+  - caption: Preliminaries
+    chapters:
     -  file: placeholder
+  - caption: Slides
+    chapters:
+    - url: https://docs.neurodata.io/connectomic-heritability/dbo.pdf
+      title: DBO
