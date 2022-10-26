@@ -137,7 +137,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
   - Each vertex (region of interest) has a low $d$ dimensional latent vector.
   - $P[i\rightarrow j]$ = $\langle x_i, x_j\rangle$
 - Latent vectors =
-- d(<span style="color: var(--connectome)">Connectome</span>$_i$, <span style="color: var(--connectome)">Connectome</span>$_j$) = $||X^{(k)} - X^{(l)}R||_F$
+- d(<span style="color: var(--connectome)">Connectome</span>$_k$, <span style="color: var(--connectome)">Connectome</span>$_l$) = $||X^{(k)} - X^{(l)}R||_F$
 
 ![center h:300](./../../images/ase.png)
 
