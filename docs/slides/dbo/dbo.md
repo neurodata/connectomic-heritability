@@ -70,10 +70,10 @@ h2 {
 <div class="columns">
 <div>
 
-- Vertex = region of interest
-- Edges = connectivity measure between a pair of vertices
-- Diffusion MRI = # of estimated neuronal fibers
-- Undirected = edges have no direction
+- Vertex: region of interest
+- Edges: connectivity measure between a pair of vertices
+- Diffusion MRI: # of estimated neuronal fibers
+- Undirected: neurons have no direction
 
 </div>
 <div>
@@ -96,37 +96,61 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 
 ---
 
-# Heritability as Causal Problem
+# Heritability as causal problem
 
 ![center h:500](./../../images/dag.svg)
 
 ---
 
-# Statistical problem
+# Do genomes affect connectomes?
 
-- Want an independence test!
+- Hypothesis:
+  $H_0: F($<span style="color: var(--connectome)">Connectome</span>|<span style="color: var(--genome)">Genome</span>$) = F($<span style="color: var(--connectome)">Connectome</span>$)$
+  $H_A: F($<span style="color: var(--connectome)">Connectome</span>|<span style="color: var(--genome)">Genome</span>$) \neq F($<span style="color: var(--connectome)">Connectome</span>$)$
 
-    $H_0: F($<span style="color: var(--genome)">Genome</span>, <span style="color: var(--connectome)">Connectome</span>$) = F($<span style="color: var(--genome)">Genome</span>$)F($<span style="color: var(--connectome)">Connectome</span>$)$
-    $H_0: F($<span style="color: var(--genome)">Genome</span>, <span style="color: var(--connectome)">Connectome</span>$) \neq F($<span style="color: var(--genome)">Genome</span>$)F($<span style="color: var(--connectome)">Connectome</span>$)$
+- Alternatively:
+  $H_0: F($<span style="color: var(--connectome)">Connectome</span>, <span style="color: var(--genome)">Genome</span>$) = F($<span style="color: var(--connectome)">Connectome</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
+  $H_A: F($<span style="color: var(--connectome)">Connectome</span>, <span style="color: var(--genome)">Genome</span>$) \neq F($<span style="color: var(--connectome)">Connectome</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
 
-
-- Test statistic: Distance correlation
+- Known as independence testing
+- Test statistic: *distance correlation (dcorr)*
 
 ---
 
 # What is distance correlation?
 
-- Require distance functions
+- Measures dependence between two multivariate quantities.
+  - For example: connectomes, genomes.
+- Can detect nonlinear associations.
+- Measures correlation between pairwise distances.
 
-- Genetic distances: coefficient of kinship
-- Connectome distances: Procrustes distance $||X - YR||_F$
+
+![center w:800](./../../images/unconditional_test.png)
 
 ---
 
+# How to compare genomes?
+- Typical twin studies do not sequence genomes.
+- Coefficient of kinship ($\phi_{ij}$)
+  -  Probabilities of finding particular genes as identical among subjects.
+
+- d(<span style="color: var(--genome)">Genome</span>$_i$, <span style="color: var(--genome)">Genome</span>$_j$) = 1 - 2\phi_{ij}$.
+
+---
+
+# How to compare connectomes?
+- Statistical modelling of connectomes!
+-
+
+- d(<span style="color: var(--connectome)">Connectome</span>$_i$, <span style="color: var(--connectome)">Connectome</span>$_j$) = $||X^{(i)} - X^{(j)}R||_F$
+
+Insert picture of rdpg embeddings
+
+---
 
 # Human Connectome Project
 
-- Brain scans
+- Brain scans from identical (monozygotic), fraternal (dizygotic), non-twin siblings.
 
 ![center w:500](./../../images/hcp_demographics.svg)
 
@@ -146,10 +170,6 @@ Insert figure
 
 ---
 
-# Why compare siblings and twins?
-
----
-
 # All three groups
 
 - Assumptions:
@@ -161,60 +181,144 @@ Insert figure
 
 # Neuroanatomy (effect mediator)
 
-- Literature show neuroanatomy is highly heritable.
-
+- Literature show neuroanatomy (e.g. brain volume) is highly heritable.
+- Want to test:
+  $H_0: F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span>$) = F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
+  $H_A: F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span>$) \neq F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
 
 ---
 
 # New DAG
 
-One with neuro anatomy
+One with neuroanatomy
 
 ---
 
 # Statistical problem
 
-- Want an independence test!
-- $H_0: F(Genome, Connectome|Covariates) = F(Genome|Covariates)F(Connectome|Covariates)$
-  $H_A: F(Genome, Connectome|Covariates) \neq F(Genome|Covariates)F(Connectome|Covariates)$
+- Want a conditional independence test!
+  $H_0: F($<span style="color: var(--connectome)">Conn.</span>, <span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$) = F($<span style="color: var(--connectome)">Conn.</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)F($<span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)$
+  $H_A: F($<span style="color: var(--connectome)">Conn.</span>, <span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$) \neq F($<span style="color: var(--connectome)">Conn.</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)F($<span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)$
 
-- Test statistic: Conditional distance correlation
+- Test statistic: Conditional distance correlation (cdcorr)
 
 ---
 
+# What is conditional distance correlation?
+
+- Augment distance correlation procedure with third distance matrix.
+- d(<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_i$, <span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_j$) = ||<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_i$ - <span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_j$||$_F$
+
+<br>
+
+![center h:350](./../../images/conditional_test.png)
+
+---
 
 # Conditional Test as causal effect estimator
 
-- Using conditional distance correlation
+-
 
 ---
 
-# The End
+# Summary
+![center h:250](./../../images/genome_to_connectome.png)
+
+- Present a causal model for heritability of connectomes.
+- Leveraged recent advances:
+  1. Statistical models for networks, allowing meaningful comparison of connectomes.
+  2. Distance and conditional distance correlation as test statistic for causal analysis$^1$.
+
+
+<footer>
+
+$^1$ Bridgeford, Eric W., et al. "Batch Effects are Causal Effects: Applications in Human Connectomics."  (2021).
+
+</footer>
+
+---
+# Acknowledgements
+
+#### Team
+
+<style scoped>
+
+p {
+    font-size: 24px;
+}
+</style>
+
+
+<div class='minipanels'>
+
+<div>
+
+![person](./../../images/people/mike-powell.jpg)
+Mike Powell
+
+</div>
+
+<div>
+
+![person](./../../images/people/bridgeford.jpg)
+Eric Bridgeford
+
+</div>
+
+<div>
+
+![person](./../../images/people/priebe_carey.jpg)
+Carey Priebe
+
+</div>
+
+<div>
+
+![person](./../../images/people/vogelstein_joshua.jpg)
+Joshua Vogelstein
+
+</div>
+</div>
 
 ---
 
-Additional slides
+
+<style scoped>
+h1 {
+    justify-content: center;
+    text-align: center;
+}
+</style>
+
+<br> <br> <br> <br> <br>
+
+# Additional slides
 
 ---
 
-# Random dot product graphs
-
----
-
-# Shortcomings
-
-- Network models
-  -
+# Shortcomings - Network model
 - Problems with connectome estimation.
-- dominant genetic effects and epistasis.
-- No interaction between environment and genetics
+  - Inability to determine the precise origin/termination of connections in the cortex.
+    - -> false negatives
+  - Crossing fibers
+    - -> false positives
+- RDPG can only represent subset of independent edge networks.
 
-- Inability to determine the precise origin/termination of connections in the cortex.
-- Crossing fibers
+![center h:300](./../../images/network_models.png)
 
 ---
 
-# Environemtal effects
+# Shortcomings - Model assumptions
+- No interaction between genome and environment
+- No epistatsis
+  - Effect of one gene is dependent on another
+  - Ex: black hair and baldness
+- No dominance effects
+- Strong assumptions in genetic distances
+
+---
+
+# What are environemtal effects?
 
 - Shared
   - Common experiences of siblings living in the same household.
@@ -224,5 +328,18 @@ Additional slides
   - Epigenetics
   - Luck
   - schools, peers
+
+---
+
+# Random dot product graphs
+
+
+
+---
+
+
+---
+
+
 
 ---
