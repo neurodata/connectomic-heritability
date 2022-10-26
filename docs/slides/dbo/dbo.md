@@ -24,7 +24,7 @@ _Johns Hopkins University - Biomedical Engineering_
 
 ![bg right:45% w:500](./../../images/nd_logo_small.png)
 
----
+<!-- ---
 
 # Outline
 
@@ -41,7 +41,7 @@ _Johns Hopkins University - Biomedical Engineering_
   - Dataset
   - Results 1
   - Results 2
-  - Results 3
+  - Results 3 -->
 
 ---
 
@@ -64,7 +64,7 @@ h2 {
 
 ---
 
-# Brains connectivity as connectomes
+# Brain connectivity as connectomes
 <!-- (aka networks or graphs) -->
 
 <div class="columns">
@@ -97,8 +97,9 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 ---
 
 # Heritability as causal problem
+- Directed acyclic graph
 
-![center h:500](./../../images/dag.svg)
+![center h:500](./../../images/simple-dag.svg)
 
 ---
 
@@ -113,7 +114,8 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
   $H_A: F($<span style="color: var(--connectome)">Connectome</span>, <span style="color: var(--genome)">Genome</span>$) \neq F($<span style="color: var(--connectome)">Connectome</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
 
 - Known as independence testing
-- Test statistic: *distance correlation (dcorr)*
+- Test statistic: _distance correlation (dcorr)_
+- Implication if true: there exists an associational heritability.
 
 ---
 
@@ -124,7 +126,6 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 - Can detect nonlinear associations.
 - Measures correlation between pairwise distances.
 
-
 ![center w:800](./../../images/unconditional_test.png)
 
 ---
@@ -132,50 +133,65 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 # How to compare genomes?
 - Typical twin studies do not sequence genomes.
 - Coefficient of kinship ($\phi_{ij}$)
-  -  Probabilities of finding particular genes as identical among subjects.
+-  Probabilities of finding particular genes as identical among subjects.
+- d(<span style="color: var(--genome)">Genome</span>$_i$, <span style="color: var(--genome)">Genome</span>$_j$) = 1 - 2$\phi_{ij}$.
 
-- d(<span style="color: var(--genome)">Genome</span>$_i$, <span style="color: var(--genome)">Genome</span>$_j$) = 1 - 2\phi_{ij}$.
+<br>
+
+<center>
+
+|   Relationship   | $\phi_{ij}$  |    $1-2\phi_{ij}$    |
+| :-------: | :-: | :-----------: |
+|Monozygotic| $\frac{1}{2}$   | $0$ |
+|Dizygotic | $\frac{1}{4}$ | $\frac{1}{2}$ |
+|Non-twin siblings | $\frac{1}{4}$ | $\frac{1}{2}$ |
+|Unrelated | $0$ | $1$ |
+
+</center>
 
 ---
 
 # How to compare connectomes?
-- Statistical modelling of connectomes!
--
-
+- Random dot product graph (RDPG) - each vertex
+  - Probability from dot product of source node's latent vector, target node's latent vector.
+  - x_i, x_j in $d$ dimensions
 - d(<span style="color: var(--connectome)">Connectome</span>$_i$, <span style="color: var(--connectome)">Connectome</span>$_j$) = $||X^{(i)} - X^{(j)}R||_F$
 
-Insert picture of rdpg embeddings
+![center h:300](./../../images/ase.png)
 
 ---
 
 # Human Connectome Project
 
 - Brain scans from identical (monozygotic), fraternal (dizygotic), non-twin siblings.
+- Regions defined using Glasser parcellation
 
-![center w:500](./../../images/hcp_demographics.svg)
+<br> <br>
+
+![center w:700](./../../images/hcp_demographics.svg)
 
 
 <footer>
 Van Essen, David C., et al., The WU-Minn human connectome project: an overview (2013)
+
+Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex." Nature (2016).
 </footer>
 
 ---
+# Genome and connectomes are dependent
+<br>
 
-# Monozygotic vs Dizygotic
+![center h:205](./../../images/hist-plot-connectomes.png)
 
-- Assumptions:
-  - Controls environment variable
+<br> <br>
 
-Insert figure
+<center>
 
----
+|   Sex   |**All**  |    **Females**    | **Males** |
+| :-------: | :-: | :-----------: | :--: |
+|p-value|    |  |  |
 
-# All three groups
-
-- Assumptions:
-  - Add in environmental and genetic variance
-
-Insert figure
+</center>
 
 ---
 
@@ -186,21 +202,43 @@ Insert figure
   $H_0: F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span>$) = F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
   $H_A: F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span>$) \neq F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
 
----
-
-# New DAG
-
-One with neuroanatomy
+- Implication if true: causal model should include neuroanatomy.
 
 ---
 
-# Statistical problem
+# Genome and neuroanatomy are dependent
+<br>
+
+![center h:205](./../../images/hist-plot-neuroanatomy.png)
+
+<br> <br>
+
+
+<center>
+
+|   Sex   |**All**  |    **Females**    | **Males** |
+| :-------: | :-: | :-----------: | :--: |
+|p-value|     |  |  |
+
+</center>
+
+---
+
+# DAG including interactions of neuroanatomy
+
+![center h:500](./../../images/dag.svg)
+
+---
+
+# Do genomes affect connectomes given neuroanatomy?
 
 - Want a conditional independence test!
   $H_0: F($<span style="color: var(--connectome)">Conn.</span>, <span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$) = F($<span style="color: var(--connectome)">Conn.</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)F($<span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)$
   $H_A: F($<span style="color: var(--connectome)">Conn.</span>, <span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$) \neq F($<span style="color: var(--connectome)">Conn.</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)F($<span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)$
 
 - Test statistic: Conditional distance correlation (cdcorr)
+- Implication if true: there exists causal dependence of connectomes on genomes.
+
 
 ---
 
@@ -215,9 +253,18 @@ One with neuroanatomy
 
 ---
 
-# Conditional Test as causal effect estimator
+# Connectomes are still dependent on genome
 
--
+<br> <br>
+
+
+<center>
+
+|   Sex   |**All**  |    **Females**    | **Males** |
+| :-------: | :-: | :-----------: | :--: |
+|p-value|      |   |  |
+
+</center>
 
 ---
 
@@ -228,6 +275,7 @@ One with neuroanatomy
 - Leveraged recent advances:
   1. Statistical models for networks, allowing meaningful comparison of connectomes.
   2. Distance and conditional distance correlation as test statistic for causal analysis$^1$.
+- Connectomes are dependent on genome, suggesting heritability.
 
 
 <footer>
@@ -332,14 +380,5 @@ h1 {
 ---
 
 # Random dot product graphs
-
-
-
----
-
-
----
-
-
 
 ---
