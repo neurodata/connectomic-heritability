@@ -29,6 +29,12 @@ jobs:
       - name: Build the book
         run: |
           jupyter-book build docs
+
+      # Move pdfs
+      - name: Moving slides to static HTML
+        run: |
+          cat ./docs/slides/manifest.txt | xargs -I % cp -r ./docs/slides/%/%.html ./docs/_build/html/
+
       # Deploy the book's HTML to gh-pages branch
       - name: GitHub Pages action
         uses: peaceiris/actions-gh-pages@v3.6.1
