@@ -22,26 +22,7 @@ _Johns Hopkins University - Biomedical Engineering_
 ![icon](../../images/github.png) [_@j1c (Github)_](https://github.com/j1c)
 ![icon](../../images/twitter.png) [_@j1c (Twitter)_](https://twitter.com/j1c)
 
-![bg right:45% w:500](./../../images/nd_logo_small.png)
-
-<!-- ---
-
-# Outline
-
-- Background
-  - **What is heritability?**
-  - Graphs, networks, connectomes
-  - Where do connectomes come from?
-- Problem
-  - What are we trying to estimate?
-  - Causal models
-  - Dcorr
-  - Distance functions
-- Results
-  - Dataset
-  - Results 1
-  - Results 2
-  - Results 3 -->
+![bg right:45% w:450](./../../images/nd_logo_small.png)
 
 ---
 
@@ -78,7 +59,7 @@ h2 {
 </div>
 <div>
 
-![center h:500](./../../images/what_is_network.png)
+![center h:525](./../../images/what_is_network.png)
 
 </div>
 
@@ -133,7 +114,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 # How to compare genomes?
 - Typical twin studies do not sequence genomes.
 - Coefficient of kinship ($\phi_{ij}$)
--  Probabilities of finding particular genes as identical among subjects.
+  - Probabilities of finding particular genes as identical among subjects.
 - d(<span style="color: var(--genome)">Genome</span>$_i$, <span style="color: var(--genome)">Genome</span>$_j$) = 1 - 2$\phi_{ij}$.
 
 <br>
@@ -152,10 +133,11 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 ---
 
 # How to compare connectomes?
-- Random dot product graph (RDPG) - each vertex
-  - Probability from dot product of source node's latent vector, target node's latent vector.
-  - x_i, x_j in $d$ dimensions
-- d(<span style="color: var(--connectome)">Connectome</span>$_i$, <span style="color: var(--connectome)">Connectome</span>$_j$) = $||X^{(i)} - X^{(j)}R||_F$
+- Random dot product graph (RDPG)
+  - Each vertex (region of interest) has a low $d$ dimensional latent vector.
+  - $P[i\rightarrow j]$ = $\langle x_i, x_j\rangle$
+- Latent vectors =
+- d(<span style="color: var(--connectome)">Connectome</span>$_i$, <span style="color: var(--connectome)">Connectome</span>$_j$) = $||X^{(k)} - X^{(l)}R||_F$
 
 ![center h:300](./../../images/ase.png)
 
@@ -344,6 +326,28 @@ h1 {
 
 ---
 
+# Causal model
+
+- $X$ denote exposure, $Y$ denote outcome, $W$ denote measured covariates, $Z$ denote unmeasured covariates
+- Want to estimate the effect of different exposures on the outcome, which is quantified using the backdoor formula if $W$ and $Z$ close all backdoor paths.
+$$f_{w, z}(y|x) = \int_{\mathcal{W}\times\mathcal{Z}}f(y|x, w, z)f(w, z)\mathrm{d}(w, z) $$
+
+- Above integrates over _all_ measured and unmeasured covariates.
+
+$$ f(y | x) = \int_{\mathcal W \times \mathcal Z}{f(y | x, w, z) f(w, z | x)}{(w, z)} $$
+- Averages the true outcome distribution over the _conditional_ distribution of the measured and unmeasured covariates.
+
+---
+
+# Causal model (cont.)
+
+- We observe the triples $(x_i, y_i, w_i)$ for $i\in[n]$.
+- Only be able to estimate the functions of $(X, Y, W)$
+- The corresponding hypothesis test is:
+$$H_0: f(y|x, w) = f(y|w) \quad \text{vs} \quad
+	H_A: f(y|x, w) \neq f(y|w).$$
+---
+
 # Shortcomings - Network model
 - Problems with connectome estimation.
   - Inability to determine the precise origin/termination of connections in the cortex.
@@ -366,7 +370,7 @@ h1 {
 
 ---
 
-# What are environemtal effects?
+# What are environmental effects?
 
 - Shared
   - Common experiences of siblings living in the same household.
@@ -381,4 +385,7 @@ h1 {
 
 # Random dot product graphs
 
----
+- Adjacency spectral embedding
+- representation of the vertices of the graphs into d dimensions via its singular value decomposition, given by $A = USU^\top$ where $U\in\mathbb{R}^{n×n}$ is the orthogonal matrix of eigenvectors and $S \in \mathbb{R}^{n×n}$ is a diagonal matrix containing the eigenvalues of $A$ ordered by magnitude.
+- $ASE(A) = \hat X =\hat U \hat S ^{1/2}$ where $\hat U \in\mathbb{R}^{n×d}$ contains the first $d$ columns of $U$, which correspond to the largest eigenvectors, and $\hat S \in\mathbb{R}^{d×d}$ is the submatrix of $ S $  corresponding to the $d$ largest eigenvalues in magnitude.
+
