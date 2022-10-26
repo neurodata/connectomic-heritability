@@ -6,5 +6,5 @@ parts:
     -  file: placeholder
   - caption: Slides
     chapters:
-    - url: https://docs.neurodata.io/connectomic-heritability/dbo.html
+    - url: https://docs.neurodata.io/connectomic-heritability/dbo.pdf
       title: DBO
