@@ -41,19 +41,20 @@ h2 {
 </style>
 
 
-## Are the brain connectivity patterns heritable?
+## Are the patterns of brain connectivity heritable?
 
 ---
 
 # Brain connectivity as connectomes
-<!-- (aka networks or graphs) -->
+<!--  -->
 
 <div class="columns">
 <div>
 
-- Vertex: region of interest
+(aka networks or graphs)
+- Vertex: region of the brain
 - Edges: connectivity measure between a pair of vertices
-- Diffusion MRI: # of estimated neuronal fibers
+- Structural connectomes: estimated # of neuronal fibers
 - Undirected: neurons have no direction
 
 </div>
@@ -86,7 +87,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 
 # Do genomes affect connectomes?
 
-- Hypothesis:
+- Our hypothesis:
   $H_0: F($<span style="color: var(--connectome)">Connectome</span>|<span style="color: var(--genome)">Genome</span>$) = F($<span style="color: var(--connectome)">Connectome</span>$)$
   $H_A: F($<span style="color: var(--connectome)">Connectome</span>|<span style="color: var(--genome)">Genome</span>$) \neq F($<span style="color: var(--connectome)">Connectome</span>$)$
 
@@ -96,7 +97,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 
 - Known as independence testing
 - Test statistic: _distance correlation (dcorr)_
-- Implication if true: there exists an associational heritability.
+- Implication if false: there exists an associational heritability.
 
 ---
 
@@ -114,11 +115,10 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 # How to compare genomes?
 - Typical twin studies do not sequence genomes.
 - Coefficient of kinship ($\phi_{ij}$)
-  - Probabilities of finding particular genes as identical among subjects.
+  - Probabilities of finding a particular gene at a particular location.
 - d(<span style="color: var(--genome)">Genome</span>$_i$, <span style="color: var(--genome)">Genome</span>$_j$) = 1 - 2$\phi_{ij}$.
 
 <br>
-
 <center>
 
 |   Relationship   | $\phi_{ij}$  |    $1-2\phi_{ij}$    |
@@ -134,21 +134,22 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 
 # How to compare connectomes?
 - Random dot product graph (RDPG)
-  - Each vertex (region of interest) has a low $d$ dimensional latent vector.
-  - $P[i\rightarrow j]$ = $\langle x_i, x_j\rangle$
-- Latent vectors =
-- d(<span style="color: var(--connectome)">Connectome</span>$_k$, <span style="color: var(--connectome)">Connectome</span>$_l$) = $||X^{(k)} - X^{(l)}R||_F$
+  - Each vertex (region of interest) has a low $d$ dimensional latent vector (position).
+  - Estimate latent position matrix $X$ via adjacency spectral embedding.
+  <!-- - $P[i\rightarrow j]$ = $\langle x_i, x_j\rangle$ -->
 
 ![center h:300](./../../images/ase.png)
+
+- d(<span style="color: var(--connectome)">Connectome</span>$_k$, <span style="color: var(--connectome)">Connectome</span>$_l$) = $||X^{(k)} - X^{(l)}R||_F$
 
 ---
 
 # Human Connectome Project
 
 - Brain scans from identical (monozygotic), fraternal (dizygotic), non-twin siblings.
-- Regions defined using Glasser parcellation
+- Regions defined using Glasser parcellation (180 regions).
 
-<br> <br>
+<br>
 
 ![center w:700](./../../images/hcp_demographics.svg)
 
@@ -171,20 +172,21 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 
 |   Sex   |**All**  |    **Females**    | **Males** |
 | :-------: | :-: | :-----------: | :--: |
-|p-value|    |  |  |
+|p-value|  $<1\times10^{-5}$  | $<1\times10^{-3}$ | $<1\times10^{-2}$  |
 
 </center>
 
 ---
 
 # Neuroanatomy (effect mediator)
-
 - Literature show neuroanatomy (e.g. brain volume) is highly heritable.
-- Want to test:
+- Want to test
   $H_0: F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span>$) = F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
   $H_A: F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span>$) \neq F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
+- d(<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_i$, <span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_j$) = ||<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_i$ - <span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_j$||$_F$
 
-- Implication if true: causal model should include neuroanatomy.
+![center w:650](./../../images/neuroanatomy_test.png)
+
 
 ---
 
@@ -200,7 +202,7 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 
 |   Sex   |**All**  |    **Females**    | **Males** |
 | :-------: | :-: | :-----------: | :--: |
-|p-value|     |  |  |
+|p-value|   $<1\times10^{-3}$    |  $<1\times10^{-2}$ | $<1\times10^{-2}$ |
 
 </center>
 
@@ -214,12 +216,12 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 
 # Do genomes affect connectomes given neuroanatomy?
 
-- Want a conditional independence test!
+- Want to test:
   $H_0: F($<span style="color: var(--connectome)">Conn.</span>, <span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$) = F($<span style="color: var(--connectome)">Conn.</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)F($<span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)$
   $H_A: F($<span style="color: var(--connectome)">Conn.</span>, <span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$) \neq F($<span style="color: var(--connectome)">Conn.</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)F($<span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span>$)$
-
+- Known as conditional independence test
 - Test statistic: Conditional distance correlation (cdcorr)
-- Implication if true: there exists causal dependence of connectomes on genomes.
+- Implication if false: there exists causal dependence of connectomes on genomes.
 
 
 ---
@@ -227,7 +229,6 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 # What is conditional distance correlation?
 
 - Augment distance correlation procedure with third distance matrix.
-- d(<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_i$, <span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_j$) = ||<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_i$ - <span style="color: var(--neuroanatomy)">Neuroanatomy</span>$_j$||$_F$
 
 <br>
 
@@ -236,7 +237,7 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 ---
 
 # Connectomes are still dependent on genome
-
+- All tests are significant.
 <br> <br>
 
 
@@ -244,7 +245,7 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 
 |   Sex   |**All**  |    **Females**    | **Males** |
 | :-------: | :-: | :-----------: | :--: |
-|p-value|      |   |  |
+|p-value|  $<1\times10^{-2}$    | $<1\times10^{-2}$  | $<1\times10^{-2}$ |
 
 </center>
 
@@ -266,7 +267,7 @@ $^1$ Bridgeford, Eric W., et al. "Batch Effects are Causal Effects: Applications
 
 </footer>
 
----
+<!-- ---
 # Acknowledgements
 
 #### Team
@@ -308,7 +309,7 @@ Carey Priebe
 Joshua Vogelstein
 
 </div>
-</div>
+</div> -->
 
 ---
 
