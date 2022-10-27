@@ -1,0 +1,672 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>What is heritability? &#8212; Connectomic Heritability</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="shortcut icon" href="../../_static/nd_logo_small.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/nd_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Connectomic Heritability</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../coverpage.html">
+                    Abstract
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Preliminaries
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../placeholder.html">
+   Placeholder
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Slides
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://docs.neurodata.io/connectomic-heritability/dbo.pdf">
+   DBO
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/neurodata/connectomic-heritability"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/neurodata/connectomic-heritability/issues/new?title=Issue%20on%20page%20%2Fslides/dbo/notes.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/slides/dbo/notes.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   What is heritability?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#brain-connectivity-as-connectomes">
+   Brain connectivity as connectomes
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-get-structural-connectomes">
+   How do we get structural connectomes?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heritability-as-causal-problem">
+   Heritability as causal problem
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#do-genomes-affect-connectomes">
+   Do genomes affect connectomes?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-distance-correlation">
+   What is distance correlation?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-compare-genomes">
+   How do we compare genomes?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-compare-connectomes">
+   How do we compare connectomes?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#human-connectome-project">
+   Human connectome project
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#genome-and-connectomes-are-dependent">
+   Genome and connectomes are dependent
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neuroanatomy">
+   Neuroanatomy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#genome-and-neuroanatomy-are-dependent">
+   Genome and neuroanatomy are dependent
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dag-including-interactions-of-neuroanatomy">
+   DAG including interactions of neuroanatomy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#do-genomes-affect-connectomes-given-neuroanatomy">
+   Do genomes affect connectomes given neuroanatomy?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-conditional-distance-correlation">
+   What is conditional distance correlation?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connectomes-are-still-dependent-on-genome">
+   Connectomes are still dependent on genome
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>What is heritability?</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   What is heritability?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#brain-connectivity-as-connectomes">
+   Brain connectivity as connectomes
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-get-structural-connectomes">
+   How do we get structural connectomes?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#heritability-as-causal-problem">
+   Heritability as causal problem
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#do-genomes-affect-connectomes">
+   Do genomes affect connectomes?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-distance-correlation">
+   What is distance correlation?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-compare-genomes">
+   How do we compare genomes?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-do-we-compare-connectomes">
+   How do we compare connectomes?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#human-connectome-project">
+   Human connectome project
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#genome-and-connectomes-are-dependent">
+   Genome and connectomes are dependent
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#neuroanatomy">
+   Neuroanatomy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#genome-and-neuroanatomy-are-dependent">
+   Genome and neuroanatomy are dependent
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dag-including-interactions-of-neuroanatomy">
+   DAG including interactions of neuroanatomy
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#do-genomes-affect-connectomes-given-neuroanatomy">
+   Do genomes affect connectomes given neuroanatomy?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-is-conditional-distance-correlation">
+   What is conditional distance correlation?
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connectomes-are-still-dependent-on-genome">
+   Connectomes are still dependent on genome
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#summary">
+   Summary
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="what-is-heritability">
+<h1>What is heritability?<a class="headerlink" href="#what-is-heritability" title="Permalink to this headline">#</a></h1>
+<p>Read slide</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="brain-connectivity-as-connectomes">
+<h1>Brain connectivity as connectomes<a class="headerlink" href="#brain-connectivity-as-connectomes" title="Permalink to this headline">#</a></h1>
+<p>We model the brain connectivity as connectomes aka networks or graphs.
+Connectomes consists of vertices, representing regions of the brain and edges, representing a connectivity measure between pairs of vertices. In structural connectomes, which are what we are interested in, the  edges represent the number of estimated neuronal fiber from one region to another. Lastly, we assume our connectomes are undirected, meaning edges have no direction.</p>
+<p>Figure on the right shows a connectome overlayed on top of a brain, where dots are the vertices, and red lines are edges. However, this representation isn’t particularly useful for analysis so we alternatively represent connectome as an adjacency matrix, which is square and symmetric.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="how-do-we-get-structural-connectomes">
+<h1>How do we get structural connectomes?<a class="headerlink" href="#how-do-we-get-structural-connectomes" title="Permalink to this headline">#</a></h1>
+<p>First we obtain magnetic resonance images from human subjects. Then we preprocess the images to remove the skull and fix artifacts like head motion. Then we use linear registration to align the images into a common space. Next, we use tractography which estimates all the neuronal fibers in the brain, and with a brain parcellation that define the regions, we can construct our connectome, represented as an adjacency matrix here. Construction of connectome is simply counting the number of neuronal fibers that go from one region to another.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="heritability-as-causal-problem">
+<h1>Heritability as causal problem<a class="headerlink" href="#heritability-as-causal-problem" title="Permalink to this headline">#</a></h1>
+<p>We want to pose the heritability analysis as a causal problem. So direct acyclic graphs or DAGs provide a visual representation of causal relationships among a set of variables.
+Our parents affects our genomes, and our ultimate goal is to estimate the existence of the red arrow. That is we want to know the causal relationship between genomes and connectomes which may also be affected by sex.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="do-genomes-affect-connectomes">
+<h1>Do genomes affect connectomes?<a class="headerlink" href="#do-genomes-affect-connectomes" title="Permalink to this headline">#</a></h1>
+<p>And so we can formulate a hypothesis test, which says does fixing our exposures, in this case genomes, change our outcomes, which are connectomes? This can be alternatively phrased as, does the joint distribution of connectomes and genomes factor into its marginals?</p>
+<p>This is known as independence testing, and our test statistic will be distance correlation. The implication if the hypothesis is false is that there exists some associational heritability effect.</p>
+<p>I say associational because as we will see later, our DAG doesnt truly capture all our confounding.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="what-is-distance-correlation">
+<h1>What is distance correlation?<a class="headerlink" href="#what-is-distance-correlation" title="Permalink to this headline">#</a></h1>
+<p>Distance correlation measures dependence between two potentially multivariate quantities, and in our case, these are connectomes and genomes. One of the main benefits of distance correlation is that it can detect nonlinear associations.</p>
+<p>And so, the distance correlation measures the correlation of all pairwise distances among the observations of one particular quantity to those of another quantity.</p>
+<p>The figure below shows our two quantities, connectomes and genomes. Using some measure of distances, we can compute a distance matrix for connectomes and genomes, which will be our input to distance correlation.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="how-do-we-compare-genomes">
+<h1>How do we compare genomes?<a class="headerlink" href="#how-do-we-compare-genomes" title="Permalink to this headline">#</a></h1>
+<p>Typically, we do not actually observe genomes in twin studies. Even though we dont observe genomes, we can compare genomes between individuals under some assumptions.</p>
+<p>One particular measure is the coefficient of kinship, which is the probability that we find the same gene at a particular location of the genome between subjects.</p>
+<p>In the table, I list out the four possible familial relationships and their coefficient of kinship. Given our coefficients, we can define the distance between a pair of genomes as one minus twice the coefficient. This gives the distances zero for identical twins, half for fraternal twins and siblings, and one for unrelated.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="how-do-we-compare-connectomes">
+<h1>How do we compare connectomes?<a class="headerlink" href="#how-do-we-compare-connectomes" title="Permalink to this headline">#</a></h1>
+<p>We leverage a statistical model for graphs called random dot product graph. In this model, each vertex is represented as low dimensional latent vector, or also called latent positions. We can estimate these vectors via adjacency spectral embedding, which is essentially a singular value decomposition.</p>
+<p>In the figure, we have a simulated connectome represented as an adjacency matrix. After we apply adjacency spectral embedding, we obtain a two dimensional latent positions, where each dot represents a vertex.</p>
+<p>And so, the distance between connectome <span class="math notranslate nohighlight">\(k\)</span> and connectome <span class="math notranslate nohighlight">\(l\)</span> is given by the Frobenius norm of the difference of latent position matrices after computing some rotation matrix <span class="math notranslate nohighlight">\(R\)</span>.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="human-connectome-project">
+<h1>Human connectome project<a class="headerlink" href="#human-connectome-project" title="Permalink to this headline">#</a></h1>
+<p>Alright. So we have our causal model, a hypothesis to test, and a procedure for performing the hypothesis test. Now all we need is the data.</p>
+<p>We use the human connectome project, which obtained brain scans from identical, fraternal, and non-twin siblings. The table below shows the demographic information. Using these brain scans, we obtain a connectome per subject using the Glasser parcellation, which divides the brain into 180 regions.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="genome-and-connectomes-are-dependent">
+<h1>Genome and connectomes are dependent<a class="headerlink" href="#genome-and-connectomes-are-dependent" title="Permalink to this headline">#</a></h1>
+<p>We first perform a qualitative examination of the distances of connectomes. In the figure, we plot the pairwise connectome distances stratified by the familial relationship, and the diamond represents the median. This is visualzing the values of the connectome distance matrix.</p>
+<p>Of course, if the genome does affect connectomes, we should expect the distances between pairs of monozygotic twins should be stochastically smaller than those from dizygotic twins, which should be stochastically smaller than those from non-twin siblings, etc. And the median certainly grows larger as the genomic distances increase. We observe this pattern when we further stratify by sex.</p>
+<p>Our independence test are all significant, meaning we can reject the hypothesis that genomes have no affect on connectomes.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="neuroanatomy">
+<h1>Neuroanatomy<a class="headerlink" href="#neuroanatomy" title="Permalink to this headline">#</a></h1>
+<p>Turns out, there is a lot of literature that state that the neuroanatomy is also heritable. That is, measurements like brain volume is highly heritable. So we measure the brain volume per region, as well as diffusivity measure that describe neuroanatomy.</p>
+<p>So we want to test another hypothesis, that the genome does not affect neuroanatomy using distance correlation. The implication if the hypothesis is false is that previous result on the effect of genome on connectomes can be explained by neuroanatomy, and it should be included in the causal model. We can compute the distance between neuroanatomy via the Frobenius norm.</p>
+<p>The figure below shows our two quantities, neuroanatomy and genomes. And, again the distances matrices will be the input to distance correlation.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="genome-and-neuroanatomy-are-dependent">
+<h1>Genome and neuroanatomy are dependent<a class="headerlink" href="#genome-and-neuroanatomy-are-dependent" title="Permalink to this headline">#</a></h1>
+<p>We again perform a qualitative examination of the distances of neuroanatomy. Similar to the figure with connectome distances, we observe that the median increases as we increase genetic distances, which remains even after stratifying for sex.</p>
+<p>And we have that all tests are all significant, meaning that we should add neuroanatomy into our causal model and control for neuroanatomy.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="dag-including-interactions-of-neuroanatomy">
+<h1>DAG including interactions of neuroanatomy<a class="headerlink" href="#dag-including-interactions-of-neuroanatomy" title="Permalink to this headline">#</a></h1>
+<p>This DAG now contains the effects of neuroanatomy, which is certainly influenced by the genome, and neuroanatomy may also have an affect on the connectomes. In addition, neuroanatomy may be affected by other factors like the environment, but by controlling for neuroanatomy, we can ignore the other effects.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="do-genomes-affect-connectomes-given-neuroanatomy">
+<h1>Do genomes affect connectomes given neuroanatomy?<a class="headerlink" href="#do-genomes-affect-connectomes-given-neuroanatomy" title="Permalink to this headline">#</a></h1>
+<p>So now we want to test whether the joint distribution of genome and connectomes conditioned on neuroanatomy can be factored into its conditional marginals. This is known as conditional independence test and the test statistic is given by conditional distance correlation. The implication if the hypothesis is false is that there exists causal dependence of connectomes on genomes.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="what-is-conditional-distance-correlation">
+<h1>What is conditional distance correlation?<a class="headerlink" href="#what-is-conditional-distance-correlation" title="Permalink to this headline">#</a></h1>
+<p>In conditional distance correlation, we augment the procedure with a third distance matrix, given by the distances of neuroanatomy.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="connectomes-are-still-dependent-on-genome">
+<h1>Connectomes are still dependent on genome<a class="headerlink" href="#connectomes-are-still-dependent-on-genome" title="Permalink to this headline">#</a></h1>
+<p>Again, we observe that all our tests are significant, meaning that we reject the null that there is no causal relationship between genomes and connectomes. That is, even after controlling for the effect of neuroanatomy on connectomes, there still exists a dependence between genome and connectomes.</p>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="summary">
+<h1>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h1>
+<p>We wanted to explore whether genomes affect connectomes. We leveraged recent advances such as statistical models for networks, allowing meaningful comparison of connectomes and the use of distance and conditional distance correlation as test statistic for causal analysis, which is the second of its kind. And lastly, we show that there is heritable effect of connectomes.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./slides/dbo"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jaewon Chung<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

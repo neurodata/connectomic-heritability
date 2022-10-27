@@ -334,8 +334,8 @@ title="Print to PDF"
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#are-the-brain-connectivity-patterns-heritable">
-     Are the brain connectivity patterns heritable?
+    <a class="reference internal nav-link" href="#are-the-patterns-of-brain-connectivity-heritable">
+     Are the patterns of brain connectivity heritable?
     </a>
    </li>
   </ul>
@@ -419,18 +419,6 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#summary">
    Summary
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#acknowledgements">
-   Acknowledgements
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#team">
-     Team
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#additional-slides">
@@ -504,8 +492,8 @@ title="Print to PDF"
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#are-the-brain-connectivity-patterns-heritable">
-     Are the brain connectivity patterns heritable?
+    <a class="reference internal nav-link" href="#are-the-patterns-of-brain-connectivity-heritable">
+     Are the patterns of brain connectivity heritable?
     </a>
    </li>
   </ul>
@@ -589,18 +577,6 @@ title="Print to PDF"
   <a class="reference internal nav-link" href="#summary">
    Summary
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#acknowledgements">
-   Acknowledgements
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#team">
-     Team
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#additional-slides">
@@ -678,20 +654,21 @@ h2 {
     text-align: center;
 }
 </style>
-<section id="are-the-brain-connectivity-patterns-heritable">
-<h2>Are the brain connectivity patterns heritable?<a class="headerlink" href="#are-the-brain-connectivity-patterns-heritable" title="Permalink to this headline">#</a></h2>
+<section id="are-the-patterns-of-brain-connectivity-heritable">
+<h2>Are the patterns of brain connectivity heritable?<a class="headerlink" href="#are-the-patterns-of-brain-connectivity-heritable" title="Permalink to this headline">#</a></h2>
 </section>
 </section>
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="brain-connectivity-as-connectomes">
 <h1>Brain connectivity as connectomes<a class="headerlink" href="#brain-connectivity-as-connectomes" title="Permalink to this headline">#</a></h1>
-<!-- (aka networks or graphs) -->
+<!--  -->
 <div class="columns">
 <div>
+<p>(aka networks or graphs)</p>
 <ul class="simple">
-<li><p>Vertex: region of interest</p></li>
+<li><p>Vertex: region of the brain</p></li>
 <li><p>Edges: connectivity measure between a pair of vertices</p></li>
-<li><p>Diffusion MRI: # of estimated neuronal fibers</p></li>
+<li><p>Structural connectomes: estimated # of neuronal fibers</p></li>
 <li><p>Undirected: neurons have no direction</p></li>
 </ul>
 </div>
@@ -720,7 +697,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 <section class="tex2jax_ignore mathjax_ignore" id="do-genomes-affect-connectomes">
 <h1>Do genomes affect connectomes?<a class="headerlink" href="#do-genomes-affect-connectomes" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p>Hypothesis:
+<li><p>Our hypothesis:
 <span class="math notranslate nohighlight">\(H_0: F(\)</span><span style="color: var(--connectome)">Connectome</span>|<span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\() = F(\)</span><span style="color: var(--connectome)">Connectome</span><span class="math notranslate nohighlight">\()\)</span>
 <span class="math notranslate nohighlight">\(H_A: F(\)</span><span style="color: var(--connectome)">Connectome</span>|<span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\() \neq F(\)</span><span style="color: var(--connectome)">Connectome</span><span class="math notranslate nohighlight">\()\)</span></p></li>
 <li><p>Alternatively:
@@ -728,7 +705,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 <span class="math notranslate nohighlight">\(H_A: F(\)</span><span style="color: var(--connectome)">Connectome</span>, <span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\() \neq F(\)</span><span style="color: var(--connectome)">Connectome</span><span class="math notranslate nohighlight">\()F(\)</span><span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\()\)</span></p></li>
 <li><p>Known as independence testing</p></li>
 <li><p>Test statistic: <em>distance correlation (dcorr)</em></p></li>
-<li><p>Implication if true: there exists an associational heritability.</p></li>
+<li><p>Implication if false: there exists an associational heritability.</p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -752,7 +729,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 <li><p>Typical twin studies do not sequence genomes.</p></li>
 <li><p>Coefficient of kinship (<span class="math notranslate nohighlight">\(\phi_{ij}\)</span>)</p>
 <ul>
-<li><p>Probabilities of finding particular genes as identical among subjects.</p></li>
+<li><p>Probabilities of finding a particular gene at a particular location.</p></li>
 </ul>
 </li>
 <li><p>d(<span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\(_i\)</span>, <span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\(_j\)</span>) = 1 - 2<span class="math notranslate nohighlight">\(\phi_{ij}\)</span>.</p></li>
@@ -790,26 +767,28 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="how-to-compare-connectomes">
 <h1>How to compare connectomes?<a class="headerlink" href="#how-to-compare-connectomes" title="Permalink to this headline">#</a></h1>
-<ul class="simple">
-<li><p>Random dot product graph (RDPG)</p>
 <ul>
-<li><p>Each vertex (region of interest) has a low <span class="math notranslate nohighlight">\(d\)</span> dimensional latent vector.</p></li>
-<li><p><span class="math notranslate nohighlight">\(P[i\rightarrow j]\)</span> = <span class="math notranslate nohighlight">\(\langle x_i, x_j\rangle\)</span></p></li>
+<li><p>Random dot product graph (RDPG)</p>
+<ul class="simple">
+<li><p>Each vertex (region of interest) has a low <span class="math notranslate nohighlight">\(d\)</span> dimensional latent vector (position).</p></li>
+<li><p>Estimate latent position matrix <span class="math notranslate nohighlight">\(X\)</span> via adjacency spectral embedding.</p></li>
 </ul>
+<!-- - $P[i\rightarrow j]$ = $\langle x_i, x_j\rangle$ -->
 </li>
-<li><p>Latent vectors =</p></li>
-<li><p>d(<span style="color: var(--connectome)">Connectome</span><span class="math notranslate nohighlight">\(_k\)</span>, <span style="color: var(--connectome)">Connectome</span><span class="math notranslate nohighlight">\(_l\)</span>) = <span class="math notranslate nohighlight">\(||X^{(k)} - X^{(l)}R||_F\)</span></p></li>
 </ul>
 <p><img alt="center h:300" src="../../_images/ase.png" /></p>
+<ul class="simple">
+<li><p>d(<span style="color: var(--connectome)">Connectome</span><span class="math notranslate nohighlight">\(_k\)</span>, <span style="color: var(--connectome)">Connectome</span><span class="math notranslate nohighlight">\(_l\)</span>) = <span class="math notranslate nohighlight">\(||X^{(k)} - X^{(l)}R||_F\)</span></p></li>
+</ul>
 </section>
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="human-connectome-project">
 <h1>Human Connectome Project<a class="headerlink" href="#human-connectome-project" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
 <li><p>Brain scans from identical (monozygotic), fraternal (dizygotic), non-twin siblings.</p></li>
-<li><p>Regions defined using Glasser parcellation</p></li>
+<li><p>Regions defined using Glasser parcellation (180 regions).</p></li>
 </ul>
-<p><br> <br></p>
+<br>
 <p><img alt="center w:700" src="../../_images/hcp_demographics.svg" /></p>
 <footer>
 Van Essen, David C., et al., The WU-Minn human connectome project: an overview (2013)
@@ -833,9 +812,9 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-align:center"><p>p-value</p></td>
-<td class="text-align:center"><p></p></td>
-<td class="text-align:center"><p></p></td>
-<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-5}\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-3}\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-2}\)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -846,11 +825,12 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 <h1>Neuroanatomy (effect mediator)<a class="headerlink" href="#neuroanatomy-effect-mediator" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
 <li><p>Literature show neuroanatomy (e.g. brain volume) is highly heritable.</p></li>
-<li><p>Want to test:
+<li><p>Want to test
 <span class="math notranslate nohighlight">\(H_0: F(\)</span><span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\() = F(\)</span><span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\()F(\)</span><span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\()\)</span>
 <span class="math notranslate nohighlight">\(H_A: F(\)</span><span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\() \neq F(\)</span><span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\()F(\)</span><span style="color: var(--genome)">Genome</span><span class="math notranslate nohighlight">\()\)</span></p></li>
-<li><p>Implication if true: causal model should include neuroanatomy.</p></li>
+<li><p>d(<span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\(_i\)</span>, <span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\(_j\)</span>) = ||<span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\(_i\)</span> - <span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\(_j\)</span>||<span class="math notranslate nohighlight">\(_F\)</span></p></li>
 </ul>
+<p><img alt="center w:650" src="../../_images/neuroanatomy_test.png" /></p>
 </section>
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="genome-and-neuroanatomy-are-dependent">
@@ -869,9 +849,9 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-align:center"><p>p-value</p></td>
-<td class="text-align:center"><p></p></td>
-<td class="text-align:center"><p></p></td>
-<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-3}\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-2}\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-2}\)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -886,11 +866,12 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 <section class="tex2jax_ignore mathjax_ignore" id="do-genomes-affect-connectomes-given-neuroanatomy">
 <h1>Do genomes affect connectomes given neuroanatomy?<a class="headerlink" href="#do-genomes-affect-connectomes-given-neuroanatomy" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p>Want a conditional independence test!
+<li><p>Want to test:
 <span class="math notranslate nohighlight">\(H_0: F(\)</span><span style="color: var(--connectome)">Conn.</span>, <span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span><span class="math notranslate nohighlight">\() = F(\)</span><span style="color: var(--connectome)">Conn.</span>|<span style="color: var(--neuroanatomy)">Neuro.</span><span class="math notranslate nohighlight">\()F(\)</span><span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span><span class="math notranslate nohighlight">\()\)</span>
 <span class="math notranslate nohighlight">\(H_A: F(\)</span><span style="color: var(--connectome)">Conn.</span>, <span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span><span class="math notranslate nohighlight">\() \neq F(\)</span><span style="color: var(--connectome)">Conn.</span>|<span style="color: var(--neuroanatomy)">Neuro.</span><span class="math notranslate nohighlight">\()F(\)</span><span style="color: var(--genome)">Genome</span>|<span style="color: var(--neuroanatomy)">Neuro.</span><span class="math notranslate nohighlight">\()\)</span></p></li>
+<li><p>Known as conditional independence test</p></li>
 <li><p>Test statistic: Conditional distance correlation (cdcorr)</p></li>
-<li><p>Implication if true: there exists causal dependence of connectomes on genomes.</p></li>
+<li><p>Implication if false: there exists causal dependence of connectomes on genomes.</p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -898,7 +879,6 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 <h1>What is conditional distance correlation?<a class="headerlink" href="#what-is-conditional-distance-correlation" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
 <li><p>Augment distance correlation procedure with third distance matrix.</p></li>
-<li><p>d(<span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\(_i\)</span>, <span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\(_j\)</span>) = ||<span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\(_i\)</span> - <span style="color: var(--neuroanatomy)">Neuroanatomy</span><span class="math notranslate nohighlight">\(_j\)</span>||<span class="math notranslate nohighlight">\(_F\)</span></p></li>
 </ul>
 <br>
 <p><img alt="center h:350" src="../../_images/conditional_test.png" /></p>
@@ -906,7 +886,10 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 <hr class="docutils" />
 <section class="tex2jax_ignore mathjax_ignore" id="connectomes-are-still-dependent-on-genome">
 <h1>Connectomes are still dependent on genome<a class="headerlink" href="#connectomes-are-still-dependent-on-genome" title="Permalink to this headline">#</a></h1>
-<p><br> <br></p>
+<ul class="simple">
+<li><p>All tests are significant.
+<br> <br></p></li>
+</ul>
 <center>
 <table class="colwidths-auto table">
 <thead>
@@ -918,9 +901,9 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-align:center"><p>p-value</p></td>
-<td class="text-align:center"><p></p></td>
-<td class="text-align:center"><p></p></td>
-<td class="text-align:center"><p></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-2}\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-2}\)</span></p></td>
+<td class="text-align:center"><p><span class="math notranslate nohighlight">\(&lt;1\times10^{-2}\)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -943,36 +926,49 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 <footer>
 <p><span class="math notranslate nohighlight">\(^1\)</span> Bridgeford, Eric W., et al. “Batch Effects are Causal Effects: Applications in Human Connectomics.”  (2021).</p>
 </footer>
-</section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="acknowledgements">
-<h1>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">#</a></h1>
-<section id="team">
-<h2>Team<a class="headerlink" href="#team" title="Permalink to this headline">#</a></h2>
+<!-- ---
+# Acknowledgements
+
+#### Team
+
 <style scoped>
 
 p {
     font-size: 24px;
 }
 </style>
+
+
 <div class='minipanels'>
+
 <div>
-<p><img alt="person" src="../../_images/mike-powell.jpg" />
-Mike Powell</p>
+
+![person](./../../images/people/mike-powell.jpg)
+Mike Powell
+
 </div>
+
 <div>
-<p><img alt="person" src="../../_images/bridgeford.jpg" />
-Eric Bridgeford</p>
+
+![person](./../../images/people/bridgeford.jpg)
+Eric Bridgeford
+
 </div>
+
 <div>
-<p><img alt="person" src="../../_images/priebe_carey.jpg" />
-Carey Priebe</p>
+
+![person](./../../images/people/priebe_carey.jpg)
+Carey Priebe
+
 </div>
+
 <div>
-<p><img alt="person" src="../../_images/vogelstein_joshua.jpg" />
-Joshua Vogelstein</p>
+
+![person](./../../images/people/vogelstein_joshua.jpg)
+Joshua Vogelstein
+
 </div>
-</div>
+</div> -->
 <hr class="docutils" />
 <style scoped>
 h1 {
@@ -981,7 +977,6 @@ h1 {
 }
 </style>
 <p><br> <br> <br> <br> <br></p>
-</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="additional-slides">
 <h1>Additional slides<a class="headerlink" href="#additional-slides" title="Permalink to this headline">#</a></h1>
