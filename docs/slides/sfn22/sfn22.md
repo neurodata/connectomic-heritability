@@ -2,7 +2,7 @@
 marp: true
 theme: poster
 paginate: false
-size: a0
+size: 40:30
 math: katex
 ---
 
@@ -12,7 +12,7 @@ math: katex
 <!-- Image in the upper left -->
 <div>
 
-![headerlogo](./images/hopkins-logo.png)
+![headerlogo](../../images/logos/hopkins-logo.png)
 
 </div>
 
@@ -23,14 +23,14 @@ math: katex
 
 ## Jaewon Chung<span class=super>1\*</span>, Eric Bridgeford<span class=super>1</span>, Michael Powell<span class=super>1</span>, Joshua T. Vogelstein<span class=super>1</span>
 
-##### 1 - Johns Hopkins University, $\ast$ - correspondence: ![icon](./images/email.png) [_j1c@jhu.edu_](mailto:j1c@jhu.edu) ![icon](./images/github.png) [_@j1c(Github)_](https://github.com/j1c) ![icon](./images/twitter.png) [_@j1chung(Twitter)_](https://twitter.com/j1chung)
+##### 1 - Johns Hopkins University, $\ast$ - correspondence: ![icon](../../images/icons/mail.png) [_j1c@jhu.edu_](mailto:j1c@jhu.edu) ![icon](../../images/icons/github.png) [_@j1c(Github)_](https://github.com/j1c) ![icon](../../images/icons/twitter.png) [_@j1chung(Twitter)_](https://twitter.com/j1chung)
 
 </div>
 
 <!-- Image on the upper right -->
 <div>
 
-![headerlogo](./images/nd_logo.png)
+![headerlogo](../../images/logos/nd_logo.png)
 
 </div>
 
@@ -111,6 +111,12 @@ math: katex
 ![center](./ohbm22/dag.png)
 **Fig 2:** Directed acyclic graph (DAG) illustrating potential relationships between the genome and connectome.
 
+<!-- End main column 1 -->
+</div>
+
+<!-- Start main column 2 -->
+<div>
+
 ### Human Connectome Project 1200
 
 - Structural connectomes are estimated using structural (sMRI) and diffusion magnetic resonance imaging (dMRI).
@@ -127,10 +133,10 @@ math: katex
 **Table 1:** Participants and their demographics of HCP1200 Dataset.
 
 </div>
-<!-- End main column 1 -->
+
 </div>
 
-<!-- Start main column 2 -->
+<!-- Start main column 3 -->
 <div>
 
 ### Three Models of Connectomes
@@ -173,7 +179,7 @@ math: katex
 
 <!-- Logo for a package -->
 
-![left h:1in](./ohbm22/graspologic-logo.svg)
+![left h:1in](../../images/logos/graspologic-logo.svg)
 
 </div>
 <div>
@@ -188,7 +194,7 @@ math: katex
 
 <!-- QR code to a package -->
 
-![center h:1in](./ohbm22/graspologic-qr.svg)
+![center h:1in](../../images/qr/graspologic-qr.svg)
 
 </div>
 </div>
@@ -217,7 +223,7 @@ math: katex
 
 <!-- QR code to a package -->
 
-![center h:1in](./ohbm22/hyppo-qr.svg)
+![center h:1in](../../images/qr/hyppo-qr.svg)
 
 </div>
 </div>
