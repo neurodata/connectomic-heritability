@@ -3,8 +3,8 @@ root: coverpage
 parts:
   - caption: Preliminaries
     chapters:
-    -  file: placeholder
-  - caption: Slides
+      - file: placeholder
+  - caption: Posters
     chapters:
-    - url: https://docs.neurodata.io/connectomic-heritability/dbo.pdf
-      title: DBO
+      - url: https://docs.neurodata.io/connectomic-heritability/sfn22.pdf
+        title: SfN 2022
