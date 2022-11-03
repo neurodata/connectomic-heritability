@@ -54,7 +54,6 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="shortcut icon" href="../../_static/nd_logo_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -93,11 +92,6 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../../index.html">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
-        
-      
-      
-      <img src="../../_static/nd_logo.png" class="logo" alt="logo">
       
       
       <h1 class="site-logo" id="site-title">Connectomic Heritability</h1>
@@ -924,7 +918,7 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 <li><p>Connectomes are dependent on genome, suggesting heritability.</p></li>
 </ul>
 <footer>
-<p><span class="math notranslate nohighlight">\(^1\)</span> Bridgeford, Eric W., et al. “Batch Effects are Causal Effects: Applications in Human Connectomics.”  (2021).</p>
+<p><span class="math notranslate nohighlight">\(^1\)</span> Bridgeford, Eric W., et al. “Batch Effects are Causal Effects: Applications in Human Connectomics.” (2021).</p>
 </footer>
 <!-- ---
 # Acknowledgements
@@ -991,7 +985,7 @@ $<span class="math notranslate nohighlight">\(f_{w, z}(y|x) = \int_{\mathcal{W}\
 <li><p>Above integrates over <em>all</em> measured and unmeasured covariates.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[ f(y | x) = \int_{\mathcal W \times \mathcal Z}{f(y | x, w, z) f(w, z | x)}{(w, z)} \]</div>
+\[ f(y | x) = \int\_{\mathcal W \times \mathcal Z}{f(y | x, w, z) f(w, z | x)}{(w, z)} \]</div>
 <ul class="simple">
 <li><p>Averages the true outcome distribution over the <em>conditional</em> distribution of the measured and unmeasured covariates.</p></li>
 </ul>
@@ -1003,8 +997,10 @@ $<span class="math notranslate nohighlight">\(f_{w, z}(y|x) = \int_{\mathcal{W}\
 <li><p>We observe the triples <span class="math notranslate nohighlight">\((x_i, y_i, w_i)\)</span> for <span class="math notranslate nohighlight">\(i\in[n]\)</span>.</p></li>
 <li><p>Only be able to estimate the functions of <span class="math notranslate nohighlight">\((X, Y, W)\)</span></p></li>
 <li><p>The corresponding hypothesis test is:
-$<span class="math notranslate nohighlight">\(H_0: f(y|x, w) = f(y|w) \quad \text{vs} \quad
-  H_A: f(y|x, w) \neq f(y|w).\)</span>$</p></li>
+$<span class="math notranslate nohighlight">\(
+H_0: f(y|x, w) = f(y|w) \quad \text{vs} \quad
+	H_A: f(y|x, w) \neq f(y|w).
+\)</span>$</p></li>
 </ul>
 </section>
 <hr class="docutils" />
@@ -1073,7 +1069,7 @@ $<span class="math notranslate nohighlight">\(H_0: f(y|x, w) = f(y|w) \quad \tex
 <ul class="simple">
 <li><p>Adjacency spectral embedding</p></li>
 <li><p>representation of the vertices of the graphs into d dimensions via its singular value decomposition, given by <span class="math notranslate nohighlight">\(A = USU^\top\)</span> where <span class="math notranslate nohighlight">\(U\in\mathbb{R}^{n×n}\)</span> is the orthogonal matrix of eigenvectors and <span class="math notranslate nohighlight">\(S \in \mathbb{R}^{n×n}\)</span> is a diagonal matrix containing the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span> ordered by magnitude.</p></li>
-<li><p><span class="math notranslate nohighlight">\(ASE(A) = \hat X =\hat U \hat S ^{1/2}\)</span> where <span class="math notranslate nohighlight">\(\hat U \in\mathbb{R}^{n×d}\)</span> contains the first <span class="math notranslate nohighlight">\(d\)</span> columns of <span class="math notranslate nohighlight">\(U\)</span>, which correspond to the largest eigenvectors, and <span class="math notranslate nohighlight">\(\hat S \in\mathbb{R}^{d×d}\)</span> is the submatrix of <span class="math notranslate nohighlight">\( S \)</span>  corresponding to the <span class="math notranslate nohighlight">\(d\)</span> largest eigenvalues in magnitude.</p></li>
+<li><p><span class="math notranslate nohighlight">\(ASE(A) = \hat X =\hat U \hat S ^{1/2}\)</span> where <span class="math notranslate nohighlight">\(\hat U \in\mathbb{R}^{n×d}\)</span> contains the first <span class="math notranslate nohighlight">\(d\)</span> columns of <span class="math notranslate nohighlight">\(U\)</span>, which correspond to the largest eigenvectors, and <span class="math notranslate nohighlight">\(\hat S \in\mathbb{R}^{d×d}\)</span> is the submatrix of <span class="math notranslate nohighlight">\( S \)</span> corresponding to the <span class="math notranslate nohighlight">\(d\)</span> largest eigenvalues in magnitude.</p></li>
 </ul>
 </section>
 

@@ -18,11 +18,11 @@ p {
 _(he/him)_ - [NeuroData lab](https://neurodata.io/)
 _Johns Hopkins University - Biomedical Engineering_
 
-![icon](../../images/mail.png) [_j1c@jhu.edu_](mailto:j1c@jhu.edu)
-![icon](../../images/github.png) [_@j1c (Github)_](https://github.com/j1c)
-![icon](../../images/twitter.png) [_@j1c (Twitter)_](https://twitter.com/j1c)
+![icon](../../images/icons/mail.png) [_j1c@jhu.edu_](mailto:j1c@jhu.edu)
+![icon](../../images/icons/github.png) [_@j1c (Github)_](https://github.com/j1c)
+![icon](../../images/icons/twitter.png) [_@j1c (Twitter)_](https://twitter.com/j1c)
 
-![bg right:45% w:450](./../../images/nd_logo_small.png)
+![bg right:45% w:450](./../../images/logos/nd_logo_small.png)
 
 ---
 
@@ -31,7 +31,7 @@ _Johns Hopkins University - Biomedical Engineering_
 - Variations in phenotype caused by variations in genotype.
 - Potentially discover relationships between diseases and genetics.
 
- <br> <br> <br>
+<br> <br> <br>
 
 <style scoped>
 h2 {
@@ -40,18 +40,19 @@ h2 {
 }
 </style>
 
-
 ## Are the patterns of brain connectivity heritable?
 
 ---
 
 # Brain connectivity as connectomes
+
 <!--  -->
 
 <div class="columns">
 <div>
 
 (aka networks or graphs)
+
 - Vertex: region of the brain
 - Edges: connectivity measure between a pair of vertices
 - Structural connectomes: estimated # of neuronal fibers
@@ -79,6 +80,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 ---
 
 # Heritability as causal problem
+
 - Directed acyclic graph
 
 ![center h:500](./../../images/simple-dag.svg)
@@ -113,6 +115,7 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 ---
 
 # How to compare genomes?
+
 - Typical twin studies do not sequence genomes.
 - Coefficient of kinship ($\phi_{ij}$)
   - Probabilities of finding a particular gene at a particular location.
@@ -121,18 +124,19 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 <br>
 <center>
 
-|   Relationship   | $\phi_{ij}$  |    $1-2\phi_{ij}$    |
-| :-------: | :-: | :-----------: |
-|Monozygotic| $\frac{1}{2}$   | $0$ |
-|Dizygotic | $\frac{1}{4}$ | $\frac{1}{2}$ |
-|Non-twin siblings | $\frac{1}{4}$ | $\frac{1}{2}$ |
-|Unrelated | $0$ | $1$ |
+|   Relationship    |  $\phi_{ij}$  | $1-2\phi_{ij}$ |
+| :---------------: | :-----------: | :------------: |
+|    Monozygotic    | $\frac{1}{2}$ |      $0$       |
+|     Dizygotic     | $\frac{1}{4}$ | $\frac{1}{2}$  |
+| Non-twin siblings | $\frac{1}{4}$ | $\frac{1}{2}$  |
+|     Unrelated     |      $0$      |      $1$       |
 
 </center>
 
 ---
 
 # How to compare connectomes?
+
 - Random dot product graph (RDPG)
   - Each vertex (region of interest) has a low $d$ dimensional latent vector (position).
   - Estimate latent position matrix $X$ via adjacency spectral embedding.
@@ -153,15 +157,17 @@ Image from Gu, Zijin, et al. "Heritability and interindividual variability of re
 
 ![center w:700](./../../images/hcp_demographics.svg)
 
-
 <footer>
 Van Essen, David C., et al., The WU-Minn human connectome project: an overview (2013)
 
 Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex." Nature (2016).
+
 </footer>
 
 ---
+
 # Genome and connectomes are dependent
+
 <br>
 
 ![center h:205](./../../images/hist-plot-connectomes.png)
@@ -170,15 +176,16 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 
 <center>
 
-|   Sex   |**All**  |    **Females**    | **Males** |
-| :-------: | :-: | :-----------: | :--: |
-|p-value|  $<1\times10^{-5}$  | $<1\times10^{-3}$ | $<1\times10^{-2}$  |
+|   Sex   |      **All**      |    **Females**    |     **Males**     |
+| :-----: | :---------------: | :---------------: | :---------------: |
+| p-value | $<1\times10^{-5}$ | $<1\times10^{-3}$ | $<1\times10^{-2}$ |
 
 </center>
 
 ---
 
 # Neuroanatomy (effect mediator)
+
 - Literature show neuroanatomy (e.g. brain volume) is highly heritable.
 - Want to test
   $H_0: F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>, <span style="color: var(--genome)">Genome</span>$) = F($<span style="color: var(--neuroanatomy)">Neuroanatomy</span>$)F($<span style="color: var(--genome)">Genome</span>$)$
@@ -187,22 +194,21 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 
 ![center w:650](./../../images/neuroanatomy_test.png)
 
-
 ---
 
 # Genome and neuroanatomy are dependent
+
 <br>
 
 ![center h:205](./../../images/hist-plot-neuroanatomy.png)
 
 <br> <br>
 
-
 <center>
 
-|   Sex   |**All**  |    **Females**    | **Males** |
-| :-------: | :-: | :-----------: | :--: |
-|p-value|   $<1\times10^{-3}$    |  $<1\times10^{-2}$ | $<1\times10^{-2}$ |
+|   Sex   |      **All**      |    **Females**    |     **Males**     |
+| :-----: | :---------------: | :---------------: | :---------------: |
+| p-value | $<1\times10^{-3}$ | $<1\times10^{-2}$ | $<1\times10^{-2}$ |
 
 </center>
 
@@ -223,7 +229,6 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 - Test statistic: Conditional distance correlation (cdcorr)
 - Implication if false: there exists causal dependence of connectomes on genomes.
 
-
 ---
 
 # What is conditional distance correlation?
@@ -237,21 +242,22 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
 ---
 
 # Connectomes are still dependent on genome
-- All tests are significant.
-<br> <br>
 
+- All tests are significant.
+  <br> <br>
 
 <center>
 
-|   Sex   |**All**  |    **Females**    | **Males** |
-| :-------: | :-: | :-----------: | :--: |
-|p-value|  $<1\times10^{-2}$    | $<1\times10^{-2}$  | $<1\times10^{-2}$ |
+|   Sex   |      **All**      |    **Females**    |     **Males**     |
+| :-----: | :---------------: | :---------------: | :---------------: |
+| p-value | $<1\times10^{-2}$ | $<1\times10^{-2}$ | $<1\times10^{-2}$ |
 
 </center>
 
 ---
 
 # Summary
+
 ![center h:250](./../../images/genome_to_connectome.png)
 
 - Present a causal model for heritability of connectomes.
@@ -260,10 +266,9 @@ Glasser, Matthew F., et al. "A multi-modal parcellation of human cerebral cortex
   2. Distance and conditional distance correlation as test statistic for causal analysis$^1$.
 - Connectomes are dependent on genome, suggesting heritability.
 
-
 <footer>
 
-$^1$ Bridgeford, Eric W., et al. "Batch Effects are Causal Effects: Applications in Human Connectomics."  (2021).
+$^1$ Bridgeford, Eric W., et al. "Batch Effects are Causal Effects: Applications in Human Connectomics." (2021).
 
 </footer>
 
@@ -313,7 +318,6 @@ Joshua Vogelstein
 
 ---
 
-
 <style scoped>
 h1 {
     justify-content: center;
@@ -331,11 +335,12 @@ h1 {
 
 - $X$ denote exposure, $Y$ denote outcome, $W$ denote measured covariates, $Z$ denote unmeasured covariates
 - Want to estimate the effect of different exposures on the outcome, which is quantified using the backdoor formula if $W$ and $Z$ close all backdoor paths.
-$$f_{w, z}(y|x) = \int_{\mathcal{W}\times\mathcal{Z}}f(y|x, w, z)f(w, z)\mathrm{d}(w, z) $$
+  $$f_{w, z}(y|x) = \int_{\mathcal{W}\times\mathcal{Z}}f(y|x, w, z)f(w, z)\mathrm{d}(w, z) $$
 
 - Above integrates over _all_ measured and unmeasured covariates.
 
-$$ f(y | x) = \int_{\mathcal W \times \mathcal Z}{f(y | x, w, z) f(w, z | x)}{(w, z)} $$
+$$ f(y | x) = \int\_{\mathcal W \times \mathcal Z}{f(y | x, w, z) f(w, z | x)}{(w, z)} $$
+
 - Averages the true outcome distribution over the _conditional_ distribution of the measured and unmeasured covariates.
 
 ---
@@ -345,11 +350,15 @@ $$ f(y | x) = \int_{\mathcal W \times \mathcal Z}{f(y | x, w, z) f(w, z | x)}{(w
 - We observe the triples $(x_i, y_i, w_i)$ for $i\in[n]$.
 - Only be able to estimate the functions of $(X, Y, W)$
 - The corresponding hypothesis test is:
-$$H_0: f(y|x, w) = f(y|w) \quad \text{vs} \quad
-	H_A: f(y|x, w) \neq f(y|w).$$
+  $$
+  H_0: f(y|x, w) = f(y|w) \quad \text{vs} \quad
+  	H_A: f(y|x, w) \neq f(y|w).
+  $$
+
 ---
 
 # Shortcomings - Network model
+
 - Problems with connectome estimation.
   - Inability to determine the precise origin/termination of connections in the cortex.
     - -> false negatives
@@ -362,6 +371,7 @@ $$H_0: f(y|x, w) = f(y|w) \quad \text{vs} \quad
 ---
 
 # Shortcomings - Model assumptions
+
 - No interaction between genome and environment
 - No epistatsis
   - Effect of one gene is dependent on another
@@ -388,5 +398,4 @@ $$H_0: f(y|x, w) = f(y|w) \quad \text{vs} \quad
 
 - Adjacency spectral embedding
 - representation of the vertices of the graphs into d dimensions via its singular value decomposition, given by $A = USU^\top$ where $U\in\mathbb{R}^{n×n}$ is the orthogonal matrix of eigenvectors and $S \in \mathbb{R}^{n×n}$ is a diagonal matrix containing the eigenvalues of $A$ ordered by magnitude.
-- $ASE(A) = \hat X =\hat U \hat S ^{1/2}$ where $\hat U \in\mathbb{R}^{n×d}$ contains the first $d$ columns of $U$, which correspond to the largest eigenvectors, and $\hat S \in\mathbb{R}^{d×d}$ is the submatrix of $ S $  corresponding to the $d$ largest eigenvalues in magnitude.
-
+- $ASE(A) = \hat X =\hat U \hat S ^{1/2}$ where $\hat U \in\mathbb{R}^{n×d}$ contains the first $d$ columns of $U$, which correspond to the largest eigenvectors, and $\hat S \in\mathbb{R}^{d×d}$ is the submatrix of $ S $ corresponding to the $d$ largest eigenvalues in magnitude.
