@@ -2,7 +2,7 @@
 marp: true
 theme: poster
 paginate: false
-size: 40:30
+size: 48:40
 math: katex
 ---
 
@@ -90,25 +90,21 @@ math: katex
 
 <!-- Big question for this work -->
 
-![](./ohbm22/overview.png)
+![center](../../images/heritability_framework.png)
 **Fig 1:** Overview of the framework for measuring heritability of connectomes.
 
-<br>
-
-## Do changes in <span style="color:var(--genome)"> genome </span> cause changes in <span style="color:var(--connectome)">connectomes</span>?
+## Do <span style="color:var(--genome)"> genomes </span> cause in <span style="color:var(--connectome)">connectomes</span>?
 
 <br>
 
 ### Causal Analysis of Effect of Genome on Connectomes
 
-<!-- ![w:1100px center](./ohbm22/dag.png) -->
-
 - Genome directly affects the structural connectome.
-- Neuroanatomym (e.g. brain volume) indirectly affects the connectome.
+- Neuroanatomy (e.g. brain volume) indirectly affects the connectome.
 - Participant history, such as the shared and non-shared environmental influences, and traits are potential confounders.
 - The shared and non-shared environment is controlled by comparing between the same sex individuals.
 
-![center](./ohbm22/dag.png)
+![center h:900](../../images/heritability_solo.svg)
 **Fig 2:** Directed acyclic graph (DAG) illustrating potential relationships between the genome and connectome.
 
 <!-- End main column 1 -->
@@ -117,10 +113,25 @@ math: katex
 <!-- Start main column 2 -->
 <div>
 
+### Connectome Validation and Heritability of Neuroanatomy
+
+![center w:1500](../../images/hist-plot.svg)
+**Fig 4:** Validating connectomes by comparing monozygotic and dizygotic twins using Kolmogrov-Smirnov test. Heritability of neuroanamy is tested using unconditional test framework. Red squares indicate significant tests; blue indicate non-significant tests.
+
+### Tests for Heritability of Connectomes
+
+![](./ohbm22/results_ohbm.png)
+**Fig 5:** Testing for unconditional and conditional heritability of connectomes. Red squares indicate significant tests; blue indicate non-significant tests.
+
+<!-- End main column 2 -->
+</div>
+
+<!-- Start main column 3 -->
+<div>
+
 ### Human Connectome Project 1200
 
 - Structural connectomes are estimated using structural (sMRI) and diffusion magnetic resonance imaging (dMRI).
-- Processed with _m2g_ pipeline, which uses Constrained Spherical Deconvolution (CSD) model and deterministic tractography.
 
 |            | Monozygotic  |  Dizygotic  | Non-twin siblings |
 | :--------: | :----------: | :---------: | :---------------: |
@@ -134,35 +145,21 @@ math: katex
 
 </div>
 
-</div>
-
-<!-- Start main column 3 -->
-<div>
-
 ### Three Models of Connectomes
 
 - **Exact:** Are the generative models of connectomes the same?
 - **Global scale:** Are the generative models same after considering global scaling?
 - **Vertex scale:** Are the generative models same after considering vertex wise scaling?
 
-![](./ohbm22/Illustrative_example.png)
-**Fig 3:** Examples of the three different models (exact, global scale, and vertex scale) of connectome heritability visualized as adjacency matrices.
+![center h:700](../../images/model_simulations.svg)
+**Fig 3:** Examples of the three different models (exact, global scale, and vertex scale) of connectome heritability visualized as adjacency matrices. Networks are sampled from stochastic block models (SBMs) with different block probabilities.
 
 <br>
 
-### Connectome Validation and Heritability of Neuroanatomy
-
-![](./ohbm22/results_ohbm_1.png)
-**Fig 4:** Validating connectomes by comparing monozygotic and dizygotic twins using Kolmogrov-Smirnov test. Heritability of neuroanamy is tested using unconditional test framework. Red squares indicate significant tests; blue indicate non-significant tests.
-
-### Tests for Heritability of Connectomes
-
-![](./ohbm22/results_ohbm.png)
-**Fig 5:** Testing for unconditional and conditional heritability of connectomes. Red squares indicate significant tests; blue indicate non-significant tests.
-
 ### Limitations and extensions
 
-- Other staitsical models to consider (e.g. COSIE [3])
+- Potential confounders that are not considered.
+- Other staitsical models to consider (e.g. COSIE [3]).
 - Repeated analysis on functional MRI or in other twin study datasets.
 
 <!-- Code/Refs/Thanks/Funding - small section -->
