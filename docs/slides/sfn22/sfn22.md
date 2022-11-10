@@ -2,7 +2,7 @@
 marp: true
 theme: poster
 paginate: false
-size: 48:40
+size: 48:38
 math: katex
 ---
 
@@ -113,15 +113,20 @@ math: katex
 <!-- Start main column 2 -->
 <div>
 
-### Connectome Validation and Heritability of Neuroanatomy
+### Associational Heritability for Connectomes and Neuroanatomy
 
 ![center w:1500](../../images/hist-plot.svg)
-**Fig 4:** Validating connectomes by comparing monozygotic and dizygotic twins using Kolmogrov-Smirnov test. Heritability of neuroanamy is tested using unconditional test framework. Red squares indicate significant tests; blue indicate non-significant tests.
+**Fig 3:** Visualization of pairwise distances of connectomes and neuroanatomy. Diamonds represent the median. Median distances grow as genetic distances increase.
 
-### Tests for Heritability of Connectomes
+<br>
 
-![](./ohbm22/results_ohbm.png)
-**Fig 5:** Testing for unconditional and conditional heritability of connectomes. Red squares indicate significant tests; blue indicate non-significant tests.
+![](./results_sfn1.png)
+**Fig 4:** Testing for associational heritability of connectomes and neuroanatomy. Red squares indicate significant tests; blue indicate non-significant tests.
+
+### Conditional Heritability of Connectomes
+
+![](./results_sfn2.png)
+**Fig 5:** Testing for conditional heritability of connectomes. Red squares indicate significant tests; blue indicate non-significant tests.
 
 <!-- End main column 2 -->
 </div>
