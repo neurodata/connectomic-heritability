@@ -2,7 +2,7 @@
 marp: true
 theme: poster
 paginate: false
-size: 48:38
+size: 48:40
 math: katex
 ---
 
@@ -93,7 +93,7 @@ math: katex
 ![center](../../images/heritability_framework.png)
 **Fig 1:** Overview of the framework for measuring heritability of connectomes.
 
-## Do <span style="color:var(--genome)"> genomes </span> cause in <span style="color:var(--connectome)">connectomes</span>?
+## Do <span style="color:var(--genome)"> genomes </span> cause <span style="color:var(--connectome)">connectomes</span>?
 
 <br>
 
