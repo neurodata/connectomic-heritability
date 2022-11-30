@@ -775,7 +775,7 @@ Li, Ruoran, Rhian Daniel, and Bernard Rachet. "How much do tumor stage and treat
 <section class="tex2jax_ignore mathjax_ignore" id="backdoor-paths">
 <h1>Backdoor paths<a class="headerlink" href="#backdoor-paths" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p>Non-causal path from exposure to outcome</p></li>
+<li><p>Non-causal path from exposure (X) to outcome (Y)</p></li>
 <li><p>Flow backwards out of exposure (arrow pointing towards exposure)</p></li>
 <li><p>Confounders create backdoor paths</p></li>
 <li><p>Path is blocked if a variable in the path is conditioned on.</p></li>
@@ -803,8 +803,12 @@ Li, Ruoran, Rhian Daniel, and Bernard Rachet. "How much do tumor stage and treat
 <h1>Backdoor criterion<a class="headerlink" href="#backdoor-criterion" title="Permalink to this headline">#</a></h1>
 <p>Causal effect exists between exposure (<span class="math notranslate nohighlight">\(X\)</span>) and outcome (<span class="math notranslate nohighlight">\(Y\)</span>) if:</p>
 <ol class="simple">
-<li><p>No backdoor paths from <span class="math notranslate nohighlight">\(X\)</span> to <span class="math notranslate nohighlight">\(Y\)</span> exist</p></li>
-<li><p>Measured covariates <span class="math notranslate nohighlight">\(Z\)</span> block all backdoor paths from <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span></p></li>
+<li><p>No backdoor paths from <span class="math notranslate nohighlight">\(X\)</span> to <span class="math notranslate nohighlight">\(Y\)</span> exist</p>
+<ul class="simple">
+<li><p>Typically plausible in randomized trials</p></li>
+</ul>
+</li>
+<li><p>Measured covariates <span class="math notranslate nohighlight">\(S\)</span> block all backdoor paths from <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span></p></li>
 </ol>
 </section>
 <hr class="docutils" />
@@ -1149,49 +1153,6 @@ Van Essen, David C., et al., The WU-Minn human connectome project: an overview (
 <footer>
 <p><span class="math notranslate nohighlight">\(^1\)</span> Bridgeford, Eric W., et al. “Batch Effects are Causal Effects: Applications in Human Connectomics.” (2021).</p>
 </footer>
-<!-- ---
-# Acknowledgements
-
-#### Team
-
-<style scoped>
-
-p {
-    font-size: 24px;
-}
-</style>
-
-
-<div class='minipanels'>
-
-<div>
-
-![person](./../../images/people/mike-powell.jpg)
-Mike Powell
-
-</div>
-
-<div>
-
-![person](./../../images/people/bridgeford.jpg)
-Eric Bridgeford
-
-</div>
-
-<div>
-
-![person](./../../images/people/priebe_carey.jpg)
-Carey Priebe
-
-</div>
-
-<div>
-
-![person](./../../images/people/vogelstein_joshua.jpg)
-Joshua Vogelstein
-
-</div>
-</div> -->
 <hr class="docutils" />
 </section>
 
