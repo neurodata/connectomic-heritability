@@ -22,6 +22,8 @@ section {
     --genome: #98C981;
     --connectome: #B4D5ED;
     --neuroanatomy: #F2C453;
+    --cov: #F2C453;
+    --age: #E06666;
 }
 
 /* REF: https://github.com/yhatt/marp/issues/119 */
