@@ -561,6 +561,39 @@ plot.heatmap(maximum_diff, &quot;Difference in Most Different Pair&quot;, &quot;
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">R</span>
+
+# Make legend
+svglite(paste0(&quot;./figures/&quot;, &quot;3-legend&quot;, &quot;.svg&quot;), height=3.1, width=0.65)
+
+colorbar &lt; -Legend(
+    col_fun=colorRamp2(c(0, vmax), c(&quot;white&quot;, &quot;red&quot;)),
+    title=&quot;Log Edgeweight&quot;,
+    legend_width=unit(1, &quot;inches&quot;),
+    legend_height=unit(3, &quot;inches&quot;),
+    direction=&quot;vertical&quot;,
+    title_position=&quot;leftcenter-rot&quot;,
+    title_gp=gpar(fontsize=14, fontfamily=&quot;DejaVu Sans&quot;),
+    labels_gp=gpar(fontsize=14, fontfamily=&quot;DejaVu Sans&quot;),
+)
+pd = packLegend(colorbar, direction=&quot;horizontal&quot;)
+draw(
+    pd,
+)
+
+dev.off()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>png 
+  2 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span>
 
 <span class="n">parta</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="s2">&quot;./figures/3a-average.svg&quot;</span><span class="p">)</span>
@@ -578,11 +611,18 @@ plot.heatmap(maximum_diff, &quot;Difference in Most Different Pair&quot;, &quot;
 <span class="p">)</span>
 <span class="n">partb_panel</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
+<span class="n">legend</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="s2">&quot;./figures/3-legend.svg&quot;</span><span class="p">)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">set_height</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">move</span><span class="p">((</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">partb</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">parta</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span>
+
+
 <span class="n">fig</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span>
-    <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">partb</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">partb</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">legend</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span>
     <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.85</span><span class="p">,</span>
     <span class="n">parta_panel</span><span class="p">,</span>
     <span class="n">partb_panel</span><span class="p">,</span>
+    <span class="n">legend</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;./figures/3-composite.svg&quot;</span><span class="p">)</span>
@@ -591,7 +631,7 @@ plot.heatmap(maximum_diff, &quot;Difference in Most Different Pair&quot;, &quot;
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3-data-plot_6_0.svg" src="_images/3-data-plot_6_0.svg" /></div>
+<img alt="_images/3-data-plot_7_0.svg" src="_images/3-data-plot_7_0.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

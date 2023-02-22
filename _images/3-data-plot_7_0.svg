@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='ASCII' standalone='yes'?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="900.0px" viewBox="0 0 900.0 425.0" height="425.0px">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="956.6129032258066px" viewBox="0 0 956.6129032258066 425.0" height="425.0px">
   <g>
     <g>
       <g class="svglite" transform="translate(20, 25) scale(1 1) translate(0, 0) scale(0.7936507936507936 0.7936507936507936) "><defs>
@@ -9881,5 +9881,143 @@
 </g>
       <text x="10" y="44" font-size="20" font-family="DejaVu Sans" font-weight="bold" letter-spacing="0" text-anchor="start" fill="black">B)</text>
     </g>
+    <g class="svglite" transform="translate(900.0, 100.0) scale(1 1) translate(0, 25) scale(1 1) translate(0, 0) scale(1.0752688172043012 1.0752688172043012) "><defs>
+  <style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style>
+</defs>
+<rect width="100%" height="100%" style="stroke: none; fill: #FFFFFF;"/>
+<defs>
+  <clipPath id="cpMC4wMHw0Ni44MHwwLjAwfDIyMy4yMA==">
+    <rect x="0.00" y="0.00" width="46.80" height="223.20"/>
+  </clipPath>
+</defs>
+<g clip-path="url(#cpMC4wMHw0Ni44MHwwLjAwfDIyMy4yMA==)">
+<text transform="translate(14.13,111.60) rotate(-90)" text-anchor="middle" style="font-size: 14.00px; font-family: &quot;DejaVu Sans&quot;;" textLength="111.86px" lengthAdjust="spacingAndGlyphs">Log Edgeweight</text>
+<text x="33.97" y="222.71" style="font-size: 14.00px; font-family: &quot;DejaVu Sans&quot;;" textLength="8.91px" lengthAdjust="spacingAndGlyphs">0</text>
+<text x="33.97" y="169.70" style="font-size: 14.00px; font-family: &quot;DejaVu Sans&quot;;" textLength="8.91px" lengthAdjust="spacingAndGlyphs">1</text>
+<text x="33.97" y="116.70" style="font-size: 14.00px; font-family: &quot;DejaVu Sans&quot;;" textLength="8.91px" lengthAdjust="spacingAndGlyphs">2</text>
+<text x="33.97" y="63.70" style="font-size: 14.00px; font-family: &quot;DejaVu Sans&quot;;" textLength="8.91px" lengthAdjust="spacingAndGlyphs">3</text>
+<text x="33.97" y="10.69" style="font-size: 14.00px; font-family: &quot;DejaVu Sans&quot;;" textLength="8.91px" lengthAdjust="spacingAndGlyphs">4</text>
+<rect x="19.80" y="3.60" width="11.34" height="1.99" style="stroke-width: 0.75; stroke: #FF5A39; fill: #FF5A39;"/>
+<rect x="19.80" y="5.59" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF5A39; fill: #FF5A39;"/>
+<rect x="19.80" y="7.78" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF5C3B; fill: #FF5C3B;"/>
+<rect x="19.80" y="9.96" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF5E3D; fill: #FF5E3D;"/>
+<rect x="19.80" y="12.15" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF603F; fill: #FF603F;"/>
+<rect x="19.80" y="14.34" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF6241; fill: #FF6241;"/>
+<rect x="19.80" y="16.52" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF6443; fill: #FF6443;"/>
+<rect x="19.80" y="18.71" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF6645; fill: #FF6645;"/>
+<rect x="19.80" y="20.89" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF6947; fill: #FF6947;"/>
+<rect x="19.80" y="23.08" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF6B49; fill: #FF6B49;"/>
+<rect x="19.80" y="25.26" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF6D4B; fill: #FF6D4B;"/>
+<rect x="19.80" y="27.45" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF6E4D; fill: #FF6E4D;"/>
+<rect x="19.80" y="29.64" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF704F; fill: #FF704F;"/>
+<rect x="19.80" y="31.82" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF7251; fill: #FF7251;"/>
+<rect x="19.80" y="34.01" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF7453; fill: #FF7453;"/>
+<rect x="19.80" y="36.19" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF7655; fill: #FF7655;"/>
+<rect x="19.80" y="38.38" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF7857; fill: #FF7857;"/>
+<rect x="19.80" y="40.56" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF7A59; fill: #FF7A59;"/>
+<rect x="19.80" y="42.75" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF7C5B; fill: #FF7C5B;"/>
+<rect x="19.80" y="44.94" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF7E5D; fill: #FF7E5D;"/>
+<rect x="19.80" y="47.12" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF7F5F; fill: #FF7F5F;"/>
+<rect x="19.80" y="49.31" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF8161; fill: #FF8161;"/>
+<rect x="19.80" y="51.49" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF8363; fill: #FF8363;"/>
+<rect x="19.80" y="53.68" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF8565; fill: #FF8565;"/>
+<rect x="19.80" y="55.86" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF8767; fill: #FF8767;"/>
+<rect x="19.80" y="58.05" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF8869; fill: #FF8869;"/>
+<rect x="19.80" y="60.24" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF8A6B; fill: #FF8A6B;"/>
+<rect x="19.80" y="62.42" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF8C6D; fill: #FF8C6D;"/>
+<rect x="19.80" y="64.61" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF8E6F; fill: #FF8E6F;"/>
+<rect x="19.80" y="66.79" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9071; fill: #FF9071;"/>
+<rect x="19.80" y="68.98" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9173; fill: #FF9173;"/>
+<rect x="19.80" y="71.16" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9375; fill: #FF9375;"/>
+<rect x="19.80" y="73.35" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9577; fill: #FF9577;"/>
+<rect x="19.80" y="75.54" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9679; fill: #FF9679;"/>
+<rect x="19.80" y="77.72" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF987B; fill: #FF987B;"/>
+<rect x="19.80" y="79.91" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9A7D; fill: #FF9A7D;"/>
+<rect x="19.80" y="82.09" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9C7F; fill: #FF9C7F;"/>
+<rect x="19.80" y="84.28" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9D81; fill: #FF9D81;"/>
+<rect x="19.80" y="86.46" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FF9F83; fill: #FF9F83;"/>
+<rect x="19.80" y="88.65" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFA185; fill: #FFA185;"/>
+<rect x="19.80" y="90.84" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFA287; fill: #FFA287;"/>
+<rect x="19.80" y="93.02" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFA489; fill: #FFA489;"/>
+<rect x="19.80" y="95.21" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFA68B; fill: #FFA68B;"/>
+<rect x="19.80" y="97.39" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFA78D; fill: #FFA78D;"/>
+<rect x="19.80" y="99.58" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFA98F; fill: #FFA98F;"/>
+<rect x="19.80" y="101.76" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFAB91; fill: #FFAB91;"/>
+<rect x="19.80" y="103.95" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFAC93; fill: #FFAC93;"/>
+<rect x="19.80" y="106.14" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFAE95; fill: #FFAE95;"/>
+<rect x="19.80" y="108.32" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFB097; fill: #FFB097;"/>
+<rect x="19.80" y="110.51" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFB199; fill: #FFB199;"/>
+<rect x="19.80" y="112.69" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFB39B; fill: #FFB39B;"/>
+<rect x="19.80" y="114.88" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFB59D; fill: #FFB59D;"/>
+<rect x="19.80" y="117.06" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFB69F; fill: #FFB69F;"/>
+<rect x="19.80" y="119.25" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFB8A1; fill: #FFB8A1;"/>
+<rect x="19.80" y="121.44" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFBAA3; fill: #FFBAA3;"/>
+<rect x="19.80" y="123.62" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFBBA5; fill: #FFBBA5;"/>
+<rect x="19.80" y="125.81" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFBDA7; fill: #FFBDA7;"/>
+<rect x="19.80" y="127.99" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFBFA9; fill: #FFBFA9;"/>
+<rect x="19.80" y="130.18" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFC0AB; fill: #FFC0AB;"/>
+<rect x="19.80" y="132.36" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFC2AE; fill: #FFC2AE;"/>
+<rect x="19.80" y="134.55" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFC4B0; fill: #FFC4B0;"/>
+<rect x="19.80" y="136.74" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFC5B2; fill: #FFC5B2;"/>
+<rect x="19.80" y="138.92" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFC7B4; fill: #FFC7B4;"/>
+<rect x="19.80" y="141.11" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFC8B6; fill: #FFC8B6;"/>
+<rect x="19.80" y="143.29" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFCAB8; fill: #FFCAB8;"/>
+<rect x="19.80" y="145.48" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFCCBA; fill: #FFCCBA;"/>
+<rect x="19.80" y="147.66" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFCDBC; fill: #FFCDBC;"/>
+<rect x="19.80" y="149.85" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFCFBE; fill: #FFCFBE;"/>
+<rect x="19.80" y="152.04" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFD1C0; fill: #FFD1C0;"/>
+<rect x="19.80" y="154.22" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFD2C3; fill: #FFD2C3;"/>
+<rect x="19.80" y="156.41" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFD4C5; fill: #FFD4C5;"/>
+<rect x="19.80" y="158.59" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFD5C7; fill: #FFD5C7;"/>
+<rect x="19.80" y="160.78" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFD7C9; fill: #FFD7C9;"/>
+<rect x="19.80" y="162.96" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFD9CB; fill: #FFD9CB;"/>
+<rect x="19.80" y="165.15" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFDACD; fill: #FFDACD;"/>
+<rect x="19.80" y="167.34" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFDCCF; fill: #FFDCCF;"/>
+<rect x="19.80" y="169.52" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFDDD1; fill: #FFDDD1;"/>
+<rect x="19.80" y="171.71" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFDFD4; fill: #FFDFD4;"/>
+<rect x="19.80" y="173.89" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFE1D6; fill: #FFE1D6;"/>
+<rect x="19.80" y="176.08" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFE2D8; fill: #FFE2D8;"/>
+<rect x="19.80" y="178.26" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFE4DA; fill: #FFE4DA;"/>
+<rect x="19.80" y="180.45" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFE5DC; fill: #FFE5DC;"/>
+<rect x="19.80" y="182.64" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFE7DE; fill: #FFE7DE;"/>
+<rect x="19.80" y="184.82" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFE9E0; fill: #FFE9E0;"/>
+<rect x="19.80" y="187.01" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFEAE3; fill: #FFEAE3;"/>
+<rect x="19.80" y="189.19" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFECE5; fill: #FFECE5;"/>
+<rect x="19.80" y="191.38" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFEDE7; fill: #FFEDE7;"/>
+<rect x="19.80" y="193.56" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFEFE9; fill: #FFEFE9;"/>
+<rect x="19.80" y="195.75" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFF1EB; fill: #FFF1EB;"/>
+<rect x="19.80" y="197.94" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFF2ED; fill: #FFF2ED;"/>
+<rect x="19.80" y="200.12" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFF4F0; fill: #FFF4F0;"/>
+<rect x="19.80" y="202.31" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFF5F2; fill: #FFF5F2;"/>
+<rect x="19.80" y="204.49" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFF7F4; fill: #FFF7F4;"/>
+<rect x="19.80" y="206.68" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFF9F6; fill: #FFF9F6;"/>
+<rect x="19.80" y="208.86" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFFAF8; fill: #FFFAF8;"/>
+<rect x="19.80" y="211.05" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFFCFB; fill: #FFFCFB;"/>
+<rect x="19.80" y="213.24" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFFDFD; fill: #FFFDFD;"/>
+<rect x="19.80" y="215.42" width="11.34" height="2.19" style="stroke-width: 0.75; stroke: #FFFFFF; fill: #FFFFFF;"/>
+<rect x="19.80" y="217.61" width="11.34" height="1.99" style="stroke-width: 0.75; stroke: #FFFFFF; fill: #FFFFFF;"/>
+<line x1="19.80" y1="217.61" x2="22.07" y2="217.61" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="19.80" y1="164.60" x2="22.07" y2="164.60" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="19.80" y1="111.60" x2="22.07" y2="111.60" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="19.80" y1="58.60" x2="22.07" y2="58.60" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="19.80" y1="5.59" x2="22.07" y2="5.59" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="31.14" y1="217.61" x2="28.87" y2="217.61" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="31.14" y1="164.60" x2="28.87" y2="164.60" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="31.14" y1="111.60" x2="28.87" y2="111.60" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="31.14" y1="58.60" x2="28.87" y2="58.60" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+<line x1="31.14" y1="5.59" x2="28.87" y2="5.59" style="stroke-width: 0.75; stroke: #FFFFFF;"/>
+</g>
+</g>
   </g>
 </svg>
