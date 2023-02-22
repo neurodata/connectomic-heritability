@@ -579,8 +579,8 @@ plot.heatmap(maximum_diff, &quot;Difference in Most Different Pair&quot;, &quot;
 <span class="n">partb_panel</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span>
-    <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">partb</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.95</span><span class="p">,</span>
-    <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.95</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">partb</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.85</span><span class="p">,</span>
     <span class="n">parta_panel</span><span class="p">,</span>
     <span class="n">partb_panel</span><span class="p">,</span>
 <span class="p">)</span>
@@ -596,7 +596,8 @@ plot.heatmap(maximum_diff, &quot;Difference in Most Different Pair&quot;, &quot;
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cairosvg</span>
-<span class="n">cairosvg</span><span class="o">.</span><span class="n">svg2pdf</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;./figures/3-composite.svg&#39;</span><span class="p">,</span> <span class="n">write_to</span><span class="o">=</span><span class="s1">&#39;./figures/3-composite.pdf&#39;</span><span class="p">)</span>
+
+<span class="n">cairosvg</span><span class="o">.</span><span class="n">svg2pdf</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;./figures/3-composite.svg&quot;</span><span class="p">,</span> <span class="n">write_to</span><span class="o">=</span><span class="s2">&quot;./figures/3-composite.pdf&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
