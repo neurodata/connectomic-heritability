@@ -5,3 +5,6 @@ format: jb-book
 root: coverpage
 parts:
   - caption: Test
+  chapters:
+    - file: 19-kde-plot
+    - file: 19-kde-plot
