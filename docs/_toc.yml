@@ -1,10 +1,11 @@
-# Table of contents
-# Learn more at https://jupyterbook.org/customize/toc.html
-
 format: jb-book
 root: coverpage
 parts:
-  - caption: Test
-  chapters:
-    - file: 19-kde-plot
-    - file: 19-kde-plot
+  - caption: Preliminaries
+    chapters:
+      - file: placeholder
+  - caption: Posters
+    chapters:
+      - url: https://docs.neurodata.io/connectomic-heritability/sfn22.pdf
+        title: SfN 2022
+
