@@ -4,6 +4,9 @@ parts:
   - caption: Preliminaries
     chapters:
       - file: placeholder
+  - caption: Figures
+    chapters:
+      - file: 3-data-plot
   - caption: Posters
     chapters:
       - url: https://docs.neurodata.io/connectomic-heritability/sfn22.pdf
