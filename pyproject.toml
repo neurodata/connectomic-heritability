@@ -6,14 +6,17 @@ authors = ["j1c <jaewonc78@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "3.8.*"
+python = ">=3.8, <3.11"
 graspologic = { git = "https://github.com/microsoft/graspologic.git", branch = "dev"}
+typing-extensions = ">=4.4.0"
 hyppo = "^0.3.2"
 jupyterlab = "^3.4.6"
 svgutils = "^0.3.4"
 pkg = {path = "pkg", develop = true}
 boto3 = "^1.24.67"
 black = "^22.8.0"
+CairoSVG = "^2.6.0"
+jupyterlab-code-formatter = "^1.5.3"
 
 [tool.poetry.dev-dependencies]
 
