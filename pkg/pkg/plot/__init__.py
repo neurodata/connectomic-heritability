@@ -1,2 +1,2 @@
-from .heatmap import *
+from .plots import *
 from .svg import *
