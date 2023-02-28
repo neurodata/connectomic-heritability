@@ -9,7 +9,12 @@ import scipy.stats as stats
 
 
 def heatmap(
-    data, ax, axes_labels, heatmap_kwargs=None, annot_kwargs=None, color_ax_kwargs=None
+    data,
+    ax=None,
+    axes_labels=None,
+    heatmap_kwargs=None,
+    annot_kwargs=None,
+    color_ax_kwargs=None,
 ):
     heatmap_kwgs = dict(
         square=True,
@@ -23,6 +28,8 @@ def heatmap(
     if heatmap_kwargs is not None:
         heatmap_kwgs.update(heatmap_kwargs)
 
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(5, 5))
     sns.heatmap(data, ax=ax, **heatmap_kwgs)
 
     n = data.shape[0]
@@ -80,8 +87,9 @@ def heatmap(
             linewidths=0.05,
         )
 
-    color_plotter("top")
-    color_plotter("left")
+    if axes_labels is not None:
+        color_plotter("top")
+        color_plotter("left")
 
 
 def _remove_shared_ax(ax):
@@ -183,10 +191,15 @@ def stripplot(plot_df, ax=None, col_names=None, row_names=None):
             ax[rdx, cdx].set_ylabel("")
 
             if rdx == 0:
-                ax[rdx, cdx].set_title(COL_NAMES[cdx], fontdict=dict(fontsize=10), loc='left')
+                ax[rdx, cdx].set_title(
+                    COL_NAMES[cdx], fontdict=dict(fontsize=10), loc="left"
+                )
 
             if cdx == 0:
-                ax[rdx, cdx].set_ylabel(ROW_NAMES[rdx], fontdict=dict(fontsize=8),)
+                ax[rdx, cdx].set_ylabel(
+                    ROW_NAMES[rdx],
+                    fontdict=dict(fontsize=8),
+                )
 
             # if rdx == 2:
             #     if cdx == 1:
@@ -286,7 +299,7 @@ def stripplot_cov(plot_df, ax=None, col_names=None, row_names=None):
             # if cdx == 0:
             #     ax[rdx].set_ylabel(ROW_NAMES[rdx], fontdict=dict(fontsize=8))
 
-    ax[0].set_title("iv) Neuroanatomy", fontdict = dict(fontsize=10), loc='left')
+    ax[0].set_title("iv) Neuroanatomy", fontdict=dict(fontsize=10), loc="left")
     # ax[-1].set_xlabel("Distance")
 
     if ax is None:
