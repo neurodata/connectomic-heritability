@@ -7,7 +7,12 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
 def heatmap(
-    data, ax, axes_labels, heatmap_kwargs=None, annot_kwargs=None, color_ax_kwargs=None
+    data,
+    ax=None,
+    axes_labels=None,
+    heatmap_kwargs=None,
+    annot_kwargs=None,
+    color_ax_kwargs=None,
 ):
     heatmap_kwgs = dict(
         square=True,
@@ -21,6 +26,8 @@ def heatmap(
     if heatmap_kwargs is not None:
         heatmap_kwgs.update(heatmap_kwargs)
 
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(5, 5))
     sns.heatmap(data, ax=ax, **heatmap_kwgs)
 
     n = data.shape[0]
@@ -33,10 +40,10 @@ def heatmap(
 
     def color_plotter(axes):
         "axes = top or left"
-        
+
         classes = np.unique(axes_labels)
         n_classes = len(classes)
-            
+
         # draw colors
         annot_kwgs = dict(fontsize=7, c="w", fontfamily="Dejavu Sans")
         if annot_kwargs is not None:
@@ -78,8 +85,10 @@ def heatmap(
             linewidths=0.05,
         )
 
-    color_plotter("top")
-    color_plotter("left")
+    if axes_labels is not None:
+        color_plotter("top")
+        color_plotter("left")
+
 
 def _remove_shared_ax(ax):
     """
