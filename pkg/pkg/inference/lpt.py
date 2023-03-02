@@ -8,17 +8,27 @@ def difference_norm(
     test_case,
 ) -> float:
     if test_case == "exact":
-        pass
+        denom=1.
     elif test_case == "global":
-        X1 = X1 / np.linalg.norm(X1, ord="fro")
-        X2 = X2 / np.linalg.norm(X2, ord="fro")
-    elif test_case == "diagonal":
-        normX1 = np.sum(X1**2, axis=1)
-        normX2 = np.sum(X2**2, axis=1)
-        normX1[normX1 <= 1e-15] = 1
-        normX2[normX2 <= 1e-15] = 1
+        normX1 = np.linalg.norm(X1, ord="fro")
+        normX2 = np.linalg.norm(X2, ord="fro")
+        X1 = X1 / normX1
+        X2 = X2 / normX2
+        denom = 1/normX1 + 1/normX2
+        
+        X1 /= denom
+        X2 /= denom
+        
+    elif test_case == "vertex":
+        normX1 = np.linalg.norm(X1, axis=1)
+        normX2 = np.linalg.norm(X2, axis=1)
         X1 = X1 / np.sqrt(normX1[:, None])
         X2 = X2 / np.sqrt(normX2[:, None])
+        
+        denom = 1/normX1.min() +1/normX2.min()
+        X1 /= denom
+        X2 /= denom
+        
     aligner = OrthogonalProcrustes()
     X1 = aligner.fit_transform(X1, X2)
     return X1 - X2
