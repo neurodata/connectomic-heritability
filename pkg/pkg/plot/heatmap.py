@@ -19,7 +19,7 @@ def heatmap(
         xticklabels=False,
         yticklabels=False,
         cbar=False,
-        cmap="RdGy",
+        cmap="RdBu",
         center=0,
         # linewidths=0.01,
     )

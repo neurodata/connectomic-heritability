@@ -22,6 +22,9 @@ def difference_norm(
     elif test_case == "vertex":
         normX1 = np.linalg.norm(X1, axis=1)
         normX2 = np.linalg.norm(X2, axis=1)
+        normX1[normX1 <= 1e-15] = 1
+        normX2[normX2 <= 1e-15] = 1
+        
         X1 = X1 / np.sqrt(normX1[:, None])
         X2 = X2 / np.sqrt(normX2[:, None])
         
