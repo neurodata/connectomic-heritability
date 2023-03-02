@@ -15,6 +15,7 @@ def heatmap(
     heatmap_kwargs=None,
     annot_kwargs=None,
     color_ax_kwargs=None,
+    ax_lw=0.01
 ):
     heatmap_kwgs = dict(
         square=True,
@@ -34,8 +35,8 @@ def heatmap(
 
     n = data.shape[0]
     for i in range(n):
-        ax.axhline(i, c="w", lw=0.1)
-        ax.axvline(i, c="w", lw=0.1)
+        ax.axhline(i, c="w", lw=ax_lw)
+        ax.axvline(i, c="w", lw=ax_lw)
 
     # plotting axes colors
     divider = make_axes_locatable(ax)
