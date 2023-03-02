@@ -2,7 +2,7 @@ import numpy as np
 from graspologic.align import OrthogonalProcrustes
 
 
-def difference_norm(
+def difference(
     X1: np.ndarray,
     X2: np.ndarray,
     test_case,
@@ -37,3 +37,12 @@ def difference_norm(
     aligner = OrthogonalProcrustes()
     X1 = aligner.fit_transform(X1, X2)
     return X1 - X2
+
+
+def difference_norm(
+    X1: np.ndarray,
+    X2: np.ndarray,
+    test_case,
+) -> float:
+    X = difference(X1, X2, test_case)
+    return np.linalg.norm(X)

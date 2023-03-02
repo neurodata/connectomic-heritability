@@ -40,14 +40,11 @@ def load_dataset(
         "Slab1068",
         "Slab907",
         "Talairach",
-        "Yeo-17-liberal",
-        "Yeo-17",
-        "Yeo-7-liberal",
-        "Yeo-7",
     ]
 
     module_path = Path(__file__).absolute().parents[2]
-    p = Path(module_path / "data/graphs")
+    
+    p = Path(module_path.parent / "data/graphs")
 
     if not p.exists():
         msg = "You must download the data using the script first."
