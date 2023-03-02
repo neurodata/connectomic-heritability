@@ -28,6 +28,8 @@ def difference_norm(
         denom = 1/normX1.min() +1/normX2.min()
         X1 /= denom
         X2 /= denom
+    else:
+        raise ValueError()
         
     aligner = OrthogonalProcrustes()
     X1 = aligner.fit_transform(X1, X2)
