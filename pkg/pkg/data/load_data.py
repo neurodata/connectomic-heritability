@@ -37,13 +37,14 @@ def load_dataset(
         "Schaefer200",
         "Schaefer300",
         "Schaefer400",
-        "Slab1068",
-        "Slab907",
-        "Talairach",
+        "Yeo-17-liberal",
+        "Yeo-17",
+        "Yeo-7-liberal",
+        "Yeo-7",
     ]
 
     module_path = Path(__file__).absolute().parents[2]
-    
+
     p = Path(module_path.parent / "data/graphs")
 
     if not p.exists():

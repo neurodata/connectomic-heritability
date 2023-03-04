@@ -15,7 +15,7 @@ def heatmap(
     heatmap_kwargs=None,
     annot_kwargs=None,
     color_ax_kwargs=None,
-    ax_lw=0.01
+    ax_lw=0.01,
 ):
     heatmap_kwgs = dict(
         square=True,
