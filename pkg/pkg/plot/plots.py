@@ -34,9 +34,12 @@ def heatmap(
     sns.heatmap(data, ax=ax, **heatmap_kwgs)
 
     n = data.shape[0]
-    for i in range(n):
-        ax.axhline(i, c="w", lw=ax_lw)
-        ax.axvline(i, c="w", lw=ax_lw)
+    if ax_lw is None or ax_lw == 0:
+        pass
+    else:
+        for i in range(n):
+            ax.axhline(i, c="w", lw=ax_lw)
+            ax.axvline(i, c="w", lw=ax_lw)
 
     # plotting axes colors
     divider = make_axes_locatable(ax)
@@ -139,7 +142,7 @@ def stripplot(plot_df, ax=None, col_names=None, row_names=None):
         ROW_NAMES = row_names
 
     for rdx, gender in enumerate(["all", "female", "male"]):
-        for cdx, scale in enumerate(["exact", "global", "vertex"]):
+        for cdx, scale in enumerate(["exact", "glob", "vertex"]):
             tmp_df = plot_df[(plot_df.scale == scale) & (plot_df.gender == gender)]
 
             sns.stripplot(

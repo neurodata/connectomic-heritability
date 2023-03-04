@@ -28,7 +28,7 @@ def difference(
         X1 = X1 / np.sqrt(normX1[:, None])
         X2 = X2 / np.sqrt(normX2[:, None])
 
-        denom = 1 / normX1.min() + 1 / normX2.min()
+        denom = normX1.min() + normX2.min()
         X1 /= denom
         X2 /= denom
     else:
