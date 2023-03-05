@@ -511,20 +511,20 @@ title="Print to PDF"
 
     <span class="n">exact</span> <span class="o">=</span> <span class="n">difference</span><span class="p">(</span><span class="n">X_hat</span><span class="p">,</span> <span class="n">Y_hat</span><span class="p">,</span> <span class="s2">&quot;exact&quot;</span><span class="p">)</span>
     <span class="n">exact_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">exact</span><span class="p">)</span>
-    <span class="n">exact</span> <span class="o">=</span> <span class="n">exact</span> <span class="o">@</span> <span class="n">exact</span><span class="o">.</span><span class="n">T</span>
+    <span class="c1"># exact = exact @ exact.T</span>
 
     <span class="n">global_</span> <span class="o">=</span> <span class="n">difference</span><span class="p">(</span><span class="n">X_hat</span><span class="p">,</span> <span class="n">Y_hat</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">)</span>
     <span class="n">global_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">global_</span><span class="p">)</span>
-    <span class="n">global_</span> <span class="o">=</span> <span class="n">global_</span> <span class="o">@</span> <span class="n">global_</span><span class="o">.</span><span class="n">T</span>
+    <span class="c1"># global_ = global_ @ global_.T</span>
 
     <span class="n">vertex</span> <span class="o">=</span> <span class="n">difference</span><span class="p">(</span><span class="n">X_hat</span><span class="p">,</span> <span class="n">Y_hat</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">)</span>
     <span class="n">vertex_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vertex</span><span class="p">)</span>
-    <span class="n">vertex</span> <span class="o">=</span> <span class="n">vertex</span> <span class="o">@</span> <span class="n">vertex</span><span class="o">.</span><span class="n">T</span>
+    <span class="c1"># vertex = vertex @ vertex.T</span>
 
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag_indices_from</span><span class="p">(</span><span class="n">exact</span><span class="p">)</span>
-    <span class="n">exact</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">global_</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">vertex</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># idx = np.diag_indices_from(exact)</span>
+    <span class="c1"># exact[idx] = 0</span>
+    <span class="c1"># global_[idx] = 0</span>
+    <span class="c1"># vertex[idx] = 0</span>
 
     <span class="k">return</span> <span class="n">exact</span><span class="p">,</span> <span class="n">global_</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">exact_norm</span><span class="p">,</span> <span class="n">global_norm</span><span class="p">,</span> <span class="n">vertex_norm</span>
 </pre></div>
@@ -539,11 +539,7 @@ title="Print to PDF"
 <span class="expanded">Hide code cell content</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span>
-    <span class="n">scale</span><span class="p">,</span>
-    <span class="n">reps</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-<span class="p">):</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="n">n</span> <span class="o">=</span> <span class="mi">25</span>
     <span class="n">ns</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span>
     <span class="n">node_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Left&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Right&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
@@ -561,39 +557,33 @@ title="Print to PDF"
             <span class="p">[</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">2.1</span> <span class="o">/</span> <span class="mi">5</span><span class="p">],</span>
         <span class="p">]</span>
     <span class="p">)</span>
-
     <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
-
+    <span class="n">networks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">diffs</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">norms</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">reps</span><span class="p">):</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">scale</span> <span class="o">==</span> <span class="s2">&quot;exact&quot;</span><span class="p">:</span>
             <span class="n">P1</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
             <span class="n">P2</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
         <span class="k">elif</span> <span class="n">scale</span> <span class="o">==</span> <span class="s2">&quot;global&quot;</span><span class="p">:</span>
-            <span class="n">P1</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
-            <span class="n">P2</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
+            <span class="n">P1</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mf">1.1</span>
+            <span class="n">P2</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="mf">0.9</span>
         <span class="k">elif</span> <span class="n">scale</span> <span class="o">==</span> <span class="s2">&quot;vertex&quot;</span><span class="p">:</span>
-            <span class="n">degree_correction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="n">degree_correction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
             <span class="c1"># degree_correction = np.diag(np.random.uniform(size=50))</span>
             <span class="n">P1</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span>
             <span class="n">P2</span> <span class="o">=</span> <span class="n">degree_correction</span> <span class="o">@</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">degree_correction</span>
         <span class="k">elif</span> <span class="n">scale</span> <span class="o">==</span> <span class="s2">&quot;different&quot;</span><span class="p">:</span>
-            <span class="c1"># degree_correction = np.diag(np.tile(np.linspace(0.5, 1, n), 2)[::-1])</span>
-            <span class="c1"># P1 = degree_correction @ X @ X.T @ degree_correction</span>
-            <span class="c1"># degree_correction = np.random.uniform(0.75, 1, size=n * 2)</span>
-            <span class="c1"># degree_correction[:n] = np.sort(degree_correction[:n])</span>
-            <span class="c1"># degree_correction[n:] = np.sort(degree_correction[n:])</span>
-            <span class="c1"># degree_correction = np.diag(degree_correction)</span>
-            <span class="c1"># P2 = degree_correction @ Y @ Y.T @ degree_correction</span>
-
+            <span class="c1"># degree_correction = np.diag(np.random.uniform(0.8, 1, n * 2))</span>
             <span class="n">P1</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">@</span> <span class="n">Y</span><span class="o">.</span><span class="n">T</span>
-            <span class="n">degree_correction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="n">degree_correction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="c1"># degree_correction = np.diag(np.random.uniform(0.2, 1, size=n * 2))</span>
             <span class="n">P2</span> <span class="o">=</span> <span class="n">degree_correction</span> <span class="o">@</span> <span class="n">X</span> <span class="o">@</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">degree_correction</span>
+            <span class="c1"># P2 = X @ X.T</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">()</span>
 
@@ -602,10 +592,15 @@ title="Print to PDF"
 
         <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">compute_diff_mats</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
 
-        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">E</span><span class="p">])</span>
+        <span class="n">networks</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">])</span>
+        <span class="n">diffs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">C</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">E</span><span class="p">])</span>
         <span class="n">norms</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">U</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">W</span><span class="p">])</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">norms</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">networks</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">norms</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -621,26 +616,12 @@ title="Print to PDF"
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">simulate</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">,</span> <span class="s2">&quot;different&quot;</span><span class="p">]]</span>
 
 <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
-<span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
+<span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
+<span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)])</span>
 </pre></div>
 </div>
 </div>
 </details>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norms</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.87947419, 0.1792044 , 0.1881103 ],
-       [0.84590727, 0.17169139, 0.18554283],
-       [1.28654017, 0.24371667, 0.14111197],
-       [1.43292067, 0.27064211, 0.15544839]])
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -701,7 +682,7 @@ title="Print to PDF"
     <span class="n">cbar</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 
 <span class="c1"># plot diffs</span>
-<span class="n">to_plot</span> <span class="o">=</span> <span class="n">res</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:]</span>
+<span class="n">to_plot</span> <span class="o">=</span> <span class="n">diffs</span>
 <span class="n">to_ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">3</span><span class="p">:]</span>
 
 <span class="n">heatmap_idx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
@@ -722,19 +703,27 @@ title="Print to PDF"
             <span class="n">vmin</span> <span class="o">=</span> <span class="n">vmin2</span>
             <span class="n">vmax</span> <span class="o">=</span> <span class="n">vmax2</span>
         <span class="n">heatmap</span><span class="p">(</span>
-            <span class="n">col</span><span class="p">,</span>
+            <span class="n">col</span> <span class="o">@</span> <span class="n">col</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
             <span class="n">ax</span><span class="o">=</span><span class="n">to_ax</span><span class="p">[</span><span class="n">rdx</span><span class="p">,</span> <span class="n">heatmap_idx</span><span class="p">[</span><span class="n">cdx</span><span class="p">]],</span>
             <span class="c1"># axes_labels=node_labels,</span>
             <span class="n">heatmap_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
-                <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
-                <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
+                <span class="c1"># vmin=vmin,</span>
+                <span class="c1"># vmax=vmax,</span>
                 <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">cbar_ax</span><span class="o">=</span><span class="n">to_ax</span><span class="p">[</span><span class="n">rdx</span><span class="p">,</span> <span class="n">cbar_idx</span><span class="p">[</span><span class="n">cdx</span><span class="p">]],</span>
                 <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="n">cbar</span> <span class="o">=</span> <span class="n">to_ax</span><span class="p">[</span><span class="n">rdx</span><span class="p">,</span> <span class="n">cbar_idx</span><span class="p">[</span><span class="n">cdx</span><span class="p">]]</span>
-        <span class="n">cbar</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">cbar</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span>
+            <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+            <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span>
+            <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
+            <span class="n">labelsize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">cbar</span><span class="o">.</span><span class="n">ticklabel_format</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">scilimits</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
         <span class="c1"># cbar.ticklabel_format(useMathText=True)</span>
         <span class="n">cbar</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">ScalarFormatter</span><span class="p">(</span><span class="n">useMathText</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
         <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
@@ -781,7 +770,7 @@ title="Print to PDF"
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="_images/4412e48f9a7618eee1f90ac8a2dd69198ddb8f81a1b132c941bdb8e0910b0734.png" src="_images/4412e48f9a7618eee1f90ac8a2dd69198ddb8f81a1b132c941bdb8e0910b0734.png" />
+<img alt="_images/7504848763b09036e90e36dac3aea120bbc6ddb21181da6adf7fee056f33de5c.png" src="_images/7504848763b09036e90e36dac3aea120bbc6ddb21181da6adf7fee056f33de5c.png" />
 </div>
 </div>
 <div class="cell docutils container">
