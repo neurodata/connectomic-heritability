@@ -1,0 +1,842 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Using python &#8212; Connectomic Heritability</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4-data-plot';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="coverpage.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Connectomic Heritability</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="coverpage.html">
+                    Abstract
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="placeholder.html">Placeholder</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Posters</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.neurodata.io/connectomic-heritability/sfn22.pdf">SfN 2022</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/neurodata/connectomic-heritability" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/neurodata/connectomic-heritability/issues/new?title=Issue%20on%20page%20%2F4-data-plot.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/4-data-plot.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Using python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> rpy2.ipython
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pkg.plot</span> <span class="kn">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">Panel</span><span class="p">,</span> <span class="n">SmartSVG</span><span class="p">,</span> <span class="n">Text</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">squareform</span>
+
+<span class="kn">from</span> <span class="nn">twins.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">R</span>
+myPaths &lt;- .libPaths()
+myPaths &lt;- c(&quot;/home/j1c/R/packages&quot;, myPaths)
+.libPaths(myPaths)
+
+suppressPackageStartupMessages(library(ComplexHeatmap))
+suppressPackageStartupMessages(library(circlize))
+suppressPackageStartupMessages(library(extrafont))
+suppressPackageStartupMessages(library(svglite))
+
+invisible(font_import())
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subjects</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nb">str</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="s2">&quot;../../twins/data/subject_metadata/truncated_restricted_processed_valid_subjects.csv&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">Subject</span>
+<span class="p">]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;../../twins/data/subject_metadata/truncated_restricted_processed_valid_subjects.csv&quot;</span>
+<span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Subject&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="c1"># remove singletons</span>
+<span class="n">uniques</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Family_ID</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">singletons</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">unique</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">uniques</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Family_ID</span> <span class="o">==</span> <span class="n">unique</span><span class="p">]</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">singletons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+
+<span class="n">singleton_idx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">singletons</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;./average_graph&quot;</span><span class="p">,</span> <span class="n">average_graph</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;./maximum_diff&quot;</span><span class="p">,</span> <span class="n">maximum_diff</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parc</span> <span class="o">=</span> <span class="s2">&quot;Desikan&quot;</span>
+
+<span class="n">graphs</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">parcellation</span><span class="o">=</span><span class="n">parc</span><span class="p">,</span> <span class="n">ptr</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">graphs</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">graphs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">}</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../../twins/notebooks/outs/1-connectome-distances/arrs/exact_</span><span class="si">{</span><span class="n">parc</span><span class="si">}</span><span class="s2">.npy&quot;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">average_graph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">graphs</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">average_graph</span><span class="p">[</span><span class="n">average_graph</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">maximum</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">idx</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">squareform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="n">maximum</span><span class="p">)</span>
+
+<span class="n">sub1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">Subject</span>
+<span class="n">sub2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">Subject</span>
+<span class="n">A1</span> <span class="o">=</span> <span class="n">graphs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">sub1</span><span class="p">)]</span>
+<span class="n">A2</span> <span class="o">=</span> <span class="n">graphs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">sub2</span><span class="p">)]</span>
+
+<span class="n">maximum_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">A1</span> <span class="o">-</span> <span class="n">A2</span><span class="p">)</span>
+
+<span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">maximum_diff</span><span class="p">,</span> <span class="n">average_graph</span><span class="p">]))</span>
+<span class="n">vmin</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">average_graph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">average_graph</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">maximum_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">maximum_diff</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">R</span> -i average_graph -i maximum_diff
+
+plotting.labels &lt;- c()
+
+for (i in 1:35){
+    plotting.labels &lt;- c(plotting.labels, &quot;L&quot;)
+}
+for (i in 1:35){
+    plotting.labels &lt;- c(plotting.labels, &quot;R&quot;)
+}
+
+vmax &lt;- max(c(average_graph, maximum_diff))
+# plotting.labels &lt;- c(plotting.labels, tolower(plotting.labels))
+plotting.labels &lt;- factor(plotting.labels, levels = unique(plotting.labels))
+
+# Make the heatmap
+plot.heatmap &lt;- function(matrix, name, save=FALSE, width=unit(1, &quot;npc&quot;)) {
+    ha = HeatmapAnnotation(
+        foo = anno_block(
+            gp = gpar(fill = 2:8, col = 0),
+            labels = c(&quot;Left&quot;, &quot;Right&quot;),
+            labels_gp = gpar(
+                col = &quot;white&quot;, 
+                fontsize = 14,
+                fontfamily = &quot;DejaVu Sans&quot;
+                # fontface=&quot;bold&quot;
+            )
+        ),
+        height = unit(6, &quot;mm&quot;)
+    )
+    ra = rowAnnotation(
+        foo = anno_block(
+            gp = gpar(fill = 2:8, col = 0),
+            labels = c(&quot;Left&quot;, &quot;Right&quot;),
+            labels_gp = gpar(
+                col = &quot;white&quot;, 
+                fontsize = 14,
+                fontfamily = &quot;DejaVu Sans&quot;
+                # fontface=&quot;bold&quot;
+            )
+        ),
+        width = unit(6, &quot;mm&quot;)
+    )
+    if (!isFALSE(save)){
+        width &lt;- 7
+        height &lt;- width
+        svglite(paste0(&quot;./figures/&quot;, save, &quot;.svg&quot;), width=width,  height=height)
+        # svg(paste0(&quot;./figures/&quot;, save, &quot;.svg&quot;))
+    }
+    ht &lt;- Heatmap(
+        matrix = matrix, 
+        col = colorRamp2(c(0, vmax), c(&quot;white&quot;, &quot;red&quot;)),
+        border = TRUE, 
+        rect_gp = gpar(lwd=0.0, col=0),
+        name = &quot;Edge Weight&quot;, 
+        column_title = name,
+        column_title_gp = gpar(fontsize = 25, fontfamily = &quot;DejaVu Sans&quot;),
+        cluster_columns = FALSE, 
+        cluster_column_slices = FALSE, 
+        show_column_names = FALSE,
+        cluster_rows = FALSE, 
+        cluster_row_slices = FALSE, 
+        show_row_names = FALSE, 
+        row_title = NULL,
+        column_split = plotting.labels, 
+        row_split = plotting.labels,
+        top_annotation = ha,
+        left_annotation = ra,
+        heatmap_width = width,
+        heatmap_height= width,
+        show_heatmap_legend = FALSE
+    )
+    draw(ht)
+    if (!isFALSE(save)){
+        dev.off()
+    }
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">R</span>
+plot.heatmap(average_graph, &quot;Average Graph&quot;, &quot;3a-average&quot;)
+
+plot.heatmap(maximum_diff, &quot;Difference in Most Different Pair&quot;, &quot;3b-difference&quot;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>png 
+  2 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">R</span>
+
+# Make legend
+svglite(paste0(&quot;./figures/&quot;, &quot;3-legend&quot;, &quot;.svg&quot;), height=3.1, width=0.65)
+
+colorbar &lt; -Legend(
+    col_fun=colorRamp2(c(0, vmax), c(&quot;white&quot;, &quot;red&quot;)),
+    title=&quot;Log Edgeweight&quot;,
+    legend_width=unit(1, &quot;inches&quot;),
+    legend_height=unit(3, &quot;inches&quot;),
+    direction=&quot;vertical&quot;,
+    title_position=&quot;leftcenter-rot&quot;,
+    title_gp=gpar(fontsize=14, fontfamily=&quot;DejaVu Sans&quot;),
+    labels_gp=gpar(fontsize=14, fontfamily=&quot;DejaVu Sans&quot;),
+)
+pd = packLegend(colorbar, direction=&quot;horizontal&quot;)
+draw(
+    pd,
+)
+
+dev.off()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>png 
+  2 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">parta</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="s2">&quot;./figures/3a-average.svg&quot;</span><span class="p">)</span>
+<span class="n">parta</span><span class="o">.</span><span class="n">set_width</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">parta</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">parta_panel</span> <span class="o">=</span> <span class="n">Panel</span><span class="p">(</span>
+    <span class="n">parta</span><span class="p">,</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;A)&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;DejaVu Sans&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">partb</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="s2">&quot;./figures/3b-difference.svg&quot;</span><span class="p">)</span>
+<span class="n">partb</span><span class="o">.</span><span class="n">set_width</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">partb</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">partb_panel</span> <span class="o">=</span> <span class="n">Panel</span><span class="p">(</span>
+    <span class="n">partb</span><span class="p">,</span> <span class="n">Text</span><span class="p">(</span><span class="s2">&quot;B)&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;DejaVu Sans&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">partb_panel</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">legend</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="s2">&quot;./figures/3-legend.svg&quot;</span><span class="p">)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">set_height</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+<span class="n">legend</span><span class="o">.</span><span class="n">move</span><span class="p">((</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">partb</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">parta</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span>
+
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">partb</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="n">legend</span><span class="o">.</span><span class="n">width</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">parta</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.85</span><span class="p">,</span>
+    <span class="n">parta_panel</span><span class="p">,</span>
+    <span class="n">partb_panel</span><span class="p">,</span>
+    <span class="n">legend</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;./figures/3-composite.svg&quot;</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7abcdc336872004fde9721eb6991caf01f3a76c57355845a5c5529e16d6ad5ae.svg" src="_images/7abcdc336872004fde9721eb6991caf01f3a76c57355845a5c5529e16d6ad5ae.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cairosvg</span>
+
+<span class="n">cairosvg</span><span class="o">.</span><span class="n">svg2pdf</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;./figures/3-composite.svg&quot;</span><span class="p">,</span> <span class="n">write_to</span><span class="o">=</span><span class="s2">&quot;./figures/3-composite.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="using-python">
+<h1>Using python<a class="headerlink" href="#using-python" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">graspologic.plot.plot</span> <span class="kn">import</span> <span class="n">_process_graphs</span>
+<span class="kn">from</span> <span class="nn">graspologic.plot.plot_matrix</span> <span class="kn">import</span> <span class="n">_remove_shared_ax</span><span class="p">,</span> <span class="n">draw_colors</span>
+<span class="kn">from</span> <span class="nn">graspologic.simulations</span> <span class="kn">import</span> <span class="n">sbm</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="kn">from</span> <span class="nn">pkg.plot</span> <span class="kn">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">Panel</span><span class="p">,</span> <span class="n">SmartSVG</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">heatmap</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;./average_graph.npy&quot;</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;./maximum_diff.npy&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hexes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;#ffffff&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;#fff5f0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;#fee0d2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;#fcbba1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;#fc9272&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;#fb6a4a&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;#ef3b2c&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;#cb181d&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">rgbs</span> <span class="o">=</span> <span class="p">[</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">hex2color</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">hexes</span><span class="p">]</span>
+
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">blend_palette</span><span class="p">(</span><span class="n">rgbs</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cmap</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">layout</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="s2">&quot;cbar&quot;</span><span class="p">],</span>
+<span class="p">]</span>
+
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot_mosaic</span><span class="p">(</span>
+    <span class="n">layout</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">heatmaps</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">Y</span><span class="p">)</span>
+<span class="n">inner_hier_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Left&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">35</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;Right&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">35</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">heatmaps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;cbar&quot;</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+    <span class="n">heatmap_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mf">4.1</span><span class="p">,</span>
+        <span class="n">center</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">cbar_ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="s2">&quot;cbar&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="n">heatmap</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">ax</span><span class="p">,</span>
+        <span class="n">inner_hier_labels</span><span class="p">,</span>
+        <span class="n">heatmap_kwargs</span><span class="o">=</span><span class="n">heatmap_kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">gap</span> <span class="o">=</span> <span class="mf">0.0035</span>
+    <span class="n">xloc</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xloc</span> <span class="o">*</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.075</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.075</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="s2">&quot;cbar&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
+    <span class="s2">&quot;Log Edge Weight&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="s2">&quot;cbar&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+<span class="n">title_kwgs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;A) Average Connectome&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">title_kwgs</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;B) Difference in Most Different Pair&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">title_kwgs</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./figures/3-data.svg&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jaewon Chung
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

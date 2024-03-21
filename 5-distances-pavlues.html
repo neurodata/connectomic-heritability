@@ -1,0 +1,1607 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Histogram Plots &#8212; Connectomic Heritability</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '5-distances-pavlues';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="coverpage.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Connectomic Heritability</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="coverpage.html">
+                    Abstract
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="placeholder.html">Placeholder</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Posters</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.neurodata.io/connectomic-heritability/sfn22.pdf">SfN 2022</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/neurodata/connectomic-heritability" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/neurodata/connectomic-heritability/issues/new?title=Issue%20on%20page%20%2F5-distances-pavlues.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/5-distances-pavlues.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Histogram Plots</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-for-each-parcellation">Plot for each parcellation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-b">Part B</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge">Merge</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pvalue-heatmap">pvalue heatmap</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="histogram-plots">
+<h1>Histogram Plots<a class="headerlink" href="#histogram-plots" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">pkg.plot</span> <span class="kn">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">Panel</span><span class="p">,</span> <span class="n">SmartSVG</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">stripplot</span><span class="p">,</span> <span class="n">stripplot_cov</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">squareform</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">&quot;../../twins/data/subject_metadata/truncated_restricted_processed_valid_subjects.csv&quot;</span>
+<span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Subject&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="c1"># remove singletons</span>
+<span class="n">uniques</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Family_ID</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">singletons</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">unique</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">uniques</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">sub</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Family_ID</span> <span class="o">==</span> <span class="n">unique</span><span class="p">]</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">singletons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+
+<span class="n">singleton_idx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">singletons</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">singleton_idx</span><span class="p">]</span>
+
+<span class="n">male_idx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Gender</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span>
+<span class="n">female_idx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Gender</span> <span class="o">==</span> <span class="s2">&quot;F&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scales</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">]</span>
+<span class="n">rel_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mz&quot;</span><span class="p">,</span> <span class="s2">&quot;dz&quot;</span><span class="p">,</span> <span class="s2">&quot;sib&quot;</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">,</span> <span class="s2">&quot;unrel&quot;</span><span class="p">]</span>
+
+<span class="c1"># rel_names = [&quot;mz&quot;, &quot;dz&quot;, &quot;sib&quot;, &quot;unrel&quot;]</span>
+
+<span class="n">genders</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;male&quot;</span><span class="p">,</span> <span class="s2">&quot;female&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="plot-for-each-parcellation">
+<h2>Plot for each parcellation<a class="headerlink" href="#plot-for-each-parcellation" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../../twins/notebooks/outs/1-connectome-distances/arrs/&quot;</span><span class="p">)</span>
+
+<span class="n">relationships</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+    <span class="s2">&quot;../../twins/notebooks/outs/1-connectome-distances/arrs/relationship_distances.npy&quot;</span>
+<span class="p">)</span>
+<span class="n">relationships</span> <span class="o">=</span> <span class="n">relationships</span><span class="p">[</span><span class="o">~</span><span class="n">singleton_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="o">~</span><span class="n">singleton_idx</span><span class="p">]</span>
+
+
+<span class="n">parc_full</span> <span class="o">=</span> <span class="s2">&quot;Schaefer1000_space-MNI152NLin6_res-1x1x1&quot;</span>
+<span class="n">parc</span> <span class="o">=</span> <span class="s2">&quot;Schaefer1000&quot;</span>
+<span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">]:</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scale</span><span class="si">}</span><span class="s2">*</span><span class="si">{</span><span class="n">parc</span><span class="si">}</span><span class="s2">.npy&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="n">dist_mat</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="n">dist_mat</span> <span class="o">=</span> <span class="n">dist_mat</span><span class="p">[</span><span class="o">~</span><span class="n">singleton_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="o">~</span><span class="n">singleton_idx</span><span class="p">]</span>
+
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;../../twins/notebooks/outs/5-covariate-distances/arrs/covariate_distances_</span><span class="si">{</span><span class="n">parc_full</span><span class="si">}</span><span class="s2">.npy&quot;</span>
+    <span class="p">)</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">cov</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">cov</span><span class="p">[</span><span class="o">~</span><span class="n">singleton_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="o">~</span><span class="n">singleton_idx</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">gender</span> <span class="ow">in</span> <span class="n">genders</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">gender</span> <span class="o">==</span> <span class="s2">&quot;male&quot;</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">dist_mat</span><span class="p">[</span><span class="n">male_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">male_idx</span><span class="p">])</span>
+            <span class="n">Y</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">relationships</span><span class="p">[</span><span class="n">male_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">male_idx</span><span class="p">])</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="n">male_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">male_idx</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">gender</span> <span class="o">==</span> <span class="s2">&quot;female&quot;</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">dist_mat</span><span class="p">[</span><span class="n">female_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">female_idx</span><span class="p">])</span>
+            <span class="n">Y</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">relationships</span><span class="p">[</span><span class="n">female_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">female_idx</span><span class="p">])</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">cov</span><span class="p">[</span><span class="n">female_idx</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">female_idx</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">dist_mat</span><span class="p">)</span>
+            <span class="n">Y</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">relationships</span><span class="p">)</span>
+            <span class="n">Z</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Y</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">500</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">==</span> <span class="n">i</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">Z</span><span class="p">[</span><span class="n">idx</span><span class="p">]):</span>
+                <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">j</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">rel_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">scale</span><span class="p">,</span> <span class="n">gender</span><span class="p">])</span>
+
+<span class="n">plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">distances</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">,</span> <span class="s2">&quot;covariate&quot;</span><span class="p">,</span> <span class="s2">&quot;relationship&quot;</span><span class="p">,</span> <span class="s2">&quot;scale&quot;</span><span class="p">,</span> <span class="s2">&quot;gender&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/pvalues.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Parcellation</th>
+      <th>Gender</th>
+      <th>test</th>
+      <th>model</th>
+      <th>pvalue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>a</td>
+      <td>Exact</td>
+      <td>0.081550</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>a</td>
+      <td>Exact</td>
+      <td>0.031428</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>a</td>
+      <td>Exact</td>
+      <td>0.005481</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>a</td>
+      <td>Global</td>
+      <td>0.101967</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>a</td>
+      <td>Global</td>
+      <td>0.013838</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>a</td>
+      <td>Global</td>
+      <td>0.004286</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>a</td>
+      <td>Vertex</td>
+      <td>0.323899</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>a</td>
+      <td>Vertex</td>
+      <td>0.023016</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>a</td>
+      <td>Vertex</td>
+      <td>0.006115</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>b</td>
+      <td>Exact</td>
+      <td>0.001195</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>b</td>
+      <td>Exact</td>
+      <td>0.000947</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>b</td>
+      <td>Exact</td>
+      <td>0.002723</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>b</td>
+      <td>Global</td>
+      <td>0.001117</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>b</td>
+      <td>Global</td>
+      <td>0.000917</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>b</td>
+      <td>Global</td>
+      <td>0.002588</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>b</td>
+      <td>Vertex</td>
+      <td>0.008350</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>b</td>
+      <td>Vertex</td>
+      <td>0.004841</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>b</td>
+      <td>Vertex</td>
+      <td>0.007018</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>c</td>
+      <td>Covariate</td>
+      <td>0.009771</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>c</td>
+      <td>Covariate</td>
+      <td>0.020404</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>c</td>
+      <td>Covariate</td>
+      <td>0.000158</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>d</td>
+      <td>Exact</td>
+      <td>0.000500</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>d</td>
+      <td>Exact</td>
+      <td>0.001000</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>d</td>
+      <td>Exact</td>
+      <td>0.001000</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>d</td>
+      <td>Global</td>
+      <td>0.001000</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>d</td>
+      <td>Global</td>
+      <td>0.001499</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>d</td>
+      <td>Global</td>
+      <td>0.001499</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>d</td>
+      <td>Vertex</td>
+      <td>0.001499</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>d</td>
+      <td>Vertex</td>
+      <td>0.001000</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>d</td>
+      <td>Vertex</td>
+      <td>0.001000</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>e</td>
+      <td>Exact</td>
+      <td>0.001999</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>e</td>
+      <td>Exact</td>
+      <td>0.001999</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>e</td>
+      <td>Exact</td>
+      <td>0.001000</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>e</td>
+      <td>Global</td>
+      <td>0.001499</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>e</td>
+      <td>Global</td>
+      <td>0.001999</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>e</td>
+      <td>Global</td>
+      <td>0.003498</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Glasser</td>
+      <td>All</td>
+      <td>e</td>
+      <td>Vertex</td>
+      <td>0.002999</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Glasser</td>
+      <td>M</td>
+      <td>e</td>
+      <td>Vertex</td>
+      <td>0.002499</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Glasser</td>
+      <td>F</td>
+      <td>e</td>
+      <td>Vertex</td>
+      <td>0.000500</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_df</span><span class="o">.</span><span class="n">gender</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">to_replace</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">All</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="n">F</span><span class="o">=</span><span class="s2">&quot;female&quot;</span><span class="p">,</span> <span class="n">M</span><span class="o">=</span><span class="s2">&quot;male&quot;</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;paper&quot;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">gender</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;female&quot;</span><span class="p">,</span> <span class="s2">&quot;male&quot;</span><span class="p">]</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">]</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s2">&quot;exact-all&quot;</span><span class="p">,</span> <span class="s2">&quot;global-all&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex-all&quot;</span><span class="p">,</span> <span class="s2">&quot;covariate-all&quot;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s2">&quot;exact-female&quot;</span><span class="p">,</span> <span class="s2">&quot;global-female&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex-female&quot;</span><span class="p">,</span> <span class="s2">&quot;covariate-female&quot;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s2">&quot;exact-male&quot;</span><span class="p">,</span> <span class="s2">&quot;global-male&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex-male&quot;</span><span class="p">,</span> <span class="s2">&quot;covariate-male&quot;</span><span class="p">],</span>
+    <span class="p">[</span><span class="s2">&quot;legend&quot;</span><span class="p">,</span> <span class="s2">&quot;legend&quot;</span><span class="p">,</span> <span class="s2">&quot;legend&quot;</span><span class="p">,</span> <span class="s2">&quot;legend&quot;</span><span class="p">],</span>
+<span class="p">]</span>
+
+<span class="n">col_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;i) Connectome Model: Exact&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ii) Connectome Model: Global&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iii) Connectome Model: Vertex&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot_mosaic</span><span class="p">(</span>
+    <span class="n">layout</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;legend&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">stripplot</span><span class="p">(</span><span class="n">plot_df</span><span class="p">,</span> <span class="n">ax_arr</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">col_names</span><span class="o">=</span><span class="n">col_names</span><span class="p">)</span>
+<span class="n">stripplot_cov</span><span class="p">(</span><span class="n">plot_df</span><span class="p">,</span> <span class="n">ax_arr</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># handle limits</span>
+<span class="n">limits</span> <span class="o">=</span> <span class="p">[[</span><span class="n">a</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">ax_arr</span><span class="p">]</span>
+
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="s2">&quot;legend&quot;</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="n">handles</span><span class="p">[:</span><span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="s2">&quot;Monozygotic&quot;</span><span class="p">,</span> <span class="s2">&quot;Dizygotic&quot;</span><span class="p">,</span> <span class="s2">&quot;Sibling&quot;</span><span class="p">,</span> <span class="s2">&quot;Unrelated&quot;</span><span class="p">],</span>
+    <span class="n">loc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Relationships&quot;</span><span class="p">,</span>
+    <span class="n">ncol</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">handletextpad</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">columnspacing</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
+    <span class="s2">&quot;A) Pairwise Distances Separated by Familial Relationships&quot;</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">,</span>
+    <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">supxlabel</span><span class="p">(</span><span class="s2">&quot;Distances&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./figures/4a.svg&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ab478a652cd29e8e45368f96a16af8622fe5e5e9454b45bf2fbd1b3b020d55a0.png" src="_images/ab478a652cd29e8e45368f96a16af8622fe5e5e9454b45bf2fbd1b3b020d55a0.png" />
+</div>
+</div>
+</section>
+<section id="part-b">
+<h2>Part B<a class="headerlink" href="#part-b" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># sns.set_context(&quot;talk&quot;, font_scale=0.65)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/pvalues.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># options for plots</span>
+<span class="n">gap</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">fontdict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">ytickloc</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="n">titles</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;i) Associational Test: Mono. vs Dizygotic&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ii) Associational Test: Connectomes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iii) Associational Test: Neuroanatomy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iv) Conditional Test: Connectomes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;v) Conditional Test: Connectome Subgraphs&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># setting variables</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Exact&quot;</span><span class="p">,</span> <span class="s2">&quot;Global&quot;</span><span class="p">,</span> <span class="s2">&quot;Vertex&quot;</span><span class="p">]</span>
+<span class="n">covariate_model</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Covariate&quot;</span><span class="p">]</span>
+<span class="n">tests</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+<span class="n">genders</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">]</span>
+
+<span class="n">nsubplots</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tests</span><span class="p">)</span>  <span class="c1"># tests</span>
+<span class="n">nmodels</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>  <span class="c1"># model</span>
+<span class="n">ngenders</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">genders</span><span class="p">)</span>  <span class="c1"># gender</span>
+
+<span class="c1"># create empty fig</span>
+<span class="n">width</span> <span class="o">=</span> <span class="n">nsubplots</span> <span class="o">*</span> <span class="mi">2</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">all_axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot_mosaic</span><span class="p">(</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ABC</span>
+<span class="sd">    DEF</span>
+<span class="sd">    &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="c1"># sharex=True,</span>
+    <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">axes</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">ax</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">all_axes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;F&quot;</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">cdx</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+    <span class="n">test</span> <span class="o">=</span> <span class="n">tests</span><span class="p">[</span><span class="n">cdx</span><span class="p">]</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">test</span> <span class="o">==</span> <span class="n">test</span><span class="p">]</span>
+    <span class="n">test_data</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;Gender&quot;</span><span class="p">])</span>
+
+    <span class="c1"># xs = np.log10(test_data.pvalue)</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="n">test_data</span><span class="o">.</span><span class="n">pvalue</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">length</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="n">ys</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ytick</span> <span class="ow">in</span> <span class="n">ytickloc</span><span class="p">:</span>
+            <span class="n">spacing</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">+</span> <span class="n">gap</span><span class="p">)</span>
+            <span class="n">ys</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">ytick</span> <span class="o">-</span> <span class="n">spacing</span><span class="p">,</span> <span class="n">ytick</span><span class="p">,</span> <span class="n">ytick</span> <span class="o">+</span> <span class="n">spacing</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ys</span> <span class="o">=</span> <span class="n">ytickloc</span>
+
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#8da0cb&quot;</span><span class="p">,</span> <span class="s2">&quot;#e78ac3&quot;</span><span class="p">,</span> <span class="s2">&quot;#a6d854&quot;</span><span class="p">]</span>
+    <span class="n">scatter</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+        <span class="n">xs</span><span class="p">,</span>
+        <span class="n">ys</span><span class="p">,</span>
+        <span class="n">c</span><span class="o">=</span><span class="n">colors</span> <span class="o">*</span> <span class="p">(</span><span class="n">length</span> <span class="o">//</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+    <span class="c1"># xaxis</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">10</span><span class="o">**-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="o">**-</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">xtick_loc</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">xtick_loc</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span>
+        <span class="p">[</span><span class="s2">&quot;$10^{-4}$&quot;</span><span class="p">,</span> <span class="s2">&quot;$10^{-3}$&quot;</span><span class="p">,</span> <span class="s2">&quot;$10^{-2}$&quot;</span><span class="p">,</span> <span class="s2">&quot;.05&quot;</span><span class="p">,</span> <span class="s2">&quot;.1&quot;</span><span class="p">],</span>
+        <span class="c1"># rotation=90,</span>
+        <span class="n">fontdict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;p-value&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">minorticks_off</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">]:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># yaxis</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+
+    <span class="c1"># set title</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">fontdict</span><span class="o">=</span><span class="n">fontdict</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+    <span class="c1"># lines</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>  <span class="c1"># set alpha-0.05 line</span>
+    <span class="k">for</span> <span class="n">ytick</span> <span class="ow">in</span> <span class="n">ytickloc</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">ytick</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+
+    <span class="c1"># significant labeling</span>
+    <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+    <span class="n">ymax</span> <span class="o">+=</span> <span class="mf">0.035</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+        <span class="s2">&quot;Significant&quot;</span><span class="p">,</span>
+        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">ymax</span><span class="p">),</span>
+        <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.022</span><span class="p">,</span> <span class="n">ymax</span><span class="p">),</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+        <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+            <span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;&lt;-&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
+        <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+        <span class="s2">&quot;Not Significant&quot;</span><span class="p">,</span>
+        <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">ymax</span><span class="p">),</span>
+        <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.11</span><span class="p">,</span> <span class="n">ymax</span><span class="p">),</span>
+        <span class="n">size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+        <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+            <span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;&lt;-&quot;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+        <span class="n">verticalalignment</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">label</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">]:</span>
+        <span class="c1"># yaxis</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Model&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span>
+            <span class="n">ticks</span><span class="o">=</span><span class="n">ytickloc</span><span class="p">,</span>
+            <span class="n">labels</span><span class="o">=</span><span class="n">models</span><span class="p">,</span>
+            <span class="c1"># rotation=90,</span>
+            <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1">#         # Twin ax</span>
+    <span class="c1">#         twin_ax = ax.twinx()</span>
+    <span class="c1">#         twin_ax.yaxis.set_ticks_position(&quot;left&quot;)</span>
+    <span class="c1">#         twin_ax.tick_params(axis=&quot;y&quot;, direction=&quot;in&quot;, pad=-5, length=0)</span>
+    <span class="c1">#         sns.despine(ax=twin_ax)</span>
+    <span class="c1">#         twin_ax.set_ylim(ax.get_ylim())</span>
+
+    <span class="c1">#         # inner ticks</span>
+    <span class="c1">#         ys = []</span>
+    <span class="c1">#         for ytick in ytickloc:</span>
+    <span class="c1">#             spacing = 1 / (3 + gap)</span>
+    <span class="c1">#             ys.extend([ytick - spacing, ytick, ytick + spacing])</span>
+    <span class="c1">#         twin_ax.set_yticks(</span>
+    <span class="c1">#             ys,</span>
+    <span class="c1">#             labels=genders * 3,</span>
+    <span class="c1">#         )</span>
+
+    <span class="c1">#         for tick in twin_ax.get_yticklabels():</span>
+    <span class="c1">#             tick.set_horizontalalignment(&quot;left&quot;)</span>
+
+    <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Gender&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="n">ytickloc</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">genders</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#8da0cb&quot;</span><span class="p">,</span> <span class="s2">&quot;#e78ac3&quot;</span><span class="p">,</span> <span class="s2">&quot;#a6d854&quot;</span><span class="p">]</span>
+
+<span class="n">handles</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">mpl</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span><span class="p">(</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Circle&quot;</span><span class="p">,</span>
+        <span class="n">markerfacecolor</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">markeredgewidth</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">colors</span>
+<span class="p">]</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">all_axes</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+    <span class="n">handles</span><span class="p">,</span>
+    <span class="p">[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;Females&quot;</span><span class="p">,</span> <span class="s2">&quot;Males&quot;</span><span class="p">],</span>
+    <span class="n">loc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Gender&quot;</span><span class="p">,</span>
+    <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">handletextpad</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">columnspacing</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
+    <span class="s2">&quot;B) P-values From Tests for Heritability&quot;</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="mf">1.065</span><span class="p">,</span>
+    <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./figures/5b.svg&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6d78b3f38951b3928a3faea8ea9847775108c3282241183ba358304211053da1.png" src="_images/6d78b3f38951b3928a3faea8ea9847775108c3282241183ba358304211053da1.png" />
+</div>
+</div>
+</section>
+<section id="merge">
+<h2>Merge<a class="headerlink" href="#merge" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dist</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./figures/5a.svg&quot;</span><span class="p">)</span>
+<span class="n">dist</span><span class="o">.</span><span class="n">set_width</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">dist</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">pvalues</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="s2">&quot;./figures/5b.svg&quot;</span><span class="p">)</span>
+<span class="n">pvalues</span><span class="o">.</span><span class="n">set_width</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">pvalues</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="mf">0.75</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span>
+    <span class="n">dist</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="mf">0.79</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="n">pvalues</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.77</span><span class="p">,</span>
+    <span class="n">dist</span><span class="p">,</span>
+    <span class="n">pvalues</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/557e58061d1a50e5c737dee7a6a70a2b450b56cdf5950778b95c7c292d3e00d8.svg" src="_images/557e58061d1a50e5c737dee7a6a70a2b450b56cdf5950778b95c7c292d3e00d8.svg" /></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">&quot;./figures/4-composite.svg&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">cairosvg</span>
+
+<span class="n">cairosvg</span><span class="o">.</span><span class="n">svg2pdf</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;./figures/4-composite.svg&quot;</span><span class="p">,</span> <span class="n">write_to</span><span class="o">=</span><span class="s2">&quot;./figures/4-composite.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pvalue-heatmap">
+<h2>pvalue heatmap<a class="headerlink" href="#pvalue-heatmap" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvalues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../results/pvalues.csv&quot;</span><span class="p">)</span>
+<span class="n">pvalues</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;corrected_pvalue&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">pvalues</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;corrected_pvalue&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.transforms</span> <span class="kn">import</span> <span class="n">Bbox</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">rankdata</span>
+<span class="kn">from</span> <span class="nn">seaborn.utils</span> <span class="kn">import</span> <span class="n">relative_luminance</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_pvalues</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">ax</span><span class="p">,</span>
+    <span class="n">show_sig</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">cbar_ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">vmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">yticklabels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">xticklabels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">heatmap_kws</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdBu_r&quot;</span><span class="p">,</span>
+        <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">cbar</span><span class="o">=</span><span class="n">cbar</span><span class="p">,</span>
+        <span class="n">cbar_ax</span><span class="o">=</span><span class="n">cbar_ax</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span>
+        <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">xticklabels</span><span class="o">=</span><span class="n">xticklabels</span><span class="p">,</span>
+        <span class="n">yticklabels</span><span class="o">=</span><span class="n">yticklabels</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">pvals</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">corrected_pvalue</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">is_significant</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">is_significant</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span> <span class="o">=</span> <span class="n">pvals</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="n">im</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">pvals</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">heatmap_kws</span><span class="p">)</span>
+
+    <span class="n">raveled_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel_multi_index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">pvals</span><span class="p">),</span> <span class="n">pvals</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">zipped</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">raveled_idx</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">is_significant</span><span class="p">)</span>
+
+    <span class="c1"># Make x&#39;s and o&#39;s</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">get_children</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_facecolors</span><span class="p">()</span>
+    <span class="n">pad</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">is_significant</span> <span class="ow">in</span> <span class="n">zipped</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">))</span>
+        <span class="c1"># REF: seaborn heatmap</span>
+        <span class="n">lum</span> <span class="o">=</span> <span class="n">relative_luminance</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">text_color</span> <span class="o">=</span> <span class="s2">&quot;.15&quot;</span> <span class="k">if</span> <span class="n">lum</span> <span class="o">&gt;</span> <span class="mf">0.408</span> <span class="k">else</span> <span class="s2">&quot;w&quot;</span>
+        <span class="n">lw</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">is_significant</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">pad</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pad</span><span class="p">]</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">pad</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pad</span><span class="p">]</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">text_color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">lw</span><span class="p">)</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pad</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">pad</span><span class="p">]</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">pad</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pad</span><span class="p">]</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">text_color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">lw</span><span class="p">)</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">cbar_ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
+        <span class="n">im</span><span class="o">.</span><span class="n">get_children</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">cax</span><span class="o">=</span><span class="n">cbar_ax</span><span class="p">,</span>
+        <span class="n">fraction</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">shrink</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">ticklocation</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parcellations</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CPAC200&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DKT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Desikan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Glasser&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-17-liberal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-17&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-7-liberal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-7&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer200&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer300&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer400&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer1000&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvalues</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;pkg.plot.svg.SmartSVG at 0x7f39608294f0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvalues</span><span class="o">.</span><span class="n">corrected_pvalue</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-2.7336519257505585
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># titles = [</span>
+<span class="c1">#     &quot;i) Assoc. Test: MZ. vs DZ Connectomes&quot;,</span>
+<span class="c1">#     &quot;ii) Assoc. Test: Connectomes&quot;,</span>
+<span class="c1">#     &quot;iii) Assoc. Test: Neuroanatomy&quot;,</span>
+<span class="c1">#     &quot;iv) Cond. Test: Connectomes&quot;,</span>
+<span class="c1">#     &quot;v) Cond. Test: Connectome Subgraphs&quot;,</span>
+<span class="c1"># ]</span>
+
+<span class="n">titles</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;I) MZ. vs DZ Connectomes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;II) All Connectomes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;III) Neuroanatomy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;IV) All Connectomes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;V) Connectome Subgraphs&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="n">hypotheses</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;dcorr_twins_only&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dcorr_all&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;dcorr_neuroanatomy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cdcorr_all&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cdcorr_subgraphs&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">vmin</span> <span class="o">=</span> <span class="n">pvalues</span><span class="o">.</span><span class="n">corrected_pvalue</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="n">pvalues</span><span class="o">.</span><span class="n">corrected_pvalue</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">parcellation</span> <span class="ow">in</span> <span class="n">parcellations</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+        <span class="n">ncols</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+        <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
+        <span class="s2">&quot;B) P-values From Tests for Heritability&quot;</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="mf">1.065</span><span class="p">,</span>
+        <span class="n">horizontalalignment</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+        <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parc_df</span> <span class="o">=</span> <span class="n">pvalues</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pvalues</span><span class="o">.</span><span class="n">parcellation</span> <span class="o">==</span> <span class="n">parcellation</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="c1"># vmin = parc_df.corrected_pvalue.min()</span>
+    <span class="c1"># vmax = parc_df.corrected_pvalue.max()</span>
+
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">hyp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hypotheses</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">hyp</span> <span class="o">!=</span> <span class="s2">&quot;cdcorr_subgraphs&quot;</span><span class="p">:</span>
+            <span class="n">hyp_df</span> <span class="o">=</span> <span class="n">parc_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">parc_df</span><span class="o">.</span><span class="n">hypothesis</span> <span class="o">==</span> <span class="n">hyp</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">hyp</span> <span class="o">==</span> <span class="s2">&quot;cdcorr_subgraphs&quot;</span><span class="p">:</span>
+            <span class="n">hyp_df</span> <span class="o">=</span> <span class="n">parc_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">parc_df</span><span class="o">.</span><span class="n">hypothesis</span> <span class="o">==</span> <span class="s2">&quot;cdcorr_all&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">hyp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;corrected_pvalue&quot;</span><span class="p">]</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.31</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">hyp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;corrected_pvalue&quot;</span><span class="p">]))</span>
+            <span class="p">)</span>
+            <span class="n">hyp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;is_significant&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hyp_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+                <span class="p">:,</span> <span class="s2">&quot;corrected_pvalue&quot;</span>
+            <span class="p">]</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="s2">&quot;Females&quot;</span><span class="p">,</span> <span class="s2">&quot;Males&quot;</span><span class="p">],</span>
+                <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Exact&quot;</span><span class="p">,</span> <span class="s2">&quot;Global&quot;</span><span class="p">,</span> <span class="s2">&quot;Vertex&quot;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xticklabels</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Exact&quot;</span><span class="p">,</span> <span class="s2">&quot;Global&quot;</span><span class="p">,</span> <span class="s2">&quot;Vertex&quot;</span><span class="p">])</span>
+        <span class="n">plot_pvalues</span><span class="p">(</span>
+            <span class="n">hyp_df</span><span class="p">,</span>
+            <span class="n">ax</span><span class="p">,</span>
+            <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">cbar_ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">vmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">vmin</span><span class="p">),</span>
+            <span class="n">vmax</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">fontdict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+        <span class="c1"># ax.set_xticklabels(</span>
+        <span class="c1">#     ax.get_xticklabels(),</span>
+        <span class="c1">#     # rotation=90,</span>
+        <span class="c1">#     fontdict=dict(fontsize=8),</span>
+        <span class="c1"># )</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">cbar</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span>
+        <span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+        <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span>
+        <span class="n">length</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">,</span>
+        <span class="n">labelsize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.05</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)],</span>
+        <span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;$\alpha$&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)),</span>
+        <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;offset points&quot;</span><span class="p">,</span>
+        <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
+        <span class="n">arrowprops</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;arrowstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;linewidth&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;relpos&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)},</span>
+    <span class="p">)</span>
+
+    <span class="n">cbar</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s2">&quot;left&quot;</span><span class="p">)</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">ScalarFormatter</span><span class="p">(</span><span class="n">useMathText</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="n">integer</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Gender Grouping&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Connectome Model&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./figures/distances/pvalue_</span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">.svg&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cairosvg</span>
+<span class="kn">from</span> <span class="nn">pkg.plot</span> <span class="kn">import</span> <span class="n">Figure</span><span class="p">,</span> <span class="n">Panel</span><span class="p">,</span> <span class="n">SmartSVG</span><span class="p">,</span> <span class="n">Text</span><span class="p">,</span> <span class="n">stripplot</span><span class="p">,</span> <span class="n">stripplot_cov</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">parcellation</span> <span class="ow">in</span> <span class="n">parcellations</span><span class="p">:</span>
+
+    <span class="n">dist</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./figures/distances/</span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">.svg&quot;</span><span class="p">)</span>
+    <span class="n">dist</span><span class="o">.</span><span class="n">set_width</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">dist</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">pfig</span> <span class="o">=</span> <span class="n">SmartSVG</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./figures/distances/pvalue_</span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">.svg&quot;</span><span class="p">)</span>
+    <span class="n">pfig</span><span class="o">.</span><span class="n">set_width</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">pfig</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">pfig</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="mf">0.77</span><span class="p">)</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span>
+        <span class="n">dist</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="mf">0.81</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">dist</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="n">pfig</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.77</span><span class="p">,</span>
+        <span class="n">dist</span><span class="p">,</span>
+        <span class="n">pfig</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;./figures/distances/</span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">-composite.svg&quot;</span><span class="p">)</span>
+    <span class="n">cairosvg</span><span class="o">.</span><span class="n">svg2pdf</span><span class="p">(</span>
+        <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;./figures/distances/</span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">-composite.svg&quot;</span><span class="p">,</span>
+        <span class="n">write_to</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;./figures/distances/</span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">-composite.pdf&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-for-each-parcellation">Plot for each parcellation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-b">Part B</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge">Merge</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pvalue-heatmap">pvalue heatmap</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jaewon Chung
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

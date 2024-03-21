@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; Connectomic Heritability</title>
+    <title>Computing distance/similarity matrices for hypothesis testin &#8212; Connectomic Heritability</title>
   
   
   
@@ -354,7 +354,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Computing distance/similarity matrices for hypothesis testin</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -363,9 +363,11 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-connectome-distances">Computing Connectome Distances</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-genomic-distance">Compute genomic distance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-neuroanatomy-distance-matrix-and-full-covariate-similarity-matrix">Compute neuroanatomy distance matrix and full covariate similarity matrix</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -376,116 +378,98 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="cell tag_hide-cell docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell content</span>
-<span class="expanded">Hide code cell content</span>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../restricted_data/processed.csv&quot;</span><span class="p">)</span>
-
-<span class="n">subjects_without_scans</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;../data/subjects_without_dwi_t1.txt&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">subjects_without_scans</span><span class="p">)]</span>
-
-
-<span class="n">subjects_with_connectomes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span>
-    <span class="s2">&quot;../data/subjects_with_all_connectomes.txt&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
-<span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">subjects_with_connectomes</span><span class="p">)]</span>
-<span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;Subject&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># remove singletons</span>
-<span class="n">uniques</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">Family_ID</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">singletons</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">unique</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">uniques</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">sub</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Family_ID</span> <span class="o">==</span> <span class="n">unique</span><span class="p">]</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">singletons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
-
-<span class="n">singleton_idx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">singletons</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">singleton_idx</span><span class="p">]</span>
-
-<span class="n">male_idx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Gender</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span>
-<span class="n">female_idx</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Gender</span> <span class="o">==</span> <span class="s2">&quot;F&quot;</span>
-
-<span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;../restricted_data/944subjects.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="computing-distance-similarity-matrices-for-hypothesis-testin">
+<h1>Computing distance/similarity matrices for hypothesis testin<a class="headerlink" href="#computing-distance-similarity-matrices-for-hypothesis-testin" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../restricted_data/944subjects.csv&quot;</span><span class="p">)</span>
-
-<span class="n">subjects</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">from</span> <span class="nn">graspologic.embed</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 <span class="kn">from</span> <span class="nn">pkg.data</span> <span class="kn">import</span> <span class="n">load_dataset</span>
 <span class="kn">from</span> <span class="nn">pkg.inference</span> <span class="kn">import</span> <span class="n">difference_norm</span>
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">squareform</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parcellation</span> <span class="o">=</span> <span class="s2">&quot;Glasser&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../restricted_data/690subjects.csv&quot;</span><span class="p">)</span>
 
-<span class="n">graphs</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">parcellation</span><span class="o">=</span><span class="n">parcellation</span><span class="p">)</span>
-<span class="n">graphs</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">graphs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">}</span>
+<span class="n">subjects</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="computing-connectome-distances">
+<h2>Computing Connectome Distances<a class="headerlink" href="#computing-connectome-distances" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_zg</span><span class="p">(</span><span class="n">subjects</span><span class="p">,</span> <span class="n">graphs</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">81</span><span class="p">):</span>
+    <span class="n">n_verts</span> <span class="o">=</span> <span class="n">graphs</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">subjects</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">n_dims</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n_verts</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">zg</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">workers</span><span class="p">)(</span>
+        <span class="n">delayed</span><span class="p">(</span><span class="n">select_dimension</span><span class="p">)(</span><span class="n">g</span><span class="p">,</span> <span class="n">n_dims</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">graphs</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">max_zg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">zg</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">max_zg</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_connectome_distances</span><span class="p">(</span><span class="n">subjects</span><span class="p">,</span> <span class="n">graphs</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">81</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_connectome_distances</span><span class="p">(</span><span class="n">subjects</span><span class="p">,</span> <span class="n">graphs</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">81</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    subjects : list</span>
 <span class="sd">    graphs : dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">subs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">]</span>
 
-    <span class="n">zg</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">workers</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">select_dimension</span><span class="p">)(</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">graphs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-    <span class="n">n_components</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">zg</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">n_components</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">n_verts</span> <span class="o">=</span> <span class="n">graphs</span><span class="p">[</span><span class="n">subs</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">n_dims</span> <span class="o">=</span> <span class="n">n_verts</span> <span class="o">//</span> <span class="mi">2</span>
 
-    <span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">n_components</span><span class="p">):</span>
-        <span class="n">X</span> <span class="o">=</span> <span class="n">AdjacencySpectralEmbed</span><span class="p">(</span>
-            <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span> <span class="n">check_lcc</span><span class="o">=</span><span class="kc">False</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-        <span class="n">Y</span> <span class="o">=</span> <span class="n">AdjacencySpectralEmbed</span><span class="p">(</span>
-            <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span> <span class="n">check_lcc</span><span class="o">=</span><span class="kc">False</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n_dims</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>  <span class="c1"># for computational efficiency</span>
+            <span class="n">n_dims</span> <span class="o">=</span> <span class="mi">100</span>
 
-        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="n">difference_norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">]]</span>
+        <span class="n">zg</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">workers</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="n">select_dimension</span><span class="p">)(</span><span class="n">g</span><span class="p">,</span> <span class="n">n_dims</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">graphs</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">max_zg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">zg</span><span class="p">])</span>
+        <span class="n">n_components</span> <span class="o">=</span> <span class="n">max_zg</span>
 
-        <span class="k">return</span> <span class="n">res</span>
+    <span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">pairs</span><span class="p">,</span> <span class="n">n_components</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+            <span class="n">G</span> <span class="o">=</span> <span class="n">graphs</span><span class="p">[</span><span class="n">u</span><span class="p">]</span>
+            <span class="n">H</span> <span class="o">=</span> <span class="n">graphs</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">AdjacencySpectralEmbed</span><span class="p">(</span>
+                <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span> <span class="n">check_lcc</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+            <span class="n">Y</span> <span class="o">=</span> <span class="n">AdjacencySpectralEmbed</span><span class="p">(</span>
+                <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span> <span class="n">check_lcc</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">difference_norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">]</span>
+            <span class="p">]</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
     <span class="n">cartesian_prods</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">subs</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">cartesian_prods</span><span class="p">,</span> <span class="n">workers</span><span class="p">)</span>
 
     <span class="n">distances</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">workers</span><span class="p">)(</span>
-        <span class="n">delayed</span><span class="p">(</span><span class="n">worker</span><span class="p">)(</span><span class="n">graphs</span><span class="p">[</span><span class="n">u</span><span class="p">],</span> <span class="n">graphs</span><span class="p">[</span><span class="n">v</span><span class="p">],</span> <span class="n">n_components</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cartesian_prods</span>
+        <span class="n">delayed</span><span class="p">(</span><span class="n">worker</span><span class="p">)(</span><span class="n">split</span><span class="p">,</span> <span class="n">n_components</span><span class="p">)</span> <span class="k">for</span> <span class="n">split</span> <span class="ow">in</span> <span class="n">splits</span>
     <span class="p">)</span>
 
-    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">distances</span>
 </pre></div>
@@ -494,90 +478,120 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">connectome_distances</span> <span class="o">=</span> <span class="n">compute_connectome_distances</span><span class="p">(</span><span class="n">subjects</span><span class="p">,</span> <span class="n">graphs</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parcellations</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CPAC200&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DKT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Desikan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Glasser&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-17-liberal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-17&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-7-liberal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-7&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer200&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer300&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer400&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer1000&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;../results/</span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">_connectome_distances&quot;</span><span class="p">,</span>
-    <span class="n">exact</span><span class="o">=</span><span class="n">connectome_distances</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
-    <span class="n">glob</span><span class="o">=</span><span class="n">connectome_distances</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
-    <span class="n">vertex</span><span class="o">=</span><span class="n">connectome_distances</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zg</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AAL&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">squareform</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">connectome_distances</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span><span class="o">.</span><span class="n">shape</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">parcellation</span> <span class="ow">in</span> <span class="n">parcellations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing </span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">graphs</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span>
+        <span class="n">parcellation</span><span class="o">=</span><span class="n">parcellation</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">graphs</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">graphs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">parcellation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">zg</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">zg</span><span class="p">[</span><span class="n">parcellation</span><span class="p">]</span> <span class="o">=</span> <span class="n">compute_zg</span><span class="p">(</span><span class="n">subjects</span><span class="p">,</span> <span class="n">graphs</span><span class="p">)</span>
+
+    <span class="n">connectome_distances</span> <span class="o">=</span> <span class="n">compute_connectome_distances</span><span class="p">(</span>
+        <span class="n">subjects</span><span class="p">,</span> <span class="n">graphs</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">zg</span><span class="p">[</span><span class="n">parcellation</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;../results/</span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">/connectome_distances&quot;</span><span class="p">,</span>
+        <span class="n">exact</span><span class="o">=</span><span class="n">connectome_distances</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="n">glob</span><span class="o">=</span><span class="n">connectome_distances</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">vertex</span><span class="o">=</span><span class="n">connectome_distances</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">subjects</span><span class="o">=</span><span class="n">subjects</span><span class="p">,</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(944, 944)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computing AAL
+Computing CPAC200
+Computing DKT
+Computing Desikan
+Computing Glasser
+Computing Yeo-17-liberal
+Computing Yeo-17
+Computing Yeo-7-liberal
+Computing Yeo-7
+Computing Schaefer200
+Computing Schaefer300
+Computing Schaefer400
+Computing Schaefer1000
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pkg.plot</span> <span class="kn">import</span> <span class="n">heatmap</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">elapsed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Script took </span><span class="si">{</span><span class="n">delta</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Script took 1:23:57.927655
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zg</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13.539416922471734
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;AAL&#39;: 10,
+ &#39;CPAC200&#39;: 11,
+ &#39;DKT&#39;: 8,
+ &#39;Desikan&#39;: 4,
+ &#39;Glasser&#39;: 9,
+ &#39;Yeo-17-liberal&#39;: 6,
+ &#39;Yeo-17&#39;: 6,
+ &#39;Yeo-7-liberal&#39;: 4,
+ &#39;Yeo-7&#39;: 4,
+ &#39;Schaefer200&#39;: 14,
+ &#39;Schaefer300&#39;: 16,
+ &#39;Schaefer400&#39;: 17,
+ &#39;Schaefer1000&#39;: 27}
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heatmap</span><span class="p">(</span><span class="n">exact</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/0ed25a083b6f52b2a73687702df6b1a0f529ee9feeb7956ab245196dd512ed58.png" src="_images/0ed25a083b6f52b2a73687702df6b1a0f529ee9feeb7956ab245196dd512ed58.png" />
-</div>
-</div>
+</section>
+<section id="compute-genomic-distance">
+<h2>Compute genomic distance<a class="headerlink" href="#compute-genomic-distance" title="Permalink to this heading">#</a></h2>
+<p>Only need to do this once since it is constant regardless of parcellation choice</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_genome_distances</span><span class="p">(</span><span class="n">subjects</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">81</span><span class="p">):</span>
@@ -587,38 +601,37 @@ document.write(`
 
 <span class="sd">    0 = MZ, 1 = NotTwin/DZ, 2 = non-twin sibling, 3 = step-sibling, 4 = unrelated.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">pairs</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="n">rel_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">MZ</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">DZ</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">NotTwin</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">Step</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">Unrelated</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+        <span class="n">dists</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+            <span class="n">subs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">])]</span>
+            <span class="n">fdx1</span><span class="p">,</span> <span class="n">mdx1</span><span class="p">,</span> <span class="n">fdx2</span><span class="p">,</span> <span class="n">mdx2</span> <span class="o">=</span> <span class="n">subs</span><span class="p">[[</span><span class="s2">&quot;Father_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Mother_ID&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+            <span class="n">zyg1</span><span class="p">,</span> <span class="n">zyg2</span> <span class="o">=</span> <span class="n">subs</span><span class="p">[[</span><span class="s2">&quot;Zygosity&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+            <span class="c1"># below checks if same family</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">fdx1</span> <span class="o">==</span> <span class="n">fdx2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">mdx1</span> <span class="o">==</span> <span class="n">mdx2</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">zyg1</span> <span class="o">==</span> <span class="n">zyg2</span><span class="p">:</span>
+                    <span class="n">dist</span> <span class="o">=</span> <span class="n">rel_dict</span><span class="p">[</span><span class="n">zyg1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">zyg1</span> <span class="o">!=</span> <span class="n">zyg2</span><span class="p">:</span>
+                    <span class="n">dist</span> <span class="o">=</span> <span class="n">rel_dict</span><span class="p">[</span><span class="s2">&quot;NotTwin&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">fdx1</span> <span class="o">!=</span> <span class="n">fdx2</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="n">mdx1</span> <span class="o">!=</span> <span class="n">mdx2</span><span class="p">):</span>  <span class="c1"># share at least one parent</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="n">rel_dict</span><span class="p">[</span><span class="s2">&quot;Step&quot;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">fdx1</span> <span class="o">!=</span> <span class="n">fdx2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">mdx1</span> <span class="o">!=</span> <span class="n">mdx2</span><span class="p">):</span>  <span class="c1"># no sharing parents</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="n">rel_dict</span><span class="p">[</span><span class="s2">&quot;Unrelated&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># sanity check</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">()</span>
+            <span class="n">dists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dist</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dists</span>
+
     <span class="n">subs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">]</span>
-
     <span class="n">cartesian_prods</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">subs</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">cartesian_prods</span><span class="p">,</span> <span class="n">workers</span><span class="p">)</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">workers</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="n">worker</span><span class="p">)(</span><span class="n">split</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span> <span class="k">for</span> <span class="n">split</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">)</span>
 
-    <span class="n">rel_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">MZ</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">DZ</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">NotTwin</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">Step</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">Unrelated</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">worker</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-        <span class="n">subs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">])]</span>
-        <span class="n">fdx1</span><span class="p">,</span> <span class="n">mdx1</span><span class="p">,</span> <span class="n">fdx2</span><span class="p">,</span> <span class="n">mdx2</span> <span class="o">=</span> <span class="n">subs</span><span class="p">[[</span><span class="s2">&quot;Father_ID&quot;</span><span class="p">,</span> <span class="s2">&quot;Mother_ID&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-        <span class="n">zyg1</span><span class="p">,</span> <span class="n">zyg2</span> <span class="o">=</span> <span class="n">subs</span><span class="p">[[</span><span class="s2">&quot;Zygosity&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-
-        <span class="c1"># below checks if same family</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">fdx1</span> <span class="o">==</span> <span class="n">fdx2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">mdx1</span> <span class="o">==</span> <span class="n">mdx2</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">zyg1</span> <span class="o">==</span> <span class="n">zyg2</span><span class="p">:</span>
-                <span class="n">dist</span> <span class="o">=</span> <span class="n">rel_dict</span><span class="p">[</span><span class="n">zyg1</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="n">zyg1</span> <span class="o">!=</span> <span class="n">zyg2</span><span class="p">:</span>
-                <span class="n">dist</span> <span class="o">=</span> <span class="n">rel_dict</span><span class="p">[</span><span class="s2">&quot;NotTwin&quot;</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">fdx1</span> <span class="o">!=</span> <span class="n">fdx2</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">mdx1</span> <span class="o">!=</span> <span class="n">mdx2</span><span class="p">):</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="n">rel_dict</span><span class="p">[</span><span class="s2">&quot;Step&quot;</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">fdx1</span> <span class="o">!=</span> <span class="n">fdx2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">mdx1</span> <span class="o">!=</span> <span class="n">mdx2</span><span class="p">):</span>
-            <span class="n">dist</span> <span class="o">=</span> <span class="n">rel_dict</span><span class="p">[</span><span class="s2">&quot;Unrelated&quot;</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># stepsib</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">dist</span>
-
-    <span class="n">cartesian_prods</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="n">subs</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-
-    <span class="n">distances</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">workers</span><span class="p">)(</span>
-        <span class="n">delayed</span><span class="p">(</span><span class="n">worker</span><span class="p">)(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cartesian_prods</span>
-    <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -626,10 +639,91 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">genome</span> <span class="o">=</span> <span class="n">compute_genome_distances</span><span class="p">(</span><span class="n">subjects</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span><span class="s2">&quot;../results/genome_distance&quot;</span><span class="p">,</span> <span class="n">genome</span><span class="o">=</span><span class="n">genome</span><span class="p">,</span> <span class="n">subjects</span><span class="o">=</span><span class="n">subjects</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="compute-neuroanatomy-distance-matrix-and-full-covariate-similarity-matrix">
+<h2>Compute neuroanatomy distance matrix and full covariate similarity matrix<a class="headerlink" href="#compute-neuroanatomy-distance-matrix-and-full-covariate-similarity-matrix" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">parcs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AAL_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CPAC200_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DKT_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Desikan_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Glasser_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer1000_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer200_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer300_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer400_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-17-liberal_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-17_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-7-liberal_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-7_space-MNI152NLin6_res-1x1x1&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ages</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">Subject</span> <span class="o">==</span> <span class="n">sub</span><span class="p">]</span><span class="o">.</span><span class="n">Age_in_Yrs</span><span class="o">.</span><span class="n">values</span> <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+    <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">ages</span> <span class="o">=</span> <span class="n">ages</span> <span class="o">/</span> <span class="n">ages</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">parc</span> <span class="ow">in</span> <span class="n">parcs</span><span class="p">:</span>
+    <span class="n">pname</span> <span class="o">=</span> <span class="n">parc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing </span><span class="si">{</span><span class="n">pname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">cov_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">parc</span><span class="si">}</span><span class="s2">.csv.csv&quot;</span> <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">subjects</span><span class="p">]</span>
+    <span class="n">covariates</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">covariate</span> <span class="ow">in</span> <span class="n">covariates</span><span class="p">:</span>
+        <span class="n">covariate</span> <span class="o">=</span> <span class="n">covariate</span><span class="p">[[</span><span class="s2">&quot;Volume&quot;</span><span class="p">,</span> <span class="s2">&quot;FA&quot;</span><span class="p">,</span> <span class="s2">&quot;AD&quot;</span><span class="p">,</span> <span class="s2">&quot;RD&quot;</span><span class="p">]]</span>
+        <span class="n">covariate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">covariate</span><span class="p">)</span>
+        <span class="n">volume</span> <span class="o">=</span> <span class="n">covariate</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">rest</span> <span class="o">=</span> <span class="n">covariate</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+
+        <span class="n">normed</span> <span class="o">=</span> <span class="n">rest</span> <span class="o">*</span> <span class="n">volume</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">to_append</span> <span class="o">=</span> <span class="p">[</span><span class="n">volume</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="o">*</span><span class="n">rest</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)]</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">to_append</span><span class="p">)</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">/</span> <span class="n">res</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Volume&quot;</span><span class="p">,</span> <span class="s2">&quot;FA&quot;</span><span class="p">,</span> <span class="s2">&quot;AD&quot;</span><span class="p">,</span> <span class="s2">&quot;RD&quot;</span><span class="p">]</span>
+    <span class="n">dists</span> <span class="o">=</span> <span class="n">pdist</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;../results/</span><span class="si">{</span><span class="n">pname</span><span class="si">}</span><span class="s2">/covariate_distance&quot;</span><span class="p">,</span>
+        <span class="n">neuroanatomy</span><span class="o">=</span><span class="n">dists</span><span class="p">,</span>
+        <span class="n">subjects</span><span class="o">=</span><span class="n">subjects</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">res</span><span class="p">,</span> <span class="n">ages</span><span class="p">])</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Volume&quot;</span><span class="p">,</span> <span class="s2">&quot;FA&quot;</span><span class="p">,</span> <span class="s2">&quot;AD&quot;</span><span class="p">,</span> <span class="s2">&quot;RD&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">]</span>
+    <span class="n">cd</span> <span class="o">=</span> <span class="n">ConditionalDcorr</span><span class="p">()</span>
+    <span class="n">simmat</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">_compute_kde</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;../results/</span><span class="si">{</span><span class="n">pname</span><span class="si">}</span><span class="s2">/covariate_kde&quot;</span><span class="p">,</span>
+        <span class="n">covariates</span><span class="o">=</span><span class="n">simmat</span><span class="p">,</span>
+        <span class="n">subjects</span><span class="o">=</span><span class="n">subjects</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -675,9 +769,11 @@ document.write(`
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-connectome-distances">Computing Connectome Distances</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-genomic-distance">Compute genomic distance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-neuroanatomy-distance-matrix-and-full-covariate-similarity-matrix">Compute neuroanatomy distance matrix and full covariate similarity matrix</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

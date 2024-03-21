@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>&lt;no title&gt; &#8212; Connectomic Heritability</title>
+    <title>Compute permutation blocks &#8212; Connectomic Heritability</title>
   
   
   
@@ -354,7 +354,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Compute permutation blocks</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -363,7 +363,14 @@ document.write(`
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Compute permutation blocks</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-a-monozygotic-vs-dizygotics">Part A) Monozygotic vs Dizygotics</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-b-dcorr-of-all-relationships">Part B) Dcorr of all relationships</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-c-neuroanatomy">Part C Neuroanatomy</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-d-conditional-dcorr">Part D conditional dcorr</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex">Vertex</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#correct-pvalues">Correct pvalues</a></li>
 </ul>
 
             </nav>
@@ -376,7 +383,308 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">squareform</span>
+
+<span class="kn">from</span> <span class="nn">hyppo.conditional</span> <span class="kn">import</span> <span class="n">ConditionalDcorr</span>
+<span class="kn">from</span> <span class="nn">hyppo.independence</span> <span class="kn">import</span> <span class="n">Dcorr</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reps</span> <span class="o">=</span> <span class="mi">25000</span>
+
+<span class="n">parcellations</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AAL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CPAC200&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DKT&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Desikan&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Glasser&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-17-liberal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-17&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-7-liberal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Yeo-7&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer200&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer300&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer400&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Schaefer1000&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_subjects_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../restricted_data/690subjects.csv&quot;</span><span class="p">)</span>
+<span class="n">twins_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../restricted_data/same_sex_twins.csv&quot;</span><span class="p">)</span>
+
+
+<span class="n">pval_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;parcellation&quot;</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;pvalue&quot;</span><span class="p">,</span> <span class="s2">&quot;hypothesis&quot;</span><span class="p">,</span> <span class="s2">&quot;gender&quot;</span><span class="p">]</span>
+<span class="n">pvalues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">pval_cols</span><span class="p">)</span>
+
+
+<span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../results/&quot;</span><span class="p">)</span>
+<span class="n">genome_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_path</span> <span class="o">/</span> <span class="s2">&quot;genome_distance.npz&quot;</span><span class="p">)[</span><span class="s2">&quot;genome&quot;</span><span class="p">]</span>
+
+<span class="n">female_idx</span> <span class="o">=</span> <span class="n">all_subjects_df</span><span class="o">.</span><span class="n">Gender</span> <span class="o">==</span> <span class="s2">&quot;F&quot;</span>
+<span class="n">male_idx</span> <span class="o">=</span> <span class="n">all_subjects_df</span><span class="o">.</span><span class="n">Gender</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="compute-permutation-blocks">
+<h1>Compute permutation blocks<a class="headerlink" href="#compute-permutation-blocks" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nrows</span> <span class="o">=</span> <span class="n">all_subjects_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fams</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">all_subjects_df</span><span class="o">.</span><span class="n">Family_ID</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">blocks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nrows</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># cols are = zygosity, family, then subjects</span>
+<span class="k">for</span> <span class="n">fdx</span><span class="p">,</span> <span class="n">fam</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fams</span><span class="p">):</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">all_subjects_df</span><span class="p">[</span><span class="n">all_subjects_df</span><span class="o">.</span><span class="n">Family_ID</span> <span class="o">==</span> <span class="n">fam</span><span class="p">]</span>
+
+    <span class="n">idx</span><span class="p">,</span> <span class="n">jdx</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">index</span>
+    <span class="n">zyg1</span><span class="p">,</span> <span class="n">zyg2</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">Zygosity</span>
+
+    <span class="k">if</span> <span class="n">zyg1</span> <span class="o">==</span> <span class="s2">&quot;MZ&quot;</span> <span class="ow">and</span> <span class="n">zyg2</span> <span class="o">==</span> <span class="s2">&quot;MZ&quot;</span><span class="p">:</span>
+        <span class="n">first_block</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">zyg1</span> <span class="o">==</span> <span class="s2">&quot;DZ&quot;</span> <span class="ow">and</span> <span class="n">zyg2</span> <span class="o">==</span> <span class="s2">&quot;DZ&quot;</span><span class="p">:</span>
+        <span class="n">first_block</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+    <span class="k">elif</span> <span class="n">zyg1</span> <span class="o">!=</span> <span class="n">zyg2</span> <span class="ow">or</span> <span class="p">(</span><span class="n">zyg1</span> <span class="o">==</span> <span class="s2">&quot;NotTwin&quot;</span> <span class="ow">and</span> <span class="n">zyg2</span> <span class="o">==</span> <span class="s2">&quot;NotTwin&quot;</span><span class="p">):</span>
+        <span class="n">first_block</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">fam</span><span class="p">)</span>
+
+    <span class="n">blocks</span><span class="p">[[</span><span class="n">idx</span><span class="p">,</span> <span class="n">jdx</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[[</span><span class="n">first_block</span><span class="p">,</span> <span class="n">fdx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">first_block</span><span class="p">,</span> <span class="n">fdx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-a-monozygotic-vs-dizygotics">
+<h1>Part A) Monozygotic vs Dizygotics<a class="headerlink" href="#part-a-monozygotic-vs-dizygotics" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twin_idx</span> <span class="o">=</span> <span class="n">all_subjects_df</span><span class="o">.</span><span class="n">Subject</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">twins_df</span><span class="o">.</span><span class="n">Subject</span><span class="p">)</span>
+
+<span class="n">twin_female_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">twin_idx</span><span class="p">,</span> <span class="n">female_idx</span><span class="p">)</span>
+<span class="n">twin_male_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">twin_idx</span><span class="p">,</span> <span class="n">male_idx</span><span class="p">)</span>
+
+<span class="n">gender_idx</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">twin_idx</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">twin_female_idx</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">twin_male_idx</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">parcellation</span> <span class="ow">in</span> <span class="n">parcellations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;running </span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">parc_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="n">parcellation</span>
+    <span class="n">connectome_distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">parc_path</span> <span class="o">/</span> <span class="s2">&quot;connectome_distances.npz&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">gender</span><span class="p">,</span> <span class="n">gender_index</span> <span class="ow">in</span> <span class="n">gender_idx</span><span class="p">:</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">gender_index</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;glob&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">]:</span>
+            <span class="n">cdist</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">connectome_distances</span><span class="p">[</span><span class="n">model</span><span class="p">])[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+            <span class="n">gdist</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">genome_distance</span><span class="p">)[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+            <span class="n">twin_blocks</span> <span class="o">=</span> <span class="n">blocks</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">][</span><span class="n">indices</span><span class="p">]</span>
+
+            <span class="n">dcorr</span> <span class="o">=</span> <span class="n">Dcorr</span><span class="p">(</span><span class="n">compute_distance</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">dcorr</span><span class="o">.</span><span class="n">test</span><span class="p">(</span>
+                <span class="n">gdist</span><span class="p">,</span>
+                <span class="n">cdist</span><span class="p">,</span>
+                <span class="n">perm_blocks</span><span class="o">=</span><span class="n">twin_blocks</span><span class="p">,</span>
+                <span class="n">reps</span><span class="o">=</span><span class="n">reps</span><span class="p">,</span>
+                <span class="n">auto</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">workers</span><span class="o">=</span><span class="mi">88</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">parcellation</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="s2">&quot;dcorr_twins_only&quot;</span><span class="p">,</span> <span class="n">gender</span><span class="p">])</span>
+
+<span class="n">pvalues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">pvalues</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pval_cols</span><span class="p">)],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">pvalues</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;../results/pvalues.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-b-dcorr-of-all-relationships">
+<h1>Part B) Dcorr of all relationships<a class="headerlink" href="#part-b-dcorr-of-all-relationships" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gender_idx</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">690</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">female_idx</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">male_idx</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">parcellation</span> <span class="ow">in</span> <span class="n">parcellations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;running </span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">parc_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="n">parcellation</span>
+    <span class="n">connectome_distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">parc_path</span> <span class="o">/</span> <span class="s2">&quot;connectome_distances.npz&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">gender</span><span class="p">,</span> <span class="n">gender_index</span> <span class="ow">in</span> <span class="n">gender_idx</span><span class="p">:</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">gender_index</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;glob&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">]:</span>
+            <span class="n">cdist</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">connectome_distances</span><span class="p">[</span><span class="n">model</span><span class="p">])[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+            <span class="n">gdist</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">genome_distance</span><span class="p">)[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+            <span class="n">dcorr</span> <span class="o">=</span> <span class="n">Dcorr</span><span class="p">(</span><span class="n">compute_distance</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+            <span class="n">stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">dcorr</span><span class="o">.</span><span class="n">test</span><span class="p">(</span>
+                <span class="n">gdist</span><span class="p">,</span>
+                <span class="n">cdist</span><span class="p">,</span>
+                <span class="n">perm_blocks</span><span class="o">=</span><span class="n">blocks</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">][</span><span class="n">indices</span><span class="p">],</span>
+                <span class="n">reps</span><span class="o">=</span><span class="n">reps</span><span class="p">,</span>
+                <span class="n">auto</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">workers</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">parcellation</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="s2">&quot;dcorr_all&quot;</span><span class="p">,</span> <span class="n">gender</span><span class="p">])</span>
+
+<span class="n">pvalues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">pvalues</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pval_cols</span><span class="p">)],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">pvalues</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;../results/pvalues.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-c-neuroanatomy">
+<h1>Part C Neuroanatomy<a class="headerlink" href="#part-c-neuroanatomy" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gender_idx</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">690</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">female_idx</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">male_idx</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../results/&quot;</span><span class="p">)</span>
+
+<span class="n">genome_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_path</span> <span class="o">/</span> <span class="s2">&quot;genome_distance.npz&quot;</span><span class="p">)[</span><span class="s2">&quot;genome&quot;</span><span class="p">]</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">parcellation</span> <span class="ow">in</span> <span class="n">parcellations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;running </span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">parc_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="n">parcellation</span>
+    <span class="n">neuro_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">parc_path</span> <span class="o">/</span> <span class="s2">&quot;covariate_distance.npz&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">gender</span><span class="p">,</span> <span class="n">gender_index</span> <span class="ow">in</span> <span class="n">gender_idx</span><span class="p">:</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">gender_index</span>
+
+        <span class="n">cdist</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">neuro_distance</span><span class="p">[</span><span class="s2">&quot;neuroanatomy&quot;</span><span class="p">])[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+        <span class="n">gdist</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">genome_distance</span><span class="p">)[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+
+        <span class="n">dcorr</span> <span class="o">=</span> <span class="n">Dcorr</span><span class="p">(</span><span class="n">compute_distance</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">dcorr</span><span class="o">.</span><span class="n">test</span><span class="p">(</span>
+            <span class="n">gdist</span><span class="p">,</span>
+            <span class="n">cdist</span><span class="p">,</span>
+            <span class="n">perm_blocks</span><span class="o">=</span><span class="n">blocks</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">][</span><span class="n">indices</span><span class="p">],</span>
+            <span class="n">reps</span><span class="o">=</span><span class="n">reps</span><span class="p">,</span>
+            <span class="n">auto</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">workers</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">parcellation</span><span class="p">,</span> <span class="s2">&quot;neuroanatomy&quot;</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="s2">&quot;dcorr_neuroanatomy&quot;</span><span class="p">,</span> <span class="n">gender</span><span class="p">])</span>
+
+<span class="n">pvalues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">pvalues</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pval_cols</span><span class="p">)],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">pvalues</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;../results/pvalues.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-d-conditional-dcorr">
+<h1>Part D conditional dcorr<a class="headerlink" href="#part-d-conditional-dcorr" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../results/&quot;</span><span class="p">)</span>
+<span class="n">genome_distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">data_path</span> <span class="o">/</span> <span class="s2">&quot;genome_distance.npz&quot;</span><span class="p">)[</span><span class="s2">&quot;genome&quot;</span><span class="p">]</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">gender_idx</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;All&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">690</span><span class="p">)],</span> <span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">female_idx</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="n">male_idx</span><span class="p">]]</span>
+
+<span class="k">for</span> <span class="n">parcellation</span> <span class="ow">in</span> <span class="n">parcellations</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;running </span><span class="si">{</span><span class="n">parcellation</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">parc_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">/</span> <span class="n">parcellation</span>
+    <span class="n">connectome_distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">parc_path</span> <span class="o">/</span> <span class="s2">&quot;connectome_distances.npz&quot;</span><span class="p">)</span>
+    <span class="n">covariate_distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">parc_path</span> <span class="o">/</span> <span class="s2">&quot;covariate_kde.npz&quot;</span><span class="p">)[</span><span class="s2">&quot;covariates&quot;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">gender</span><span class="p">,</span> <span class="n">gender_index</span> <span class="ow">in</span> <span class="n">gender_idx</span><span class="p">:</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">gender_index</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span> <span class="s2">&quot;glob&quot;</span><span class="p">,</span> <span class="s2">&quot;vertex&quot;</span><span class="p">]:</span>
+
+            <span class="n">cdist</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">connectome_distances</span><span class="p">[</span><span class="n">model</span><span class="p">])[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+            <span class="n">gdist</span> <span class="o">=</span> <span class="n">squareform</span><span class="p">(</span><span class="n">genome_distance</span><span class="p">)[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+            <span class="n">vdist</span> <span class="o">=</span> <span class="n">covariate_distances</span><span class="p">[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:][:,</span> <span class="n">indices</span><span class="p">]</span>
+
+            <span class="n">cd</span> <span class="o">=</span> <span class="n">ConditionalDcorr</span><span class="p">(</span><span class="n">compute_distance</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">cd</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">gdist</span><span class="p">,</span> <span class="n">cdist</span><span class="p">,</span> <span class="n">vdist</span><span class="p">,</span> <span class="n">reps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">parcellation</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="s2">&quot;cdcorr_all&quot;</span><span class="p">,</span> <span class="n">gender</span><span class="p">])</span>
+
+<span class="n">pvalues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">pvalues</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">pval_cols</span><span class="p">)],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+<span class="n">pvalues</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;../results/pvalues.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>running AAL
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="vertex">
+<h1>Vertex<a class="headerlink" href="#vertex" title="Permalink to this heading">#</a></h1>
+</section>
+<section id="correct-pvalues">
+<h1>Correct pvalues<a class="headerlink" href="#correct-pvalues" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.stats.multitest</span> <span class="kn">import</span> <span class="n">multipletests</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">significant</span><span class="p">,</span> <span class="n">corrected</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">multipletests</span><span class="p">(</span><span class="n">pvalues</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;fdr_bh&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvalues</span><span class="p">[</span><span class="s2">&quot;corrected_pvalue&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corrected</span>
+<span class="n">pvalues</span><span class="p">[</span><span class="s2">&quot;is_significant&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">significant</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pvalues</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;../results/pvalues.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -421,7 +729,14 @@ document.write(`
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Compute permutation blocks</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-a-monozygotic-vs-dizygotics">Part A) Monozygotic vs Dizygotics</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-b-dcorr-of-all-relationships">Part B) Dcorr of all relationships</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-c-neuroanatomy">Part C Neuroanatomy</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-d-conditional-dcorr">Part D conditional dcorr</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#vertex">Vertex</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#correct-pvalues">Correct pvalues</a></li>
 </ul>
 
   </nav></div>
