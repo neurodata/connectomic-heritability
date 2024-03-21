@@ -167,7 +167,7 @@ def stripplot(plot_df, ax=None, col_names=None, row_names=None):
                 palette=["w"],
                 markers="d",
                 scale=1.1,
-                estimator=np.median,
+                estimator=np.mean,
                 errorbar=None,
                 ax=ax[rdx, cdx],
             )
@@ -181,7 +181,7 @@ def stripplot(plot_df, ax=None, col_names=None, row_names=None):
                 palette="dark",
                 markers="d",
                 scale=1,
-                estimator=np.median,
+                estimator=np.mean,
                 errorbar=None,
                 ax=ax[rdx, cdx],
             )
@@ -273,7 +273,7 @@ def stripplot_cov(plot_df, ax=None, col_names=None, row_names=None):
                 palette=["w"],
                 markers="d",
                 scale=1.1,
-                estimator=np.median,
+                estimator=np.mean,
                 errorbar=None,
                 ax=ax[rdx],
             )
@@ -287,7 +287,7 @@ def stripplot_cov(plot_df, ax=None, col_names=None, row_names=None):
                 palette="dark",
                 markers="d",
                 scale=1,
-                estimator=np.median,
+                estimator=np.mean,
                 errorbar=None,
                 ax=ax[rdx],
             )
